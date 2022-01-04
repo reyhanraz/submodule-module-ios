@@ -1,0 +1,492 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C39B7A65B873328DEC98B66 /* Pods_ArtisanService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */; };
+		A738DC8323116B850051B127 /* PostArtisanServiceViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */; };
+		A738DC8523116B910051B127 /* PostArtisanServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */; };
+		A738DC8723116D210051B127 /* ArtisanServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8623116D210051B127 /* ArtisanServiceRequest.swift */; };
+		A738DC892311713A0051B127 /* ArtisanServiceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC882311713A0051B127 /* ArtisanServiceApi.swift */; };
+		A738DC8B231172910051B127 /* PostArtisanServiceCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */; };
+		A738DC8D2311859F0051B127 /* ArtisanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8C2311859F0051B127 /* ArtisanService.swift */; };
+		A738DC8F231185B20051B127 /* ArtisanServiceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8E231185B20051B127 /* ArtisanServiceDetail.swift */; };
+		A738DC9223124CA60051B127 /* ArtisanServiceSQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC9123124CA60051B127 /* ArtisanServiceSQLCache.swift */; };
+		A738DC96231258B00051B127 /* ArtisanService+SQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC95231258B00051B127 /* ArtisanService+SQL.swift */; };
+		A738DC9E231267190051B127 /* ArtisanServiceCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC9D231267190051B127 /* ArtisanServiceCloudService.swift */; };
+		A7BACA8F237AA9230056B8D0 /* CommonUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BACA8E237AA9230056B8D0 /* CommonUI.framework */; };
+		A7C313532313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C313522313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift */; };
+		A7C313562313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C313552313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift */; };
+		A7D4901D2311278E0030FE80 /* ArtisanService.h in Headers */ = {isa = PBXBuildFile; fileRef = A7D4901B2311278E0030FE80 /* ArtisanService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A7DC216F2327408100D06C1F /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC216E2327408100D06C1F /* Common.framework */; };
+		A7DC21712327408500D06C1F /* Platform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21702327408500D06C1F /* Platform.framework */; };
+		A7DC21732327408800D06C1F /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21722327408800D06C1F /* Domain.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
+		5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtisanService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModelType.swift; sourceTree = "<group>"; };
+		A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModel.swift; sourceTree = "<group>"; };
+		A738DC8623116D210051B127 /* ArtisanServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceRequest.swift; sourceTree = "<group>"; };
+		A738DC882311713A0051B127 /* ArtisanServiceApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceApi.swift; sourceTree = "<group>"; };
+		A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceCloudService.swift; sourceTree = "<group>"; };
+		A738DC8C2311859F0051B127 /* ArtisanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanService.swift; sourceTree = "<group>"; };
+		A738DC8E231185B20051B127 /* ArtisanServiceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceDetail.swift; sourceTree = "<group>"; };
+		A738DC9123124CA60051B127 /* ArtisanServiceSQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceSQLCache.swift; sourceTree = "<group>"; };
+		A738DC95231258B00051B127 /* ArtisanService+SQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtisanService+SQL.swift"; sourceTree = "<group>"; };
+		A738DC9D231267190051B127 /* ArtisanServiceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceCloudService.swift; sourceTree = "<group>"; };
+		A7BACA8E237AA9230056B8D0 /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7C313522313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteArtisanServiceCloudService.swift; sourceTree = "<group>"; };
+		A7C313552313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceUseCaseProvider.swift; sourceTree = "<group>"; };
+		A7D490182311278E0030FE80 /* ArtisanService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtisanService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7D4901B2311278E0030FE80 /* ArtisanService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtisanService.h; sourceTree = "<group>"; };
+		A7D4901C2311278E0030FE80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7DC216E2327408100D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7DC21702327408500D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7DC21722327408800D06C1F /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A7D490152311278E0030FE80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7DC21732327408800D06C1F /* Domain.framework in Frameworks */,
+				A7DC21712327408500D06C1F /* Platform.framework in Frameworks */,
+				A7BACA8F237AA9230056B8D0 /* CommonUI.framework in Frameworks */,
+				A7DC216F2327408100D06C1F /* Common.framework in Frameworks */,
+				4C39B7A65B873328DEC98B66 /* Pods_ArtisanService.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		20B0EB2F96AA0149C01BF4C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7BACA8E237AA9230056B8D0 /* CommonUI.framework */,
+				A7DC21722327408800D06C1F /* Domain.framework */,
+				A7DC21702327408500D06C1F /* Platform.framework */,
+				A7DC216E2327408100D06C1F /* Common.framework */,
+				5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9FBEBEEBBE5A674E1AF6291E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */,
+				0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Partner/Pods;
+			sourceTree = "<group>";
+		};
+		A738DC9023124C900051B127 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				A738DC9123124CA60051B127 /* ArtisanServiceSQLCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		A7C313542313AD46005EC194 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				A7C313552313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		A7D4900E2311278E0030FE80 = {
+			isa = PBXGroup;
+			children = (
+				A7D4901A2311278E0030FE80 /* ArtisanService */,
+				A7D490192311278E0030FE80 /* Products */,
+				9FBEBEEBBE5A674E1AF6291E /* Pods */,
+				20B0EB2F96AA0149C01BF4C7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A7D490192311278E0030FE80 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A7D490182311278E0030FE80 /* ArtisanService.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A7D4901A2311278E0030FE80 /* ArtisanService */ = {
+			isa = PBXGroup;
+			children = (
+				A7C313542313AD46005EC194 /* Domain */,
+				A738DC9023124C900051B127 /* Cache */,
+				A7D49028231128D00030FE80 /* ViewModel */,
+				A7D49027231128CB0030FE80 /* Model */,
+				A738DC882311713A0051B127 /* ArtisanServiceApi.swift */,
+				A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */,
+				A7C313522313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift */,
+				A738DC9D231267190051B127 /* ArtisanServiceCloudService.swift */,
+				A7D4901B2311278E0030FE80 /* ArtisanService.h */,
+				A7D4901C2311278E0030FE80 /* Info.plist */,
+			);
+			path = ArtisanService;
+			sourceTree = "<group>";
+		};
+		A7D49027231128CB0030FE80 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A738DC8623116D210051B127 /* ArtisanServiceRequest.swift */,
+				A738DC8E231185B20051B127 /* ArtisanServiceDetail.swift */,
+				A738DC8C2311859F0051B127 /* ArtisanService.swift */,
+				A738DC95231258B00051B127 /* ArtisanService+SQL.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A7D49028231128D00030FE80 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */,
+				A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A7D490132311278E0030FE80 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7D4901D2311278E0030FE80 /* ArtisanService.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		A7D490172311278E0030FE80 /* ArtisanService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7D490202311278E0030FE80 /* Build configuration list for PBXNativeTarget "ArtisanService" */;
+			buildPhases = (
+				1D1D5BC3AEB6B3BB7D4056F4 /* [CP] Check Pods Manifest.lock */,
+				A7D490132311278E0030FE80 /* Headers */,
+				A7D490142311278E0030FE80 /* Sources */,
+				A7D490152311278E0030FE80 /* Frameworks */,
+				A7D490162311278E0030FE80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ArtisanService;
+			productName = ArtisanService;
+			productReference = A7D490182311278E0030FE80 /* ArtisanService.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A7D4900F2311278E0030FE80 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "Adrena Teknologi Indonesia";
+				TargetAttributes = {
+					A7D490172311278E0030FE80 = {
+						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1030;
+					};
+				};
+			};
+			buildConfigurationList = A7D490122311278E0030FE80 /* Build configuration list for PBXProject "ArtisanService" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A7D4900E2311278E0030FE80;
+			productRefGroup = A7D490192311278E0030FE80 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A7D490172311278E0030FE80 /* ArtisanService */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A7D490162311278E0030FE80 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D1D5BC3AEB6B3BB7D4056F4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ArtisanService-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A7D490142311278E0030FE80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A738DC8323116B850051B127 /* PostArtisanServiceViewModelType.swift in Sources */,
+				A738DC8523116B910051B127 /* PostArtisanServiceViewModel.swift in Sources */,
+				A738DC9E231267190051B127 /* ArtisanServiceCloudService.swift in Sources */,
+				A7C313562313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift in Sources */,
+				A738DC8F231185B20051B127 /* ArtisanServiceDetail.swift in Sources */,
+				A7C313532313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift in Sources */,
+				A738DC8723116D210051B127 /* ArtisanServiceRequest.swift in Sources */,
+				A738DC8B231172910051B127 /* PostArtisanServiceCloudService.swift in Sources */,
+				A738DC8D2311859F0051B127 /* ArtisanService.swift in Sources */,
+				A738DC96231258B00051B127 /* ArtisanService+SQL.swift in Sources */,
+				A738DC9223124CA60051B127 /* ArtisanServiceSQLCache.swift in Sources */,
+				A738DC892311713A0051B127 /* ArtisanServiceApi.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A7D4901E2311278E0030FE80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A7D4901F2311278E0030FE80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A7D490212311278E0030FE80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArtisanService/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.adrena.ios.beautybell.ArtisanService;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A7D490222311278E0030FE80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ArtisanService/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.adrena.ios.beautybell.ArtisanService;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A7D490122311278E0030FE80 /* Build configuration list for PBXProject "ArtisanService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7D4901E2311278E0030FE80 /* Debug */,
+				A7D4901F2311278E0030FE80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7D490202311278E0030FE80 /* Build configuration list for PBXNativeTarget "ArtisanService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7D490212311278E0030FE80 /* Debug */,
+				A7D490222311278E0030FE80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A7D4900F2311278E0030FE80 /* Project object */;
+}
