@@ -372,7 +372,7 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
 
 extension Booking {
     public var isContactable: Bool {
-        (status == .booking || status == .process || status == .accepted) && paymentStatus == .paid
+        (status == .booking || status == .process || status == .accepted || status == .confirmed) && paymentStatus == .paid
     }
 
     public var isCancelableByArtisan: Bool {
