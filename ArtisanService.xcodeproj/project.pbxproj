@@ -28,7 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
+		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
 		5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtisanService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModelType.swift; sourceTree = "<group>"; };
 		A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModel.swift; sourceTree = "<group>"; };
@@ -49,7 +49,7 @@
 		A7DC216E2327408100D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21702327408500D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21722327408800D06C1F /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
+		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
