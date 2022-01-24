@@ -56,11 +56,11 @@ public class BookingSearchAdapter<C: Cache>: NSObject, UITableViewDelegate, UITa
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let booking = list?[indexPath.row] else { return }
         
-        _cache.remove(request: BookingListRequest(id: booking.id))
-        
-        _cache.put(model: booking)
-        
-        delegate?.searchBookingTapped(booking)
+//        _cache.remove(request: BookingListRequest(id: booking.id))
+//        
+//        _cache.put(model: booking)
+//        
+//        delegate?.searchBookingTapped(booking)
     }
 }
 

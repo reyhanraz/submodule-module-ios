@@ -503,7 +503,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     @objc func artisanTapped() {
         guard let artisan = _booking?.artisan else { return }
         
-        delegate?.viewArtisan(artisan: artisan)
+//        delegate?.viewArtisan(artisan: artisan)
     }
     
     @objc func copyRefundCode() {
@@ -517,12 +517,12 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     @objc func complaintTapped() {
         guard let booking = _booking else { return }
         
-        let controller = PostComplaintViewController(id: booking.id)
-        controller.delegate = self
-        
-        let sheetController = SheetViewController(controller: controller)
-        
-        present(sheetController, animated: false, completion: nil)
+//        let controller = PostComplaintViewController(id: booking.id)
+//        controller.delegate = self
+//        
+//        let sheetController = SheetViewController(controller: controller)
+//        
+//        present(sheetController, animated: false, completion: nil)
     }
     
     @objc func reviewTapped() {
@@ -530,7 +530,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             let booking = _booking,
             let artisan = booking.artisan else { return }
         
-        delegate?.showRating(controller: self, booking: booking, artisan: artisan)
+//        delegate?.showRating(controller: self, booking: booking, artisan: artisan)
     }
     
     @objc func editTapped() {
@@ -549,7 +549,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             
             var params : [String : Any] = [
                 EventParams.bookingId.rawValue: self._id,
-                EventParams.bookingStatus.rawValue: booking.status.rawValue
+                EventParams.bookingStatus.rawValue: booking.bookingStatus?.id.rawValue
             ]
             
             if let artisan = booking.artisan {
@@ -560,11 +560,11 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             
             let yes = UIAlertAction(title: "yes".l10n(), style: .destructive) { _ in
                 
-                booking.status = .canceledByCustomer
+                booking.bookingStatus?.id = .canceledByCustomer
                 
                 self.trackEvent(name: EventNames.cancelCustomRequestFinished.rawValue, extraParams: params)
                 
-                self._updateViewModel.execute(request: (BookingListRequest(statuses: [.canceledByCustomer], bookingType: .booking, id: booking.id, artisanId: booking.artisan?.id), nil))
+//                self._updateViewModel.execute(request: (BookingListRequest(statuses: [.canceledByCustomer], bookingType: .booking, id: booking.id, artisanId: booking.artisan?.id), nil))
             }
             
             let cancel = UIAlertAction(title: "close".l10n(), style: .cancel)
@@ -597,39 +597,39 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     }
     
     @objc func cancel(_ view: UIButton) {
-        guard let booking = _booking else { return }
-        
-        let status: Booking.Status
-        
-        if _userKind == .artisan {
-            status = .canceledByCustomer
-        } else {
-            status = .canceledByArtisan
-        }
-        
-        trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: status, confirmation: false)
-        
-        let alert = UIAlertController(title: nil,
-                                      message: "cancel_booking_message".l10n(),
-                                      preferredStyle: .actionSheet)
-        
-        let update = UIAlertAction(title: "cancel_booking".l10n().capitalized, style: .destructive) { _ in
-            booking.status = status
-            
-            self._updateViewModel.execute(request: (
-                                            bookingListRequest: BookingListRequest(statuses: [booking.status],
-                                                                                   bookingType: .booking,
-                                                                                   id: booking.id,
-                                                                                   artisanId: booking.artisan?.id),
-                                            checkAvailabilityRequest: nil))
-        }
-        
-        let cancel = UIAlertAction(title: "close".l10n(), style: .cancel)
-        
-        alert.addAction(update)
-        alert.addAction(cancel)
-        
-        present(alert, animated: true, completion: nil)
+//        guard let booking = _booking else { return }
+//
+//        let status: Booking.Status
+//
+//        if _userKind == .artisan {
+//            status = .canceledByCustomer
+//        } else {
+//            status = .canceledByArtisan
+//        }
+//
+//        trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: status, confirmation: false)
+//
+//        let alert = UIAlertController(title: nil,
+//                                      message: "cancel_booking_message".l10n(),
+//                                      preferredStyle: .actionSheet)
+//
+//        let update = UIAlertAction(title: "cancel_booking".l10n().capitalized, style: .destructive) { _ in
+//            booking.bookingStatus.id = status
+//
+//            self._updateViewModel.execute(request: (
+//                bookingListRequest: BookingListRequest(statuses: [booking.bookingStatus.id],
+//                                                                                   bookingType: .booking,
+//                                                                                   id: booking.id,
+//                                                                                   artisanId: booking.artisan?.id),
+//                                            checkAvailabilityRequest: nil))
+//        }
+//
+//        let cancel = UIAlertAction(title: "close".l10n(), style: .cancel)
+//
+//        alert.addAction(update)
+//        alert.addAction(cancel)
+//
+//        present(alert, animated: true, completion: nil)
     }
     
     @objc func updateStatus(_ button: UIButton) {
@@ -651,28 +651,29 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             present(alert, animated: true, completion: nil)
             
             return
-        } else if booking.nextBookingStatus == .bid && !booking.hasBid {
-            let dialogView = bidRequestDialogView
-            
-            if !view.subviews.contains(dialogView) {
-                view.addSubview(dialogView)
-                
-                NSLayoutConstraint.activate([
-                    dialogView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    dialogView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    dialogView.topAnchor.constraint(equalTo: view.topAnchor),
-                    dialogView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-                ])
-            }
-            
-            dialogView.price = booking.totalPrice.doubleValue
-            
-            dialogView.show(isShow: true, completion: { _ in
-                dialogView.firstResponder = true
-            })
-            
-            return
         }
+//            else if booking.nextBookingStatus == .bid && !booking.hasBid {
+//            let dialogView = bidRequestDialogView
+//            
+//            if !view.subviews.contains(dialogView) {
+//                view.addSubview(dialogView)
+//                
+//                NSLayoutConstraint.activate([
+//                    dialogView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//                    dialogView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//                    dialogView.topAnchor.constraint(equalTo: view.topAnchor),
+//                    dialogView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//                ])
+//            }
+//            
+//            dialogView.price = booking.totalPrice.doubleValue
+//            
+//            dialogView.show(isShow: true, completion: { _ in
+//                dialogView.firstResponder = true
+//            })
+//            
+//            return
+//        }
         
         if button.tag == Booking.Status.canceledByCustomer.rawValue {
             message = "cancel_booking_message".l10n()
@@ -685,7 +686,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             style = .default
         }
         
-        trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.nextBookingStatus, confirmation: false)
+//        trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.nextBookingStatus, confirmation: false)
         
         showConfirmationAlert(message: message, style: style, buttonTitle: button.titleLabel?.text, booking: booking, statusId: button.tag, bidPrice: nil)
     }
@@ -702,14 +703,14 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     
     // MARK: - PostComplaintViewControllerDelegate
     func complaintDidSend(id: Int, reason: String) {
-        guard let viewController = presentedViewController as? SheetViewController, let booking = _booking else { return }
-        
-        viewController.closeSheet()
-        
-        booking.status = .complaint
-        //TODO: Handle Update Booking
+//        guard let viewController = presentedViewController as? SheetViewController, let booking = _booking else { return }
+//
+//        viewController.closeSheet()
+//
+//        booking.status = .complaint
+//        //TODO: Handle Update Booking
 //        _cache?.update(model: booking)
-        loadData()
+//        loadData()
         
     }
     
@@ -721,29 +722,29 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     func acceptBid(view: BookingUserView, from artisan: Artisan) {
         guard let booking = _booking else { return }
         
-        let params : [String : Any] = [
-            EventParams.bookingId.rawValue: booking.id,
-            EventParams.customerId.rawValue: booking.customer.id,
-            EventParams.bookingStatus.rawValue: booking.status.rawValue,
-            EventParams.artisanId.rawValue: artisan.id
-        ]
-        
-        trackEvent(name: EventNames.acceptCustomRequestConfirmation.rawValue, extraParams: params)
-        
-        let alert = UIAlertController(title: "accept_bid".l10n(),
-                                      message: "accept_bid_from_x_confirmation".l10n(args: [artisan.name]),
-                                      preferredStyle: .actionSheet)
-        
-        let accept = UIAlertAction(title: "accept".l10n(), style: .default) { _ in
-            self._acceptedArtisan = artisan
-            self._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: artisan.id, refund: false))
-        }
-        
-        alert.addAction(accept)
-        
-        alert.addAction(UIAlertAction(title: "cancel".l10n(), style: .cancel))
-        
-        present(alert, animated: true, completion: nil)
+//        let params : [String : Any] = [
+//            EventParams.bookingId.rawValue: booking.id,
+//            EventParams.customerId.rawValue: booking.customer.id,
+//            EventParams.bookingStatus.rawValue: booking.status.rawValue,
+//            EventParams.artisanId.rawValue: artisan.id
+//        ]
+//
+//        trackEvent(name: EventNames.acceptCustomRequestConfirmation.rawValue, extraParams: params)
+//
+//        let alert = UIAlertController(title: "accept_bid".l10n(),
+//                                      message: "accept_bid_from_x_confirmation".l10n(args: [artisan.name]),
+//                                      preferredStyle: .actionSheet)
+//
+//        let accept = UIAlertAction(title: "accept".l10n(), style: .default) { _ in
+//            self._acceptedArtisan = artisan
+//            self._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: artisan.id, refund: false))
+//        }
+//
+//        alert.addAction(accept)
+//
+//        alert.addAction(UIAlertAction(title: "cancel".l10n(), style: .cancel))
+//
+//        present(alert, animated: true, completion: nil)
     }
     
     func showContactOptions(name: String, phone: String) {
@@ -793,65 +794,65 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     public func checkoutSuccess() {
         guard let booking = _booking else { return }
         
-        if let artisan = _acceptedArtisan, booking.isCustom {
-            dismiss(animated: true)
-            
-            let alert = UIAlertController(title: "payment_success".l10n(),
-                                          message: "bid_from_x_has_been_fully_paid".l10n(args: [artisan.name]),
-                                          preferredStyle: .alert)
-            
-            let ok = UIAlertAction(title: "ok".l10n(), style: .default)
-            
-            alert.addAction(ok)
-            
-            present(alert, animated: true)
-            
-            let params : [String : Any] = [
-                EventParams.bookingId.rawValue: booking.id,
-                EventParams.customerId.rawValue: booking.customer.id,
-                EventParams.bookingStatus.rawValue: booking.status.rawValue,
-                EventParams.artisanId.rawValue: booking.artisan?.id ?? 0
-            ]
-            
-            trackEvent(name: EventNames.acceptCustomRequestFinished.rawValue, extraParams: params)
-            
-            bidderStackView.arrangedSubviews.forEach { view in
-                UIView.animate(withDuration: 0.3) {
-                    if view.tag == artisan.id, let bidderView = view as? BookingUserView {
-                        bidderView.accept = true
-                        self.lblStatus.text = "accepted".l10n()
-                        self.lblBookingStatus.alpha = 0.0
-                        self.serviceSummaryView.lblTotalBookingFees.price = bidderView.price
-                    } else {
-                        view.isHidden = true
-                        view.alpha = 0.0
-                        
-                        self.bidderStackView.layoutIfNeeded()
-                    }
-                }
-            }
-            
-            delegate?.statusUpdated(booking: booking)
-            
-        } else if !booking.isCustom {
-            let controller = BookingSuccessViewController(booking: booking)
-            
-            controller.title = "payment_success".l10n()
-            
-            let navigationController = UINavigationController(rootViewController: controller)
-            
-            navigationController.modalPresentationStyle = .fullScreen
-            
-            visibleController?.present(navigationController, animated: true)
-            
-            booking.paymentStatus = .paid
-            
-            showDetail(booking)
-            //TODO: Handle Update Booking Status
-//            _cache?.update(model: booking)
-            
-            delegate?.paymentUpdated(booking: booking)
-        }
+//        if let artisan = _acceptedArtisan, booking.isCustom {
+//            dismiss(animated: true)
+//
+//            let alert = UIAlertController(title: "payment_success".l10n(),
+//                                          message: "bid_from_x_has_been_fully_paid".l10n(args: [artisan.name]),
+//                                          preferredStyle: .alert)
+//
+//            let ok = UIAlertAction(title: "ok".l10n(), style: .default)
+//
+//            alert.addAction(ok)
+//
+//            present(alert, animated: true)
+//
+//            let params : [String : Any] = [
+//                EventParams.bookingId.rawValue: booking.id,
+//                EventParams.customerId.rawValue: booking.customer.id,
+//                EventParams.bookingStatus.rawValue: booking.status.rawValue,
+//                EventParams.artisanId.rawValue: booking.artisan?.id ?? 0
+//            ]
+//
+//            trackEvent(name: EventNames.acceptCustomRequestFinished.rawValue, extraParams: params)
+//
+//            bidderStackView.arrangedSubviews.forEach { view in
+//                UIView.animate(withDuration: 0.3) {
+//                    if view.tag == artisan.id, let bidderView = view as? BookingUserView {
+//                        bidderView.accept = true
+//                        self.lblStatus.text = "accepted".l10n()
+//                        self.lblBookingStatus.alpha = 0.0
+//                        self.serviceSummaryView.lblTotalBookingFees.price = bidderView.price
+//                    } else {
+//                        view.isHidden = true
+//                        view.alpha = 0.0
+//
+//                        self.bidderStackView.layoutIfNeeded()
+//                    }
+//                }
+//            }
+//
+//            delegate?.statusUpdated(booking: booking)
+//
+//        } else if !booking.isCustom {
+//            let controller = BookingSuccessViewController(booking: booking)
+//
+//            controller.title = "payment_success".l10n()
+//
+//            let navigationController = UINavigationController(rootViewController: controller)
+//
+//            navigationController.modalPresentationStyle = .fullScreen
+//
+//            visibleController?.present(navigationController, animated: true)
+//
+//            booking.paymentStatus = .paid
+//
+//            showDetail(booking)
+//            //TODO: Handle Update Booking Status
+////            _cache?.update(model: booking)
+//
+//            delegate?.paymentUpdated(booking: booking)
+//        }
     }
     
     public func checkoutFailed() {
@@ -866,9 +867,9 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     func continueBid(price: Double?) {
         guard let booking = _booking else { return }
         
-        trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.nextBookingStatus, confirmation: false)
+//        trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.nextBookingStatus, confirmation: false)
         
-        booking.status = booking.nextBookingStatus
+//        booking.status = booking.nextBookingStatus
         
         showConfirmationAlert(message: "confirm_booking_status_update_message".l10n(args: ["bid".l10n()]), style: .default, buttonTitle: "bid".l10n(), booking: booking, statusId: Booking.Status.open.rawValue, bidPrice: price)
     }
@@ -916,11 +917,11 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             strongSelf.showPaymentSummary(detail.data?.paymentSummary)
             strongSelf.showDetail(booking)
             
-            if booking.showPayment {
-                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: false))
-            } else if detail.data?.paymentSummary?.isRefundable == true {
-                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: true))
-            }
+//            if booking.showPayment {
+//                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: false))
+//            } else if detail.data?.paymentSummary?.isRefundable == true {
+//                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: true))
+//            }
             
         }).disposed(by: disposeBag)
         
@@ -940,7 +941,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
         _updateViewModel.failed.drive(onNext: { [weak self] error in
             guard let strongSelf = self, let booking = strongSelf._booking else { return }
             
-            booking.status = booking.revertBookingStatus
+//            booking.status = booking.revertBookingStatus
             
             let alert = UIAlertController(title: "information".l10n(),
                                           message: "unable_to_update_booking_status".l10n(),
@@ -956,61 +957,61 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
         _updateViewModel.exception.drive(onNext: { [weak self] error in
             guard let strongSelf = self, let booking = strongSelf._booking else { return }
             
-            let params : [String : Any] = [
-                EventParams.bookingId.rawValue: booking.id,
-                EventParams.customerId.rawValue: booking.customer.id,
-                EventParams.bookingStatus.rawValue: booking.status.rawValue
-            ]
-            
-            booking.status = booking.revertBookingStatus
-            
-            if let _ = error as? StatusError {
-                
-                strongSelf.trackEvent(name: booking.isRequestNotAccepted ? EventNames.bidCustomRequestClashConfirmation.rawValue : EventNames.confirmBookingScheduleClashConfirmation.rawValue, extraParams: params)
-                
-                let alert = UIAlertController(title: "information".l10n(),
-                                              message: "check_availability_schedule".l10n(args: [
-                                                                                            booking.start.toFullDate,
-                                                                                            booking.nextBookingAction.lowercased(),
-                                                                                            booking.isRequestNotAccepted ? "request".l10n().lowercased() : "booking".l10n().lowercased()]),
-                                              preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "check_schedule".l10n(), style: .default, handler: { _ in
-                    strongSelf.trackEvent(name: EventNames.checkCalendar.rawValue, extraParams: params)
-                    
-                    strongSelf.delegate?.showCalendar(date: booking.start)
-                }))
-                
-                alert.addAction(UIAlertAction(title: booking.nextBookingAction, style: .default, handler: { _ in
-                    booking.status = booking.nextBookingStatus
-                    
-                    strongSelf.trackEvent(name: booking.isRequestNotAccepted ? EventNames.bidCustomRequestClashProceed.rawValue : EventNames.confirmBookingScheduleClashProceed.rawValue, extraParams: params)
-                    
-                    strongSelf._updateViewModel.execute(request: (
-                                                            bookingListRequest: BookingListRequest(statuses: [booking.status],
-                                                                                                   bookingType: booking.isRequestNotAccepted ? .customizeRequest : .booking,
-                                                                                                   id: booking.id,
-                                                                                                   artisanId: booking.artisan?.id),
-                                                            checkAvailabilityRequest: nil)
-                    )
-                }))
-                
-                alert.addAction(UIAlertAction(title: "cancel".l10n(), style: .cancel, handler: { _ in
-                    strongSelf.trackEvent(name: booking.isRequestNotAccepted ? EventNames.bidCustomRequestClashCancel.rawValue : EventNames.confirmBookingScheduleClashCancel.rawValue, extraParams: params)
-                }))
-                
-                strongSelf.present(alert, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertController(title: "update_failed".l10n(),
-                                              message: "update_error_message".l10n(),
-                                              preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "ok".l10n(), style: .default))
-                
-                strongSelf.present(alert, animated: true, completion: nil)
-            }
-            
-            strongSelf.updateButton()
+//            let params : [String : Any] = [
+//                EventParams.bookingId.rawValue: booking.id,
+//                EventParams.customerId.rawValue: booking.customer.id,
+//                EventParams.bookingStatus.rawValue: booking.status.rawValue
+//            ]
+//
+//            booking.status = booking.revertBookingStatus
+//
+//            if let _ = error as? StatusError {
+//
+//                strongSelf.trackEvent(name: booking.isRequestNotAccepted ? EventNames.bidCustomRequestClashConfirmation.rawValue : EventNames.confirmBookingScheduleClashConfirmation.rawValue, extraParams: params)
+//
+//                let alert = UIAlertController(title: "information".l10n(),
+//                                              message: "check_availability_schedule".l10n(args: [
+//                                                                                            booking.start.toFullDate,
+//                                                                                            booking.nextBookingAction.lowercased(),
+//                                                                                            booking.isRequestNotAccepted ? "request".l10n().lowercased() : "booking".l10n().lowercased()]),
+//                                              preferredStyle: .alert)
+//
+//                alert.addAction(UIAlertAction(title: "check_schedule".l10n(), style: .default, handler: { _ in
+//                    strongSelf.trackEvent(name: EventNames.checkCalendar.rawValue, extraParams: params)
+//
+//                    strongSelf.delegate?.showCalendar(date: booking.start)
+//                }))
+//
+//                alert.addAction(UIAlertAction(title: booking.nextBookingAction, style: .default, handler: { _ in
+//                    booking.status = booking.nextBookingStatus
+//
+//                    strongSelf.trackEvent(name: booking.isRequestNotAccepted ? EventNames.bidCustomRequestClashProceed.rawValue : EventNames.confirmBookingScheduleClashProceed.rawValue, extraParams: params)
+//
+//                    strongSelf._updateViewModel.execute(request: (
+//                                                            bookingListRequest: BookingListRequest(statuses: [booking.status],
+//                                                                                                   bookingType: booking.isRequestNotAccepted ? .customizeRequest : .booking,
+//                                                                                                   id: booking.id,
+//                                                                                                   artisanId: booking.artisan?.id),
+//                                                            checkAvailabilityRequest: nil)
+//                    )
+//                }))
+//
+//                alert.addAction(UIAlertAction(title: "cancel".l10n(), style: .cancel, handler: { _ in
+//                    strongSelf.trackEvent(name: booking.isRequestNotAccepted ? EventNames.bidCustomRequestClashCancel.rawValue : EventNames.confirmBookingScheduleClashCancel.rawValue, extraParams: params)
+//                }))
+//
+//                strongSelf.present(alert, animated: true, completion: nil)
+//            } else {
+//                let alert = UIAlertController(title: "update_failed".l10n(),
+//                                              message: "update_error_message".l10n(),
+//                                              preferredStyle: .alert)
+//
+//                alert.addAction(UIAlertAction(title: "ok".l10n(), style: .default))
+//
+//                strongSelf.present(alert, animated: true, completion: nil)
+//            }
+//
+//            strongSelf.updateButton()
             
         }).disposed(by: disposeBag)
         
@@ -1023,49 +1024,49 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             
             strongSelf._booking = booking
             
-            strongSelf.lblStatus.text = booking.bookingStatusDetailed
+//            strongSelf.lblStatus.text = booking.bookingStatusDetailed
+//
+//            if booking.status.isCanceled && booking.paymentStatus != .refunded {
+//                booking.paymentStatus = .toRefund
+//                //TODO: Handle Update Booking Row
+////                strongSelf._cache?.update(model: booking)
+//                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: true))
+//
+//                strongSelf.serviceSummaryView.booking = booking
+//                strongSelf.btnRefund.isHidden = strongSelf._userKind == .customer
+//            }
+//
+//            strongSelf.updateButton()
+//
+//            let message: String
+//
+//            if statuses[0] == .canceledByArtisan && booking.isRequestNotAccepted && booking.status == .bid {
+//                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: .canceledByArtisan, confirmation: true)
+//
+//                message = "bid_x_canceled".l10n(args: [booking.invoice])
+//            } else if statuses[0] == .canceledByCustomer && booking.isRequestNotAccepted {
+//                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: .canceledByCustomer, confirmation: true)
+//
+//                message = "bid_x_canceled".l10n(args: [booking.invoice])
+//            } else if booking.status == .bid {
+//                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.status, confirmation: true)
+//
+//                message = "you_have_successfully_bid_x".l10n(args: [booking.invoice])
+//            } else {
+//                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.status, confirmation: true)
+//
+//                message = "booking_with_x_status_x".l10n(args: [booking.invoice, booking.bookingStatus.lowercased()])
+//            }
             
-            if booking.status.isCanceled && booking.paymentStatus != .refunded {
-                booking.paymentStatus = .toRefund
-                //TODO: Handle Update Booking Row
-//                strongSelf._cache?.update(model: booking)
-                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: true))
-                
-                strongSelf.serviceSummaryView.booking = booking
-                strongSelf.btnRefund.isHidden = strongSelf._userKind == .customer
-            }
-            
-            strongSelf.updateButton()
-            
-            let message: String
-            
-            if statuses[0] == .canceledByArtisan && booking.isRequestNotAccepted && booking.status == .bid {
-                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: .canceledByArtisan, confirmation: true)
-                
-                message = "bid_x_canceled".l10n(args: [booking.invoice])
-            } else if statuses[0] == .canceledByCustomer && booking.isRequestNotAccepted {
-                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: .canceledByCustomer, confirmation: true)
-                
-                message = "bid_x_canceled".l10n(args: [booking.invoice])
-            } else if booking.status == .bid {
-                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.status, confirmation: true)
-                
-                message = "you_have_successfully_bid_x".l10n(args: [booking.invoice])
-            } else {
-                strongSelf.trackBookingStatusUpdate(id: booking.id, customerId: booking.customer.id, status: booking.status, confirmation: true)
-                
-                message = "booking_with_x_status_x".l10n(args: [booking.invoice, booking.bookingStatus.lowercased()])
-            }
-            
-            let alert = UIAlertController(title: "booking_status".l10n(),
-                                          message: message,
-                                          preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "ok".l10n(), style: .default))
-            
-            strongSelf.present(alert, animated: true, completion: nil)
-            
-            strongSelf.delegate?.statusUpdated(booking: booking)
+//            let alert = UIAlertController(title: "booking_status".l10n(),
+//                                          message: message,
+//                                          preferredStyle: .alert)
+//
+//            alert.addAction(UIAlertAction(title: "ok".l10n(), style: .default))
+//
+//            strongSelf.present(alert, animated: true, completion: nil)
+//
+//            strongSelf.delegate?.statusUpdated(booking: booking)
             
         }).disposed(by: disposeBag)
         
@@ -1120,44 +1121,44 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             
             let checkAvailabilityRequest: CheckAvailabilityRequest?
             
-            if statusId == Booking.Status.canceledByCustomer.rawValue {
-                booking.status = .canceledByCustomer
-                checkAvailabilityRequest = nil
-            } else if statusId == Booking.Status.canceledByArtisan.rawValue {
-                booking.status = .canceledByArtisan
-                checkAvailabilityRequest = nil
-            } else {
-                booking.status = booking.nextBookingStatus
-                
-                if booking.status == .confirmed || booking.status == .bid {
-                    if !booking.isCustom && booking.status == .confirmed {
-                        checkAvailabilityRequest = CheckAvailabilityRequest(
-                            artisanId: booking.artisan?.id ?? 0,
-                            timeStart: booking.start.toUTC,
-                            serviceRequests: booking.serviceIdAndQuantities?.map({ CheckAvailabilityRequest.ServiceRequest(serviceId: $0.serviceId, quantity: $0.quantity) }),
-                            customRequestServiceRequests: nil)
-                    } else {
-                        checkAvailabilityRequest = CheckAvailabilityRequest(
-                            artisanId: booking.artisan?.id ?? self._preference.userId,
-                            timeStart: booking.start.toUTC,
-                            serviceRequests: nil,
-                            customRequestServiceRequests: [CheckAvailabilityRequest.CustomRequestServiceRequest(
-                                                            categoryTypeId: booking.customizeRequestServices?.first?.serviceId ?? 0,
-                                                            quantity: booking.customizeRequestServices?.first?.quantity ?? 0)])
-                        
-                    }
-                } else {
-                    checkAvailabilityRequest = nil
-                }
-            }
-            
-            self._updateViewModel.execute(request: (
-                                            bookingListRequest: BookingListRequest(statuses: [booking.status],
-                                                                                   bookingType: isRequestNotAccepted ? .customizeRequest : .booking,
-                                                                                   id: booking.id,
-                                                                                   artisanId: booking.artisan?.id,
-                                                                                   bidPrice: bidPrice),
-                                            checkAvailabilityRequest: checkAvailabilityRequest))
+//            if statusId == Booking.Status.canceledByCustomer.rawValue {
+//                booking.status = .canceledByCustomer
+//                checkAvailabilityRequest = nil
+//            } else if statusId == Booking.Status.canceledByArtisan.rawValue {
+//                booking.status = .canceledByArtisan
+//                checkAvailabilityRequest = nil
+//            } else {
+//                booking.status = booking.nextBookingStatus
+//
+//                if booking.status == .confirmed || booking.status == .bid {
+//                    if !booking.isCustom && booking.status == .confirmed {
+//                        checkAvailabilityRequest = CheckAvailabilityRequest(
+//                            artisanId: booking.artisan?.id ?? 0,
+//                            timeStart: booking.start.toUTC,
+//                            serviceRequests: booking.serviceIdAndQuantities?.map({ CheckAvailabilityRequest.ServiceRequest(serviceId: $0.serviceId, quantity: $0.quantity) }),
+//                            customRequestServiceRequests: nil)
+//                    } else {
+//                        checkAvailabilityRequest = CheckAvailabilityRequest(
+//                            artisanId: booking.artisan?.id ?? self._preference.userId,
+//                            timeStart: booking.start.toUTC,
+//                            serviceRequests: nil,
+//                            customRequestServiceRequests: [CheckAvailabilityRequest.CustomRequestServiceRequest(
+//                                                            categoryTypeId: booking.customizeRequestServices?.first?.serviceId ?? 0,
+//                                                            quantity: booking.customizeRequestServices?.first?.quantity ?? 0)])
+//
+//                    }
+//                } else {
+//                    checkAvailabilityRequest = nil
+//                }
+//            }
+//
+//            self._updateViewModel.execute(request: (
+//                                            bookingListRequest: BookingListRequest(statuses: [booking.status],
+//                                                                                   bookingType: isRequestNotAccepted ? .customizeRequest : .booking,
+//                                                                                   id: booking.id,
+//                                                                                   artisanId: booking.artisan?.id,
+//                                                                                   bidPrice: bidPrice),
+//                                            checkAvailabilityRequest: checkAvailabilityRequest))
         }
         
         let cancel = UIAlertAction(title: "close".l10n(), style: .cancel)
@@ -1192,31 +1193,31 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             btnRefund.isHidden = true
             btnUpdateStatus.isHidden = true
             btnCancel.isHidden = !booking.isCancelable
-            btnReview.isHidden = booking.status != .completed
-            btnComplaint.isHidden = booking.status != .completed || booking.hasReview
+//            btnReview.isHidden = booking.status != .completed
+//            btnComplaint.isHidden = booking.status != .completed || booking.hasReview
             
             btnReview.isEnabled = !booking.hasReview
             
-            if booking.status == .complaint || booking.hasReview{
-                btnReview.isHidden = true
-                btnComplaint.isHidden = true
-            }
-                        
-            if booking.status == .open || booking.status == .bid{
-                lblBookingStatus.text = booking.bookingStatus
-            } else {
-                _stackViewTopConstraint.constant =  -(lblBookingStatus.frame.height+7)
-                lblBookingStatus.isHidden = true
-                btnUpdateStatus.isHidden = true
-            }
-          
-            if booking.showPayment {
-                btnRefund.isHidden = true
-                btnPayment.isHidden = false
-            } else if _paymentSummary?.isRefundable == true {
-                btnPayment.isHidden = true
-                btnRefund.isHidden = false
-            }
+//            if booking.status == .complaint || booking.hasReview{
+//                btnReview.isHidden = true
+//                btnComplaint.isHidden = true
+//            }
+//
+//            if booking.status == .open || booking.status == .bid{
+//                lblBookingStatus.text = booking.bookingStatus
+//            } else {
+//                _stackViewTopConstraint.constant =  -(lblBookingStatus.frame.height+7)
+//                lblBookingStatus.isHidden = true
+//                btnUpdateStatus.isHidden = true
+//            }
+//
+//            if booking.showPayment {
+//                btnRefund.isHidden = true
+//                btnPayment.isHidden = false
+//            } else if _paymentSummary?.isRefundable == true {
+//                btnPayment.isHidden = true
+//                btnRefund.isHidden = false
+//            }
           
             let moreButton = UIImage(named: "ic_more", bundle: CustomButton.self)
 
@@ -1227,67 +1228,67 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             lblBookingStatus.isHidden = true
             btnUpdateStatus.isEnabled = true
             btnUpdateStatus.isHidden = false
-            btnUpdateStatus.text = booking.nextBookingAction
+//            btnUpdateStatus.text = booking.nextBookingAction
             btnReview.isHidden = true
             btnComplaint.isHidden = true
             btnCancel.isHidden = !booking.isCancelableByArtisan
             
             _stackViewTopConstraint.constant =  -(lblBookingStatus.frame.height+7)
             
-            if booking.status == .booking{
-                btnCancel.text = "reject".l10n()
-            }else if booking.status == .confirmed{
-                btnCancel.text = "cancel".l10n()
-            }
-            
-            if booking.status.isCompleted || booking.status.isComplained || booking.status.isCanceled || booking.alreadyBid {
-                btnUpdateStatus.isHidden = true
-            } else if booking.isExpired {
-                btnUpdateStatus.isEnabled = false
-            }
+//            if booking.status == .booking{
+//                btnCancel.text = "reject".l10n()
+//            }else if booking.status == .confirmed{
+//                btnCancel.text = "cancel".l10n()
+//            }
+//
+//            if booking.status.isCompleted || booking.status.isComplained || booking.status.isCanceled || booking.alreadyBid {
+//                btnUpdateStatus.isHidden = true
+//            } else if booking.isExpired {
+//                btnUpdateStatus.isEnabled = false
+//            }
         }
         
         venueView.booking = booking
     }
     
     private func showDetail(_ detail: Booking) {
-        _booking = detail
-        
-        let text = "booking_id_x".l10n(args: [detail.invoice])
-        let attributedString = NSMutableAttributedString(string: text)
-        
-        let ranges = text.ranges(of: "booking_id_colon".l10n())
-        
-        ranges.forEach {
-            attributedString.addAttributes([.foregroundColor: UIColor.BeautyBell.gray500], range: NSRange($0, in: text))
-        }
-        
-        btnUpdateStatus.isHidden = false
-        lblBookingID.attributedText = attributedString
-        lblDate.text = detail.createdAt.toMediumDate
-        lblStatus.text = detail.bookingStatusDetailed
-        
-        if _userKind == .artisan {
-            profileView.isHidden = detail.artisan == nil
-            
-            profileView.artisan = detail.artisan
-        } else {
-            profileView.customer = detail.customer
-        }
-        
-        reviewView.isHidden = !detail.hasReview
-        reviewView.review = detail.review
-        complaintView.isHidden = detail.status != .complaint
-        complaintView.complaint = detail.complaint
-        
-        venueView.booking = detail
-        serviceSummaryView.booking = detail
-        
-        updateButton()
-        
-        if _bidderList == nil, detail.status == .bid && _userKind == .artisan {
-            _bidderViewModel.execute(request: detail.id)
-        }
+//        _booking = detail
+//
+//        let text = "booking_id_x".l10n(args: [detail.invoice])
+//        let attributedString = NSMutableAttributedString(string: text)
+//
+//        let ranges = text.ranges(of: "booking_id_colon".l10n())
+//
+//        ranges.forEach {
+//            attributedString.addAttributes([.foregroundColor: UIColor.BeautyBell.gray500], range: NSRange($0, in: text))
+//        }
+//
+//        btnUpdateStatus.isHidden = false
+//        lblBookingID.attributedText = attributedString
+//        lblDate.text = detail.createdAt.toMediumDate
+//        lblStatus.text = detail.bookingStatusDetailed
+//
+//        if _userKind == .artisan {
+//            profileView.isHidden = detail.artisan == nil
+//
+//            profileView.artisan = detail.artisan
+//        } else {
+//            profileView.customer = detail.customer
+//        }
+//
+//        reviewView.isHidden = !detail.hasReview
+//        reviewView.review = detail.review
+//        complaintView.isHidden = detail.status != .complaint
+//        complaintView.complaint = detail.complaint
+//
+//        venueView.booking = detail
+//        serviceSummaryView.booking = detail
+//
+//        updateButton()
+//
+//        if _bidderList == nil, detail.status == .bid && _userKind == .artisan {
+//            _bidderViewModel.execute(request: detail.id)
+//        }
     }
     
     private func showPaymentSummary(_ paymentSummary: PaymentSummary?) {

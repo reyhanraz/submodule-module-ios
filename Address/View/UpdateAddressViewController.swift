@@ -322,13 +322,13 @@ public class UpdateAddressViewController: RxViewController, LabelTextFieldDelega
     private func setAddress(_ address: Address) {
        
         edtAddressName.text = address.name
-        edtAddressDetail.text = address.detail
-        edtProvince.text = address.provinceName
-        edtDistrict.text = address.districtName
-        edtSubDistrict.text = address.villageAndSubDistrict
-        edtPostalCode.text = address.postalCode
-        
-        edtProvince.selectionId = address.areaId
+//        edtAddressDetail.text = address.detail
+//        edtProvince.text = address.provinceName
+//        edtDistrict.text = address.districtName
+//        edtSubDistrict.text = address.villageAndSubDistrict
+//        edtPostalCode.text = address.postalCode
+//        
+//        edtProvince.selectionId = address.areaId
         
         locationMapView.layoutIfNeeded()
         

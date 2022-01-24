@@ -187,58 +187,58 @@ public class BookingView: UIView {
     
     public func setBooking(booking: Booking, kind: User.Kind) {
         
-        lineView.backgroundColor = booking.status.color
-        statusSeparatorView.backgroundColor = lineView.backgroundColor
-        
-        layer.borderColor = lineView.backgroundColor?.cgColor
-        
-        lblBookingStatus.textColor = lineView.backgroundColor
-        lblEventName.text = booking.eventName
-        lblBookingID.text = booking.invoice
-        lblBookingTime.text = booking.start.toString(format: "E dd MMM yyyy, HH:mm")
-        lblServiceType.text = booking.serviceTypes
-        lblPaymentStatus.text = booking.paymentStatusName
-
-        if booking.status == .bid && booking.hasBid {
-            let text = booking.bookingStatus
-            let attributedString = NSMutableAttributedString(string: text)
-            
-            let ranges = text.ranges(of: "by_you".l10n())
-            
-            ranges.forEach {
-                attributedString.addAttributes([.foregroundColor: UIColor.BeautyBell.gray500, .font: regularBody2], range: NSRange($0, in: text))
-            }
-            
-            lblBookingStatus.attributedText = attributedString
-        } else {
-            lblBookingStatus.text = booking.bookingStatus
-        }
-
-        if kind == .artisan {
-            if booking.artisan == nil {
-                lblName.isHidden = true
-                imgAvatar.isHidden = true
-                ratingView.isHidden = true
-            } else {
-                lblName.isHidden = false
-                imgAvatar.isHidden = false
-                ratingView.isHidden = false
-                
-                lblName.text = booking.artisan?.name
-                imgAvatar.loadMedia(url: booking.artisan?.avatar?.small, failure: UIImage(named: "Avatar", bundle: LogoView.self))
-                ratingView.rating = booking.artisan?.reviewRating
-            }
-            
-            imgBadge.image = booking.artisan?.badgeImage
-            imgBadge.isHidden = imgBadge.image == nil
-        } else {
-            lblName.text = booking.customer.name
-            imgBadge.isHidden = true
-            imgAvatar.loadMedia(url: booking.customer.avatar?.small, failure: UIImage(named: "Avatar", bundle: LogoView.self))
-            ratingView.isHidden = true
-        }
-        
-        lblTotalBookingFees.price = booking.totalPrice
+//        lineView.backgroundColor = booking.status.color
+//        statusSeparatorView.backgroundColor = lineView.backgroundColor
+//        
+//        layer.borderColor = lineView.backgroundColor?.cgColor
+//        
+//        lblBookingStatus.textColor = lineView.backgroundColor
+//        lblEventName.text = booking.eventName
+//        lblBookingID.text = booking.invoice
+//        lblBookingTime.text = booking.start.toString(format: "E dd MMM yyyy, HH:mm")
+//        lblServiceType.text = booking.serviceTypes
+//        lblPaymentStatus.text = booking.paymentStatusName
+//
+//        if booking.status == .bid && booking.hasBid {
+//            let text = booking.bookingStatus
+//            let attributedString = NSMutableAttributedString(string: text)
+//            
+//            let ranges = text.ranges(of: "by_you".l10n())
+//            
+//            ranges.forEach {
+//                attributedString.addAttributes([.foregroundColor: UIColor.BeautyBell.gray500, .font: regularBody2], range: NSRange($0, in: text))
+//            }
+//            
+//            lblBookingStatus.attributedText = attributedString
+//        } else {
+//            lblBookingStatus.text = booking.bookingStatus
+//        }
+//
+//        if kind == .artisan {
+//            if booking.artisan == nil {
+//                lblName.isHidden = true
+//                imgAvatar.isHidden = true
+//                ratingView.isHidden = true
+//            } else {
+//                lblName.isHidden = false
+//                imgAvatar.isHidden = false
+//                ratingView.isHidden = false
+//                
+//                lblName.text = booking.artisan?.name
+//                imgAvatar.loadMedia(url: booking.artisan?.avatar?.small, failure: UIImage(named: "Avatar", bundle: LogoView.self))
+//                ratingView.rating = booking.artisan?.reviewRating
+//            }
+//            
+//            imgBadge.image = booking.artisan?.badgeImage
+//            imgBadge.isHidden = imgBadge.image == nil
+//        } else {
+//            lblName.text = booking.customer.name
+//            imgBadge.isHidden = true
+//            imgAvatar.loadMedia(url: booking.customer.avatar?.small, failure: UIImage(named: "Avatar", bundle: LogoView.self))
+//            ratingView.isHidden = true
+//        }
+//        
+//        lblTotalBookingFees.price = booking.totalPrice
     }
     
     required init(coder aDecoder: NSCoder) {
