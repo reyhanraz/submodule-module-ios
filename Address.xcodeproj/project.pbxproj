@@ -44,9 +44,9 @@
 
 /* Begin PBXFileReference section */
 		00DFB54ECD58E8B784D736E9 /* Pods_Address.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Address.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A3003ABA9EC6F4A8315E033 /* Pods-Address.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Address.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Address/Pods-Address.release.xcconfig"; sourceTree = "<group>"; };
+		4A3003ABA9EC6F4A8315E033 /* Pods-Address.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Address.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Address/Pods-Address.release.xcconfig"; sourceTree = "<group>"; };
 		687D5E792719798800B4AC2B /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
-		6A99322DAD9ADBC2DF0CAE08 /* Pods-Address.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Address.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Address/Pods-Address.debug.xcconfig"; sourceTree = "<group>"; };
+		6A99322DAD9ADBC2DF0CAE08 /* Pods-Address.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Address.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Address/Pods-Address.debug.xcconfig"; sourceTree = "<group>"; };
 		A75B2A9C22FEEB2A008FB8CB /* ProvinceSQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceSQLCache.swift; sourceTree = "<group>"; };
 		A75B2A9E22FEEB5B008FB8CB /* Province.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Province.swift; sourceTree = "<group>"; };
 		A75B2AA222FEEC21008FB8CB /* ProvinceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceCloudService.swift; sourceTree = "<group>"; };

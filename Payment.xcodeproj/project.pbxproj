@@ -34,7 +34,7 @@
 
 /* Begin PBXFileReference section */
 		597571DFD5551F670103D8AB /* Pods_Payment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Payment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		77D202A68DB2FB5136541126 /* Pods-Payment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payment.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-Payment/Pods-Payment.debug.xcconfig"; sourceTree = "<group>"; };
+		77D202A68DB2FB5136541126 /* Pods-Payment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payment.debug.xcconfig"; path = "Target Support Files/Pods-Payment/Pods-Payment.debug.xcconfig"; sourceTree = "<group>"; };
 		A700E13423E3F2E200C1A907 /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A700E13C23E4252200C1A907 /* GetPayoutURLCLoudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPayoutURLCLoudService.swift; sourceTree = "<group>"; };
 		A700E13E23E4261B00C1A907 /* PayoutSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayoutSummary.swift; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		A78057F323E0176B00666E7A /* GroupedPaymentHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedPaymentHistory.swift; sourceTree = "<group>"; };
 		A78057F623E0178D00666E7A /* PaymentHistoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistoriesViewModel.swift; sourceTree = "<group>"; };
 		A7DDA99723E06B2100BA340E /* PaymentHistorySQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistorySQLCache.swift; sourceTree = "<group>"; };
-		B16BECA385815179684ADCE8 /* Pods-Payment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payment.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-Payment/Pods-Payment.release.xcconfig"; sourceTree = "<group>"; };
+		B16BECA385815179684ADCE8 /* Pods-Payment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payment.release.xcconfig"; path = "Target Support Files/Pods-Payment/Pods-Payment.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A83C6A00A06334107C447D6 /* Pods-EventTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-EventTracking/Pods-EventTracking.debug.xcconfig"; sourceTree = "<group>"; };
+		1A83C6A00A06334107C447D6 /* Pods-EventTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.debug.xcconfig"; path = "Target Support Files/Pods-EventTracking/Pods-EventTracking.debug.xcconfig"; sourceTree = "<group>"; };
 		A7BACA6E237A9D090056B8D0 /* EventTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EventTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BACA71237A9D090056B8D0 /* EventTracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventTracking.h; sourceTree = "<group>"; };
 		A7BACA72237A9D090056B8D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -25,7 +25,7 @@
 		A7BACA86237AA4810056B8D0 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BACA8A237AA4960056B8D0 /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA03BB88BE969065AA4887E9 /* Pods_EventTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED556EB752D774FA005665F7 /* Pods-EventTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-EventTracking/Pods-EventTracking.release.xcconfig"; sourceTree = "<group>"; };
+		ED556EB752D774FA005665F7 /* Pods-EventTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.release.xcconfig"; path = "Target Support Files/Pods-EventTracking/Pods-EventTracking.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

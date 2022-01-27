@@ -23,8 +23,8 @@
 
 /* Begin PBXFileReference section */
 		48257AF99C8C2F9AFD97A848 /* Pods_ChangePassword.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChangePassword.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BEAFE161DE33568EF85714C /* Pods-ChangePassword.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.debug.xcconfig"; sourceTree = "<group>"; };
-		7AC0C54A5C259D19836F103B /* Pods-ChangePassword.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.release.xcconfig"; sourceTree = "<group>"; };
+		5BEAFE161DE33568EF85714C /* Pods-ChangePassword.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.debug.xcconfig"; sourceTree = "<group>"; };
+		7AC0C54A5C259D19836F103B /* Pods-ChangePassword.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.release.xcconfig"; sourceTree = "<group>"; };
 		A748F6DC22E37D1700410436 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		A748F6E022E380CE00410436 /* ChangePasswordViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModelType.swift; sourceTree = "<group>"; };
 		A748F6E222E3811300410436 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
