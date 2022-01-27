@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		24049C62FA65E404BE341A4D /* Pods-GoogleLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleLocation.debug.xcconfig"; path = "Target Support Files/Pods-GoogleLocation/Pods-GoogleLocation.debug.xcconfig"; sourceTree = "<group>"; };
+		24049C62FA65E404BE341A4D /* Pods-GoogleLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleLocation.debug.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-GoogleLocation/Pods-GoogleLocation.debug.xcconfig"; sourceTree = "<group>"; };
 		683069FB27063E1A00AFE53E /* LocationGeocodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGeocodeService.swift; sourceTree = "<group>"; };
 		683069FC27063E1A00AFE53E /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		683069FD27063E1A00AFE53E /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
@@ -25,7 +25,7 @@
 		68BB1840270428AE00707ACE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68BB184A27042BC400707ACE /* SetupMapSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupMapSDK.swift; sourceTree = "<group>"; };
 		C77D164704FD4E32C359BF19 /* Pods_GoogleLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoogleLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F32FB329A0E750CCDFD28DC8 /* Pods-GoogleLocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleLocation.release.xcconfig"; path = "Target Support Files/Pods-GoogleLocation/Pods-GoogleLocation.release.xcconfig"; sourceTree = "<group>"; };
+		F32FB329A0E750CCDFD28DC8 /* Pods-GoogleLocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoogleLocation.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-GoogleLocation/Pods-GoogleLocation.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
