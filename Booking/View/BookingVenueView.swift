@@ -139,13 +139,13 @@ public class BookingVenueView: UIView {
         didSet {
             guard let booking = booking else { return }
             
-            lblEventName.text = booking.eventName
-            lblEventDate.text = booking.start.toString(format: "E dd MMM yyyy, HH:mm")
-            lblVenue.text = booking.bookingAddress?.name
-            lblLocation.text = booking.bookingAddress?.address
-            lblOpenInMap.isHidden = !booking.showDirectionLink && _userKind == .customer
-            lblAddressNote.text = booking.bookingAddress?.addressNote
-            lblOpenInMap.text = _userKind == .artisan ? "check_location".l10n() : "get_direction".l10n()
+//            lblEventName.text = booking.eventName
+//            lblEventDate.text = booking.start.toString(format: "E dd MMM yyyy, HH:mm")
+//            lblVenue.text = booking.bookingAddress?.name
+//            lblLocation.text = booking.bookingAddress?.address
+//            lblOpenInMap.isHidden = !booking.showDirectionLink && _userKind == .customer
+//            lblAddressNote.text = booking.bookingAddress?.addressNote
+//            lblOpenInMap.text = _userKind == .artisan ? "check_location".l10n() : "get_direction".l10n()
 
         }
     }
@@ -233,12 +233,12 @@ public class BookingVenueView: UIView {
     
     // MARK: - Selector
     @objc func openInMapTapped() {
-        guard
-            let booking = booking, let latitude = booking.bookingAddress?.latitude, let longitude = booking.bookingAddress?.longitude
-            else { return }
-
-        if booking.showDirectionLink || _userKind == .artisan {
-            delegate?.locationTapped(location: CLLocationCoordinate2D(latitude: Double(latitude) ?? 0, longitude: Double(longitude) ?? 0))
-        }
+//        guard
+//            let booking = booking, let latitude = booking.bookingAddress?.latitude, let longitude = booking.bookingAddress?.longitude
+//            else { return }
+//
+//        if booking.showDirectionLink || _userKind == .artisan {
+//            delegate?.locationTapped(location: CLLocationCoordinate2D(latitude: Double(latitude) ?? 0, longitude: Double(longitude) ?? 0))
+//        }
     }
 }

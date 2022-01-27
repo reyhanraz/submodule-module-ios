@@ -162,16 +162,16 @@ public class BookingSuccessViewController: BaseViewController, BookingVenueViewD
     
     // MARK: - Selector
     @objc func finish() {
-        if let id = _booking.artisan?.id, let serviceIds = _booking.bookingServices?.map({ String($0.serviceId) }).joined(separator: ",") {
-            trackEvent(name: EventNames.bookingStepFinish.rawValue, extraParams: [
-                EventParams.bookingId.rawValue: _booking.id,
-                EventParams.artisanId.rawValue: id,
-                EventParams.serviceList.rawValue: serviceIds
-            ])
-        }
-        
-        // Dismiss all presented modals
-        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+//        if let id = _booking.artisan?.id, let serviceIds = _booking.bookingServices?.map({ String($0.serviceId) }).joined(separator: ",") {
+//            trackEvent(name: EventNames.bookingStepFinish.rawValue, extraParams: [
+//                EventParams.bookingId.rawValue: _booking.id,
+//                EventParams.artisanId.rawValue: id,
+//                EventParams.serviceList.rawValue: serviceIds
+//            ])
+//        }
+//        
+//        // Dismiss all presented modals
+//        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Private
@@ -186,7 +186,7 @@ public class BookingSuccessViewController: BaseViewController, BookingVenueViewD
         }
         
         lblBookingID.attributedText = attributedString
-        profileView.artisan = _booking.artisan
+//        profileView.artisan = _booking.artisan
         
         lblInformation.text = "you_will_be_contacted_x".l10n(args: [_booking.artisan?.name ?? ""])
         

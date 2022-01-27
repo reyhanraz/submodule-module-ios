@@ -189,8 +189,8 @@ public class AddressCell: SwipeCollectionViewCell {
     private func setAddress(_ address: Address) {
         lblAddressName.text = address.name
         lblAddressDetail.text = address.detail
-        lblSubDistrictName.text = "\(address.urbanVillageName), \(address.subDistrictName)"
-        lblDistrict.text = "\(address.districtName), \(address.provinceName)"
-        lblPostalCode.text = address.postalCode
+//        lblSubDistrictName.text = "\(address.urbanVillageName), \(address.subDistrictName)"
+//        lblDistrict.text = "\(address.districtName), \(address.provinceName)"
+//        lblPostalCode.text = address.postalCode
     }
 }

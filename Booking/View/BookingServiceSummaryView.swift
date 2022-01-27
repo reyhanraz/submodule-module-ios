@@ -79,34 +79,34 @@ public class BookingServiceSummaryView: UIView {
         didSet {
             guard let booking = booking else { return }
     
-            booking.bookingServices?.forEach {
-                let v = BookingServiceView()
-                let separator = SeparatorView()
-                
-                separator.translatesAutoresizingMaskIntoConstraints = false
-                
-                v.translatesAutoresizingMaskIntoConstraints = false
-                v.service = $0
-                
-                stackView.addArrangedSubview(v)
-                stackView.addArrangedSubview(separator)
-            }
-            
-            booking.customizeRequestServices?.forEach {
-                let v = BookingServiceView()
-                let separator = SeparatorView()
-                
-                separator.translatesAutoresizingMaskIntoConstraints = false
-                
-                v.translatesAutoresizingMaskIntoConstraints = false
-                v.setCustomizeRequestService($0, notes: booking.notes)
-                
-                stackView.addArrangedSubview(v)
-                stackView.addArrangedSubview(separator)
-            }
-            
-            lblTotalBookingFees.price = booking.totalPrice
-            lblPaymentStatus.text = booking.paymentStatusName
+//            booking.bookingServices?.forEach {
+//                let v = BookingServiceView()
+//                let separator = SeparatorView()
+//                
+//                separator.translatesAutoresizingMaskIntoConstraints = false
+//                
+//                v.translatesAutoresizingMaskIntoConstraints = false
+//                v.service = $0
+//                
+//                stackView.addArrangedSubview(v)
+//                stackView.addArrangedSubview(separator)
+//            }
+//            
+//            booking.customizeRequestServices?.forEach {
+//                let v = BookingServiceView()
+//                let separator = SeparatorView()
+//                
+//                separator.translatesAutoresizingMaskIntoConstraints = false
+//                
+//                v.translatesAutoresizingMaskIntoConstraints = false
+//                v.setCustomizeRequestService($0, notes: booking.notes)
+//                
+//                stackView.addArrangedSubview(v)
+//                stackView.addArrangedSubview(separator)
+//            }
+//            
+//            lblTotalBookingFees.price = booking.totalPrice
+//            lblPaymentStatus.text = booking.paymentStatusName
         }
     }
     
