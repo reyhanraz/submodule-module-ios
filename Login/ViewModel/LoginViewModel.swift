@@ -64,6 +64,8 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
         validatedPassword = password.flatMapLatest { value in
             if value.isEmpty {
                 return .just(.empty)
+            } else if !value.validPassword {
+                return .just(.failed(message: "invalid_password".l10n()))
             } else {
                 return .just(.ok(message: nil))
             }
