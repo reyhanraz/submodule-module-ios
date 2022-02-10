@@ -12,6 +12,9 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import GoogleSignIn
+import FBSDKLoginKit
+import AuthenticationServices
 
 public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewModelOutput {
     public typealias Outputs = LoginViewModel<T>
@@ -31,6 +34,8 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
     public let success: Driver<T>
     
     public let dismissResponder: Driver<Bool>
+    
+    var signInConfig: GIDConfiguration?
     
     public init<U: UseCase>(
         email: Driver<String>,
@@ -79,6 +84,14 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
         let forms = Driver.combineLatest(email, password) { email, password in
             LoginRequest(email: email, password: password)
         }
+            
+        if let path =
+            Bundle.main.path(forResource: "FirebaseDefault", ofType: "plist"),
+            let dictionary = NSDictionary(contentsOfFile: path),
+            let clientID = dictionary["google_client_id"] as? String {
+            
+            signInConfig = GIDConfiguration.init(clientID: clientID)
+        }
         
         login = loginSignal.withLatestFrom(forms)
             .do(onNext: { _ in
@@ -104,6 +117,40 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
                 return .empty()
         }
     }
+    
+    public func handleGoogleSigninRequest(vc: UIViewController) {
+        guard let signInConfig = signInConfig else { return }
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: vc) { user, error in
+            guard let idToken = user?.authentication.idToken else {
+                return
+            }
+            
+            // TODO: idtoken for identifier field (endpoint: accounts/login)
+        }
+    }
+    
+    public func handleFacebookLoginRequest(vc: UIViewController) {
+        LoginManager().logIn(permissions: ["public_profile", "email"], from: vc) { result, error in
+            guard let token = result?.token?.tokenString else {
+                return
+            }
+            
+            // TODO: token for identifier field (endpoint: accounts/login)
+        }
+    }
+    
+    public func handleAppleidRequest(vc: UIViewController) {
+        if #available(iOS 13.0, *) {
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = vc as? ASAuthorizationControllerDelegate
+            authorizationController.performRequests()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
 }
-
 
