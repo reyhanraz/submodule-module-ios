@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68A5F82327B4FD4900F6728E /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */; };
+		68A5F82427B4FD4900F6728E /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A71A633E23150AB2001A724B /* UpdateArtisanProfileViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A633D23150AB2001A724B /* UpdateArtisanProfileViewModelType.swift */; };
 		A71A634023150ABD001A724B /* UpdateArtisanProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A633F23150ABD001A724B /* UpdateArtisanProfileViewModel.swift */; };
 		A71A634223150C4A001A724B /* ArtisanProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A634123150C4A001A724B /* ArtisanProfileRequest.swift */; };
@@ -28,9 +30,24 @@
 		DD1D8EB50FC940845AF028FF /* Pods_Profile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBBE2EA12DF437D5FF656F06 /* Pods_Profile.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		68A5F82527B4FD4900F6728E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				68A5F82427B4FD4900F6728E /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		695BE480C54D83B62FC74C79 /* Pods-Profile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Profile.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Profile/Pods-Profile.debug.xcconfig"; sourceTree = "<group>"; };
-		A1B8BC70720385D40DBA3CD1 /* Pods-Profile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Profile.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Profile/Pods-Profile.release.xcconfig"; sourceTree = "<group>"; };
+		68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		695BE480C54D83B62FC74C79 /* Pods-Profile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Profile.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Profile/Pods-Profile.debug.xcconfig"; sourceTree = "<group>"; };
+		A1B8BC70720385D40DBA3CD1 /* Pods-Profile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Profile.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Profile/Pods-Profile.release.xcconfig"; sourceTree = "<group>"; };
 		A71A633D23150AB2001A724B /* UpdateArtisanProfileViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateArtisanProfileViewModelType.swift; sourceTree = "<group>"; };
 		A71A633F23150ABD001A724B /* UpdateArtisanProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateArtisanProfileViewModel.swift; sourceTree = "<group>"; };
 		A71A634123150C4A001A724B /* ArtisanProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanProfileRequest.swift; sourceTree = "<group>"; };
@@ -62,6 +79,7 @@
 				A7DC21652327405A00D06C1F /* Domain.framework in Frameworks */,
 				A7DC21632327405700D06C1F /* Platform.framework in Frameworks */,
 				A7DC21612327405200D06C1F /* Common.framework in Frameworks */,
+				68A5F82327B4FD4900F6728E /* ServiceWrapper.framework in Frameworks */,
 				DD1D8EB50FC940845AF028FF /* Pods_Profile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +156,7 @@
 		ECE340AE0EAE9F1DB4012B26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */,
 				A7DC21642327405A00D06C1F /* Domain.framework */,
 				A7DC21622327405700D06C1F /* Platform.framework */,
 				A7DC21602327405200D06C1F /* Common.framework */,
@@ -169,6 +188,7 @@
 				A7BF4FEB22E2C8AD0077F6C8 /* Sources */,
 				A7BF4FEC22E2C8AD0077F6C8 /* Frameworks */,
 				A7BF4FED22E2C8AD0077F6C8 /* Resources */,
+				68A5F82527B4FD4900F6728E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
