@@ -78,13 +78,13 @@ public class BookingServiceView: UIView {
         return v
     }()
     
-    public var service: Booking.BookingService? {
-        didSet {
-            guard let service = service else { return }
-            
-            setService(service)
-        }
-    }
+//    public var service: Booking.BookingService? {
+//        didSet {
+//            guard let service = service else { return }
+//            
+//            setService(service)
+//        }
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
@@ -134,17 +134,17 @@ public class BookingServiceView: UIView {
         ])
     }
     
-    private func setService(_ service: Booking.BookingService) {
-        lblServiceType.text = service.title
-        lblQuantity.text = "x_pax".l10n(args: [service.quantity])
-        lblServiceFee.price = service.price
-        lblNotes.text = service.notes
-    }
-    
-    public func setCustomizeRequestService(_ service: Booking.CustomizeRequestService, notes: String?) {
-        lblServiceType.text = service.title
-        lblQuantity.text = "x_pax".l10n(args: [service.quantity])
-        lblServiceFee.price = service.price
-        lblNotes.text = notes
-    }
+//    private func setService(_ service: Booking.BookingService) {
+//        lblServiceType.text = service.title
+//        lblQuantity.text = "x_pax".l10n(args: [service.quantity])
+//        lblServiceFee.price = service.price
+//        lblNotes.text = service.notes
+//    }
+//
+//    public func setCustomizeRequestService(_ service: Booking.CustomizeRequestService, notes: String?) {
+//        lblServiceType.text = service.title
+//        lblQuantity.text = "x_pax".l10n(args: [service.quantity])
+//        lblServiceFee.price = service.price
+//        lblNotes.text = notes
+//    }
 }

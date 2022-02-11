@@ -20,23 +20,20 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
             body.column(CommonColumns._id.rawValue, .integer).primaryKey()
             body.column(Address.Columns.id.rawValue, .integer).unique(onConflict: .replace)
             body.column(Address.Columns.userId.rawValue, .integer).notNull()
-            body.column(Address.Columns.provinceId.rawValue, .integer)
-            body.column(Address.Columns.districtId.rawValue, .integer)
-            body.column(Address.Columns.areaId.rawValue, .integer)
             body.column(Address.Columns.name.rawValue, .text).notNull()
             body.column(Address.Columns.detail.rawValue, .text).notNull()
-            body.column(Address.Columns.provinceName.rawValue, .text)
-            body.column(Address.Columns.districtName.rawValue, .text)
-            body.column(Address.Columns.districtType.rawValue, .text)
-            body.column(Address.Columns.subDistrictName.rawValue, .text)
-            body.column(Address.Columns.urbanVillageName.rawValue, .text)
-            body.column(Address.Columns.postalCode.rawValue, .text)
             body.column(Address.Columns.lat.rawValue, .double)
             body.column(Address.Columns.lon.rawValue, .double)
             body.column(CommonColumns.timestamp.rawValue, .integer).notNull()
             body.column(Address.Columns.address.rawValue, .text)
             body.column(Address.Columns.rawAddress.rawValue, .blob)
         }
+    }
+    
+    public static func dropTable(db: Database) throws{
+        try db.execute(sql: """
+            DROP TABLE IF EXISTS \(Address.databaseTableName);
+        """)
     }
     
     public override func getList(request: R? = nil) -> [Address] {
@@ -60,33 +57,15 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
                 
                 try db.execute(sql: """
                     UPDATE \(Address.databaseTableName) SET
-                    \(Address.Columns.provinceId.rawValue) = ?,
-                    \(Address.Columns.districtId.rawValue) = ?,
-                    \(Address.Columns.areaId.rawValue) = ?,
                     \(Address.Columns.name.rawValue) = ?,
                     \(Address.Columns.detail.rawValue) = ?,
-                    \(Address.Columns.provinceName.rawValue) = ?,
-                    \(Address.Columns.districtName.rawValue) = ?,
-                    \(Address.Columns.districtType.rawValue) = ?,
-                    \(Address.Columns.subDistrictName.rawValue) = ?,
-                    \(Address.Columns.urbanVillageName.rawValue) = ?,
-                    \(Address.Columns.postalCode.rawValue) = ?,
                     \(Address.Columns.lat.rawValue) = ?,
                     \(Address.Columns.lon.rawValue) = ?,
                     \(CommonColumns.timestamp.rawValue) = ?
                     WHERE
                     \(Address.Columns.id.rawValue) = ?
-                    """, arguments: [model.provinceId,
-                                     model.districtId,
-                                     model.areaId,
-                                     model.name,
+                    """, arguments: [model.name,
                                      model.detail,
-                                     model.provinceName,
-                                     model.districtName,
-                                     model.districtType,
-                                     model.subDistrictName,
-                                     model.urbanVillageName,
-                                     model.postalCode,
                                      model.lat,
                                      model.lon,
                                      timestamp, model.id])
@@ -114,17 +93,8 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
                     
                     try Address(id: record.id,
                                 userId: record.userId,
-                                provinceId: record.provinceId,
-                                districtId: record.districtId,
-                                areaId: record.areaId,
                                 name: record.name,
                                 detail: record.detail,
-                                provinceName: record.provinceName,
-                                districtName: record.districtName,
-                                districtType: record.districtType,
-                                subDistrictName: record.subDistrictName,
-                                urbanVillageName: record.urbanVillageName,
-                                postalCode: record.postalCode,
                                 lat: record.lat,
                                 lon: record.lon,
                                 timestamp: timestamp,
