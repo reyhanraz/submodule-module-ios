@@ -30,13 +30,10 @@ open class ServiceHelper{
         let baseURL = "\(PlatformConfig.hostString)/\(endPoint)"
         var header = HTTPHeaders(PlatformConfig.defaultHttpHeaders)
         
-        let credentialData = "web:secret".data(using: String.Encoding.utf8)!
-        let base64Credentials = credentialData.base64EncodedString(options: [])
-        
         let param: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(parameters))) as? [String: Any] ?? [:]
         
         if !_user.isAuthorized{
-            header.add(name: "Authorization", value: "Basic \(base64Credentials)")
+            header.add(HTTPHeader.authorization(username: "web", password: "secret"))
             return Observable<DataResponse<Any>>.create { observer in
                 let request = ServiceHelper.dataRequest(baseURL, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header) { response in
                     observer.onNext(response)
@@ -61,7 +58,7 @@ open class ServiceHelper{
             return Observable<DataResponse<Any>>.create {[weak self] observer in
                 let refreshToken = LoginRequest(identifier: self?._user.authorizationCode, password: self?._user.refreshToken, grantType: .refreshToken)
                 let loginParameter: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(refreshToken))) as? [String: Any] ?? [:]
-                header.add(name: "Authorization", value: "Basic \(base64Credentials)")
+                header.add(HTTPHeader.authorization(username: "web", password: "secret"))
                 let request = ServiceHelper.dataRequest("\(PlatformConfig.hostString)/accounts/login", method: .post,parameters: loginParameter, encoding: JSONEncoding.default, headers: header) { response in
                     switch response.result{
                     case .success(_):
