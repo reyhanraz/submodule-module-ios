@@ -1,9 +1,9 @@
 //
-//  LoginViewModel.swift
+//  LoginCustomerViewModel.swift
 //  Login
 //
-//  Created by Fandy Gotama on 14/05/19.
-//  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
+//  Created by Reyhan Rifqi Azzami on 08/02/22.
+//  Copyright © 2022 Adrena Teknologi Indonesia. All rights reserved.
 //
 
 import RxSwift
@@ -12,9 +12,15 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
+import GoogleSignIn
+import FBSDKLoginKit
+import AuthenticationServices
 
-public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewModelOutput {
-    public typealias Outputs = LoginViewModel<T>
+public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
+    public typealias T = Token
+    
+    public typealias Outputs = LoginCustomerViewModel
     
     public var outputs: Outputs { return self }
     
@@ -31,13 +37,15 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
     public let success: Driver<T>
     
     public let dismissResponder: Driver<Bool>
-        
+    
+    var signInConfig: GIDConfiguration?
+    
     public init<U: UseCase>(
         email: Driver<String>,
         password: Driver<String>,
         loginSignal: Signal<()>,
         useCase: U
-        ) where U.R == LoginRequest, U.T == T, U.E == Error {
+        ) where U.R == ServiceWrapper.LoginRequest, U.T == T, U.E == Error {
         
         let loadingProperty = PublishSubject<Loading>()
         let successProperty = PublishSubject<T>()
@@ -77,9 +85,17 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
             email.isValid && password.isValid
             
             }.distinctUntilChanged()
+            
+        if let path =
+            Bundle.main.path(forResource: "FirebaseDefault", ofType: "plist"),
+            let dictionary = NSDictionary(contentsOfFile: path),
+            let clientID = dictionary["google_client_id"] as? String {
+            
+            signInConfig = GIDConfiguration.init(clientID: clientID)
+        }
         
         let forms = Driver.combineLatest(email, password) { email, password in
-            LoginRequest(email: email, password: password)
+            ServiceWrapper.LoginRequest(identifier: email, password: password, grantType: .password)
         }
         
         login = loginSignal.withLatestFrom(forms)
@@ -99,6 +115,8 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
                     exceptionProperty.onNext(Exception(title: "login_failed".l10n(), message: "login_error_message".l10n(), error: error))
                 case .unauthorized:
                     unauthorizedProperty.onNext(Unauthorized(title: "login_failed".l10n(), message: "login_unauthorized".l10n(), showLogin: false))
+                case .fail(status: _, errors: _):
+                    unauthorizedProperty.onNext(Unauthorized(title: "login_failed".l10n(), message: "login_unauthorized".l10n(), showLogin: false))
                 default:
                     return .empty()
                 }
@@ -106,5 +124,40 @@ public struct LoginViewModel<T: ResponseType>: LoginViewModelType, LoginViewMode
                 return .empty()
         }
     }
+    
+    public func handleGoogleSigninRequest(vc: UIViewController) {
+        guard let signInConfig = signInConfig else { return }
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: vc) { user, error in
+            guard let idToken = user?.authentication.idToken else {
+                return
+            }
+            
+            // TODO: idtoken for identifier field (endpoint: accounts/login)
+        }
+    }
+    
+    public func handleFacebookLoginRequest(vc: UIViewController) {
+        LoginManager().logIn(permissions: ["public_profile", "email"], from: vc) { result, error in
+            guard let token = result?.token?.tokenString else {
+                return
+            }
+            
+            // TODO: token for identifier field (endpoint: accounts/login)
+        }
+    }
+    
+    public func handleAppleidRequest(vc: UIViewController) {
+        if #available(iOS 13.0, *) {
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = vc as? ASAuthorizationControllerDelegate
+            authorizationController.performRequests()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
 }
-
