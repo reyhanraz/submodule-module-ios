@@ -18,6 +18,7 @@ public struct LoginRequest: Encodable {
         case artisanPassword = "artisan_password"
         case artisanGoogle = "google_artisan"
         case artisanFacebook = "facebook_artisan"
+        case guest
         
     }
     
@@ -25,7 +26,7 @@ public struct LoginRequest: Encodable {
     let password: String?
     let grant_type: String
     
-    public init(identifier: String?, password: String? = nil, grantType: LoginRequest.Grant_Type){
+    public init(identifier: String? = nil, password: String? = nil, grantType: LoginRequest.Grant_Type){
         self.identifier = identifier
         self.password = password
         self.grant_type = grantType.rawValue
@@ -35,6 +36,6 @@ public struct LoginRequest: Encodable {
 public struct Token: Codable {
     public let access_token: String
     public let expires_in: Double
-    public let refresh_token: String
+    public let refresh_token: String?
     public let token_type: String
 }

@@ -9,9 +9,9 @@
 import Platform
 
 public struct RegisterRequest: Encodable {
-    let name: String
-    let email: String
-    let password: String
-    let phone: String
-    let gender: User.Gender
+    public let name: String
+    public let email: String
+    public let password: String
+    public let phone: String
+    public let gender: User.Gender
 }

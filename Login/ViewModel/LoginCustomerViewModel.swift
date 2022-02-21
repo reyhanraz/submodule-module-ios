@@ -40,10 +40,11 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
     
     var signInConfig: GIDConfiguration?
     
+    private let _requestProperty = PublishSubject<ServiceWrapper.LoginRequest>()
+    
     public init<U: UseCase>(
-        email: Driver<String>,
-        password: Driver<String>,
-        loginSignal: Signal<()>,
+        email: Driver<String?>,
+        password: Driver<String?>,
         useCase: U
         ) where U.R == ServiceWrapper.LoginRequest, U.T == T, U.E == Error {
         
@@ -60,6 +61,7 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
         dismissResponder = dismissResponderProperty.asDriver(onErrorJustReturn: false)
         
         validatedEmail = email.flatMapLatest { email in
+            guard let email = email else { return .empty() }
             if email.isEmpty {
                 return .just(.empty)
             } else if email.isValidEmail {
@@ -70,6 +72,7 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
         }
         
         validatedPassword = password.flatMapLatest { value in
+            guard let value = value else { return .empty() }
             if value.isEmpty {
                 return .just(.empty)
             } else if !value.validPassword {
@@ -94,11 +97,8 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
             signInConfig = GIDConfiguration.init(clientID: clientID)
         }
         
-        let forms = Driver.combineLatest(email, password) { email, password in
-            ServiceWrapper.LoginRequest(identifier: email, password: password, grantType: .password)
-        }
-        
-        login = loginSignal.withLatestFrom(forms)
+        login = _requestProperty
+                .asDriver(onErrorDriveWith: .empty())
             .do(onNext: { _ in
                 loadingProperty.onNext(Loading(start: true, text: "logging_in".l10n()))
                 dismissResponderProperty.onNext(true)
@@ -107,22 +107,31 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
                 return useCase.execute(request: request).asDriver(onErrorDriveWith: .empty())
             }
             .do(onNext: { _ in loadingProperty.onNext(Loading(start: false, text: "login".l10n())) })
-            .flatMapLatest { result in
+                .flatMapLatest { result in
                 switch result {
-                case let .success(register):
-                    successProperty.onNext(register)
+                case let .success(login):
+                    successProperty.onNext(login)
                 case let .error(error):
                     exceptionProperty.onNext(Exception(title: "login_failed".l10n(), message: "login_error_message".l10n(), error: error))
                 case .unauthorized:
                     unauthorizedProperty.onNext(Unauthorized(title: "login_failed".l10n(), message: "login_unauthorized".l10n(), showLogin: false))
                 case .fail(status: _, errors: _):
                     unauthorizedProperty.onNext(Unauthorized(title: "login_failed".l10n(), message: "login_unauthorized".l10n(), showLogin: false))
-                default:
-                    return .empty()
                 }
                 
                 return .empty()
         }
+    }
+    
+    public func execute(idetifier: String? = nil, password: String? = nil, grantType: ServiceWrapper.LoginRequest.Grant_Type? = .password){
+        let request: ServiceWrapper.LoginRequest
+        if idetifier == nil && password == nil{
+            request = ServiceWrapper.LoginRequest(grantType: .guest)
+        }else{
+            request = ServiceWrapper.LoginRequest(identifier: idetifier, password: password, grantType: grantType!)
+        }
+        
+        _requestProperty.onNext(request)
     }
     
     public func handleGoogleSigninRequest(vc: UIViewController) {
@@ -133,6 +142,7 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
             }
             
             // TODO: idtoken for identifier field (endpoint: accounts/login)
+            execute(idetifier: idToken, grantType: .google)
         }
     }
     
@@ -143,6 +153,7 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
             }
             
             // TODO: token for identifier field (endpoint: accounts/login)
+            execute(idetifier: token, grantType: .facebook)
         }
     }
     
