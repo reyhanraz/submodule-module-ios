@@ -21,7 +21,7 @@ public protocol RegisterProfileViewModelOutput {
     var validatedPassword: Driver<ValidationResult> { get }
     var validatedPasswordConfirmation: Driver<ValidationResult> { get }
     var nextEnabled: Driver<Bool> { get }
-    var result: Driver<(RegisterRequest, String)> { get }
+    var result: Driver<(ServiceWrapper.RegisterRequest, String)> { get }
 }
 
 protocol RegisterProfileViewModelType {
@@ -38,7 +38,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
     public let validatedPassword: Driver<ValidationResult>
     public let validatedPasswordConfirmation: Driver<ValidationResult>
     public let nextEnabled: Driver<Bool>
-    public let result: Driver<(RegisterRequest, String)>
+    public let result: Driver<(ServiceWrapper.RegisterRequest, String)>
     
     public let validatedGender = PublishSubject<ValidationResult>()
     
@@ -71,19 +71,17 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
                     return useCase.execute(request: CheckUserRequest(identifier: email, type: "customer", findType: .email)).map { (email, $0) }.asDriver(onErrorDriveWith: .empty())
                 }
                 .flatMap { result in
+                    if result.0.isEmpty {
+                        return .just(.empty)
+                    }
+                    
+                    guard result.0.isValidEmail else { return .just(.failed(message: "invalid_email".l10n())) }
+                    
                     switch result.1 {
                     case .success:
-                        if result.0.isEmpty {
-                            return .just(.empty)
-                        } else if result.0.isValidEmail {
-                            return .just(.failed(message: "email_already_used".l10n()))
-                        } else {
-                            return .just(.failed(message: "invalid_email".l10n()))
-                        }
+                        return .just(.failed(message: "email_already_used".l10n()))
                     case let .fail(status, _):
-                        if result.0.isEmpty {
-                            return .just(.empty)
-                        } else if status.code == 400 {
+                        if status.code == 400 {
                             return .just(.failed(message: "invalid_email".l10n()))
                         } else if status.code == 404 {
                            return .just(.ok(message: nil))
@@ -91,11 +89,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
 
                         return .just(.ok(message: nil))
                     default:
-                        if result.0.isValidEmail {
-                            return .just(.ok(message: nil))
-                        } else {
-                            return .just(.failed(message: "invalid_email".l10n()))
-                        }
+                        return .just(.ok(message: nil))
                     }
                 }
         
@@ -113,21 +107,20 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
                     return useCase.execute(request: CheckUserRequest(identifier: formattedPhone, type: "customer", findType: .phoneNumber)).map { (formattedPhone, $0, mobilePhone) }.asDriver(onErrorDriveWith: .empty())
                 }
                 .flatMap { result in
+                    if result.2.isEmpty{
+                        return .just(.empty)
+                    }
+                    guard result.2.starts(with: "0"),
+                          let _ = try? phoneNumberKit.parse(result.2, withRegion: phone.1)
+                    else {
+                        return .just(.failed(message: "invalid_phone".l10n()))
+                    }
+                    
                     switch result.1 {
                     case .success:
-                        if result.0.isEmpty {
-                            return .just(.empty)
-                        }else if !result.2.starts(with: "0"){
-                            return .just(.failed(message: "invalid_phone".l10n()))
-                        } else {
-                            return .just(.failed(message: "phone_already_used"))
-                        }
+                        return .just(.failed(message: "phone_already_used".l10n()))
                     case let .fail(status, _):
-                        if result.0.isEmpty {
-                            return .just(.empty)
-                        } else if !result.2.starts(with: "0"){
-                            return .just(.failed(message: "invalid_phone".l10n()))
-                        } else if status.code == 400 {
+                        if status.code == 400 {
                             return .just(.failed(message: "invalid_phone".l10n()))
                         } else if status.code == 404 {
                             return .just(.ok(message: nil))
@@ -135,13 +128,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
 
                         return .just(.ok(message: nil))
                     default:
-                        if result.0.isEmpty {
-                            return .just(.empty)
-                        }else if !result.2.starts(with: "0"){
-                            return .just(.failed(message: "invalid_phone".l10n()))
-                        } else {
-                            return .just(.ok(message: nil))
-                        }
+                        return .just(.ok(message: nil))
                     }
                 }
 
@@ -181,7 +168,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
             
             }.distinctUntilChanged()
         
-        let forms = Driver.combineLatest(phone.0, name.0, email, password, gender) { mobilePhone, name, email, password, gender -> (RegisterRequest, String) in
+            let forms = Driver.combineLatest(phone.0, name.0, email, password, gender) { mobilePhone, name, email, password, gender -> (ServiceWrapper.RegisterRequest, String) in
             let phoneNumber = try? phoneNumberKit.parse(mobilePhone, withRegion: phone.1)
             
             let formattedPhone: String
@@ -192,7 +179,13 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
                 formattedPhone = ""
             }
             
-            return (RegisterRequest(name: name, email: email, password: password, phone: formattedPhone, gender: gender == "male".l10n() ? .male : .female), mobilePhone)
+            return (ServiceWrapper.RegisterRequest(name: name,
+                                                   email: email,
+                                                   password: password,
+                                                   phone: formattedPhone,
+                                                   gender: gender == "male".l10n() ? .male : .female,
+                                                   type: "customer"),
+                    mobilePhone)
         }
             
         result = btnNext.withLatestFrom(forms).asDriver(onErrorDriveWith: .empty())
