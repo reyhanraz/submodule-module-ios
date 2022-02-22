@@ -50,7 +50,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
         password: Driver<String>,
         passwordConfirmation: Driver<String>,
         btnNext: Signal<()>,
-        useCase: U) where U.R == CheckUserRequest, U.T == Status, U.E == Error {
+        useCase: U) where U.R == CheckUserRequest, U.T == CheckUser, U.E == Error {
         
         let phoneNumberKit = PhoneNumberKit()
         
@@ -66,32 +66,85 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
             }
         }
         
-        validatedEmail = email.flatMapLatest { email in
-            if email.isEmpty {
-                return .just(.empty)
-            } else if email.isValidEmail {
-                return .just(.ok(message: nil))
-            } else {
-                return .just(.failed(message: "invalid_email".l10n()))
-            }
-        }
-        
-        validatedPhone = phone.0.flatMapLatest { value in
-            
-            if value.isEmpty {
-                return .just(.empty)
-            }else if !value.starts(with: "0"){
-                return .just(.failed(message: "invalid_phone".l10n()))
-            } else {
-                do {
-                    let _ = try phoneNumberKit.parse(value, withRegion: phone.1)
-                    
-                    return .just(.ok(message: nil))
-                } catch {
-                    return .just(.failed(message: "invalid_phone".l10n()))
+        validatedEmail = email.debounce(.milliseconds(500))
+                .flatMap { email in
+                    return useCase.execute(request: CheckUserRequest(identifier: email, type: "customer", findType: .email)).map { (email, $0) }.asDriver(onErrorDriveWith: .empty())
                 }
-            }
-        }
+                .flatMap { result in
+                    switch result.1 {
+                    case .success:
+                        if result.0.isEmpty {
+                            return .just(.empty)
+                        } else if result.0.isValidEmail {
+                            return .just(.failed(message: "email_already_used".l10n()))
+                        } else {
+                            return .just(.failed(message: "invalid_email".l10n()))
+                        }
+                    case let .fail(status, _):
+                        if result.0.isEmpty {
+                            return .just(.empty)
+                        } else if status.code == 400 {
+                            return .just(.failed(message: "invalid_email".l10n()))
+                        } else if status.code == 404 {
+                           return .just(.ok(message: nil))
+                        }
+
+                        return .just(.ok(message: nil))
+                    default:
+                        if result.0.isValidEmail {
+                            return .just(.ok(message: nil))
+                        } else {
+                            return .just(.failed(message: "invalid_email".l10n()))
+                        }
+                    }
+                }
+        
+        validatedPhone = phone.0.debounce(.milliseconds(500))
+                .flatMap { mobilePhone -> Driver<(String, Result<CheckUser, Error>, String)> in
+                    let phoneNumber = try? phoneNumberKit.parse(mobilePhone, withRegion: phone.1)
+
+                    let formattedPhone: String
+
+                    if let phoneNumber = phoneNumber {
+                        formattedPhone = phoneNumberKit.format(phoneNumber, toType: .e164)
+                    } else {
+                        formattedPhone = ""
+                    }
+                    return useCase.execute(request: CheckUserRequest(identifier: formattedPhone, type: "customer", findType: .phoneNumber)).map { (formattedPhone, $0, mobilePhone) }.asDriver(onErrorDriveWith: .empty())
+                }
+                .flatMap { result in
+                    switch result.1 {
+                    case .success:
+                        if result.0.isEmpty {
+                            return .just(.empty)
+                        }else if !result.2.starts(with: "0"){
+                            return .just(.failed(message: "invalid_phone".l10n()))
+                        } else {
+                            return .just(.failed(message: "phone_already_used"))
+                        }
+                    case let .fail(status, _):
+                        if result.0.isEmpty {
+                            return .just(.empty)
+                        } else if !result.2.starts(with: "0"){
+                            return .just(.failed(message: "invalid_phone".l10n()))
+                        } else if status.code == 400 {
+                            return .just(.failed(message: "invalid_phone".l10n()))
+                        } else if status.code == 404 {
+                            return .just(.ok(message: nil))
+                        }
+
+                        return .just(.ok(message: nil))
+                    default:
+                        if result.0.isEmpty {
+                            return .just(.empty)
+                        }else if !result.2.starts(with: "0"){
+                            return .just(.failed(message: "invalid_phone".l10n()))
+                        } else {
+                            return .just(.ok(message: nil))
+                        }
+                    }
+                }
+
             
         let validatedGender: Driver<ValidationResult> = gender.flatMapLatest{ value in
             if value.isEmpty{

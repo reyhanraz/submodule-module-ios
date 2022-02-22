@@ -14,7 +14,7 @@ import Platform
 public class CheckUserCloudService: RegisterAPI, ServiceType {
     public typealias R = CheckUserRequest
 
-    public typealias T = Status
+    public typealias T = CheckUser
     public typealias E = Error
 
 

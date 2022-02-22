@@ -16,7 +16,7 @@ open class RegisterAPI: ServiceHelper{
     }
     
     public func checkEmail(request: CheckUserRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("checkEmail", method: .post ,parameters: request).retry(3).map { result in
+        return super.request("api/v1/users/find", method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
             return (result.data, result.response)
         }
     }
