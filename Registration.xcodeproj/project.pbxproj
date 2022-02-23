@@ -8,19 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		68A5F84427BD67DD00F6728E /* RegistrationCustomerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F84327BD67DC00F6728E /* RegistrationCustomerViewModel.swift */; };
-		68A5F84F27BD735F00F6728E /* CheckEmailCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F84E27BD735E00F6728E /* CheckEmailCloudService.swift */; };
+		68A5F84F27BD735F00F6728E /* CheckUserCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F84E27BD735E00F6728E /* CheckUserCloudService.swift */; };
 		68A5F85127BD741900F6728E /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F85027BD741900F6728E /* ServiceWrapper.framework */; };
 		68A5F85227BD741900F6728E /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F85027BD741900F6728E /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68A5F85F27BFD6F500F6728E /* OTPChallengerCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F85E27BFD6F400F6728E /* OTPChallengerCloudService.swift */; };
 		68A5F86127C0119600F6728E /* OTPChallengerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86027C0119600F6728E /* OTPChallengerViewModel.swift */; };
 		68A5F86327C4B3EF00F6728E /* CheckUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86227C4B3EF00F6728E /* CheckUser.swift */; };
+		68A5F86727C4E70B00F6728E /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86627C4E70B00F6728E /* RegisterRequest.swift */; };
+		68A5F86927C4E8FB00F6728E /* NewRegisterCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86827C4E8FB00F6728E /* NewRegisterCloudService.swift */; };
+		68A5F86B27C4EBC300F6728E /* PostRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86A27C4EBC300F6728E /* PostRegisterViewModel.swift */; };
+		68A5F86D27C55D5D00F6728E /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86C27C55D5D00F6728E /* RegisterResponse.swift */; };
 		A73D9F7E22881FD8006C19BA /* Registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A73D9F7C22881FD8006C19BA /* Registration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A74BA8602289893C005F2ADF /* RegisterCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BA85F2289893C005F2ADF /* RegisterCloudService.swift */; };
 		A74BA86322898ACA005F2ADF /* RegisterApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BA86222898ACA005F2ADF /* RegisterApi.swift */; };
 		A7C878BF2288464500F920B1 /* RegistrationViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C878BE2288464500F920B1 /* RegistrationViewModelType.swift */; };
 		A7C878C12288469F00F920B1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C878C02288469F00F920B1 /* RegistrationViewModel.swift */; };
 		A7C878C62288476300F920B1 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C878C52288476300F920B1 /* Register.swift */; };
-		A7C878CF22884C8A00F920B1 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C878CE22884C8A00F920B1 /* RegisterRequest.swift */; };
 		A7DC21B62327C24400D06C1F /* Platform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21B52327C24400D06C1F /* Platform.framework */; };
 		A7DC21B82327C24800D06C1F /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21B72327C24800D06C1F /* Common.framework */; };
 		A7DC21BA2327C24B00D06C1F /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21B92327C24B00D06C1F /* Domain.framework */; };
@@ -43,11 +46,15 @@
 
 /* Begin PBXFileReference section */
 		68A5F84327BD67DC00F6728E /* RegistrationCustomerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCustomerViewModel.swift; sourceTree = "<group>"; };
-		68A5F84E27BD735E00F6728E /* CheckEmailCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailCloudService.swift; sourceTree = "<group>"; };
+		68A5F84E27BD735E00F6728E /* CheckUserCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserCloudService.swift; sourceTree = "<group>"; };
 		68A5F85027BD741900F6728E /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68A5F85E27BFD6F400F6728E /* OTPChallengerCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPChallengerCloudService.swift; sourceTree = "<group>"; };
 		68A5F86027C0119600F6728E /* OTPChallengerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPChallengerViewModel.swift; sourceTree = "<group>"; };
 		68A5F86227C4B3EF00F6728E /* CheckUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUser.swift; sourceTree = "<group>"; };
+		68A5F86627C4E70B00F6728E /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
+		68A5F86827C4E8FB00F6728E /* NewRegisterCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRegisterCloudService.swift; sourceTree = "<group>"; };
+		68A5F86A27C4EBC300F6728E /* PostRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegisterViewModel.swift; sourceTree = "<group>"; };
+		68A5F86C27C55D5D00F6728E /* RegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
 		70082FA74BDD5D4586C46931 /* Pods-Registration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Registration.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Registration/Pods-Registration.release.xcconfig"; sourceTree = "<group>"; };
 		89F307DCCF8CBC43A5D5693A /* Pods_Registration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Registration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A73D9F7922881FD8006C19BA /* Registration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Registration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,7 +65,6 @@
 		A7C878BE2288464500F920B1 /* RegistrationViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModelType.swift; sourceTree = "<group>"; };
 		A7C878C02288469F00F920B1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		A7C878C52288476300F920B1 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
-		A7C878CE22884C8A00F920B1 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		A7DC21B52327C24400D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21B72327C24800D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21B92327C24B00D06C1F /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,7 +111,8 @@
 				A7C878C42288472F00F920B1 /* Model */,
 				A7C878BD2288463000F920B1 /* ViewModel */,
 				A74BA86222898ACA005F2ADF /* RegisterApi.swift */,
-				68A5F84E27BD735E00F6728E /* CheckEmailCloudService.swift */,
+				68A5F84E27BD735E00F6728E /* CheckUserCloudService.swift */,
+				68A5F86827C4E8FB00F6728E /* NewRegisterCloudService.swift */,
 				68A5F85E27BFD6F400F6728E /* OTPChallengerCloudService.swift */,
 				A74BA85F2289893C005F2ADF /* RegisterCloudService.swift */,
 				A73D9F7C22881FD8006C19BA /* Registration.h */,
@@ -121,6 +128,7 @@
 				A7C878C02288469F00F920B1 /* RegistrationViewModel.swift */,
 				68A5F84327BD67DC00F6728E /* RegistrationCustomerViewModel.swift */,
 				68A5F86027C0119600F6728E /* OTPChallengerViewModel.swift */,
+				68A5F86A27C4EBC300F6728E /* PostRegisterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -129,8 +137,9 @@
 			isa = PBXGroup;
 			children = (
 				A7C878C52288476300F920B1 /* Register.swift */,
-				A7C878CE22884C8A00F920B1 /* RegisterRequest.swift */,
+				68A5F86627C4E70B00F6728E /* RegisterRequest.swift */,
 				68A5F86227C4B3EF00F6728E /* CheckUser.swift */,
+				68A5F86C27C55D5D00F6728E /* RegisterResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -263,16 +272,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7C878C62288476300F920B1 /* Register.swift in Sources */,
+				68A5F86727C4E70B00F6728E /* RegisterRequest.swift in Sources */,
 				A74BA86322898ACA005F2ADF /* RegisterApi.swift in Sources */,
 				A74BA8602289893C005F2ADF /* RegisterCloudService.swift in Sources */,
 				68A5F85F27BFD6F500F6728E /* OTPChallengerCloudService.swift in Sources */,
 				A7C878BF2288464500F920B1 /* RegistrationViewModelType.swift in Sources */,
 				68A5F86327C4B3EF00F6728E /* CheckUser.swift in Sources */,
-				A7C878CF22884C8A00F920B1 /* RegisterRequest.swift in Sources */,
-				68A5F84F27BD735F00F6728E /* CheckEmailCloudService.swift in Sources */,
+				68A5F84F27BD735F00F6728E /* CheckUserCloudService.swift in Sources */,
 				68A5F84427BD67DD00F6728E /* RegistrationCustomerViewModel.swift in Sources */,
 				A7C878C12288469F00F920B1 /* RegistrationViewModel.swift in Sources */,
 				68A5F86127C0119600F6728E /* OTPChallengerViewModel.swift in Sources */,
+				68A5F86D27C55D5D00F6728E /* RegisterResponse.swift in Sources */,
+				68A5F86927C4E8FB00F6728E /* NewRegisterCloudService.swift in Sources */,
+				68A5F86B27C4EBC300F6728E /* PostRegisterViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,7 +25,7 @@ public class CheckUserCloudService: RegisterAPI, ServiceType {
     public func get(request: CheckUserRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        return self.checkEmail(request: request).map { (data, response) in
+        return self.checkUser(request: request).map { (data, response) in
             self.parse(data: data, statusCode: response?.statusCode)
         }
     }

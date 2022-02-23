@@ -32,7 +32,7 @@ open class ServiceHelper{
         
         let param: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(parameters))) as? [String: Any] ?? [:]
         
-        if endPoint == "accounts/login"{
+        if endPoint == "accounts/login" || endPoint == "accounts/register"{
             header.add(HTTPHeader.authorization(username: "web", password: "secret"))
             return Observable<DataResponse<Any>>.create { observer in
                 let request = ServiceHelper.dataRequest(baseURL, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header) { response in
