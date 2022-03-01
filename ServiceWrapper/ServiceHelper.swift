@@ -26,13 +26,13 @@ open class ServiceHelper{
         })
     }
     
-    public func request<R: Encodable> (_ endPoint: String, method: HTTPMethod = .get, parameters: R?) -> Observable<DataResponse<Any>>  {        
+    public func request<R: Encodable> (_ endPoint: String, method: HTTPMethod = .get, parameters: R?, encoding: ParameterEncoding = URLEncoding.default) -> Observable<DataResponse<Any>>  {
         let baseURL = "\(PlatformConfig.hostString)/\(endPoint)"
         var header = HTTPHeaders(PlatformConfig.defaultHttpHeaders)
         
         let param: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(parameters))) as? [String: Any] ?? [:]
         
-        if !_user.isAuthorized{
+        if endPoint == "accounts/login" || endPoint == "accounts/register"{
             header.add(HTTPHeader.authorization(username: "web", password: "secret"))
             return Observable<DataResponse<Any>>.create { observer in
                 let request = ServiceHelper.dataRequest(baseURL, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header) { response in
@@ -43,10 +43,10 @@ open class ServiceHelper{
                     request.cancel()
                 }
             }
-        } else if _user.isAuthorized && !_user.isTokenExpired{
+        } else if !_user.isTokenExpired{
             header.add(name: "Authorization", value: "\(_user.tokenType ?? "") \(_user.authorizationCode ?? "")")
             return Observable<DataResponse<Any>>.create { observer in
-                let request = ServiceHelper.dataRequest(baseURL, method: method, parameters: param, headers: header) { response in
+                let request = ServiceHelper.dataRequest(baseURL, method: method, parameters: param, encoding: encoding, headers: header) { response in
                     observer.onNext(response)
                     observer.onCompleted()
                 }
@@ -56,7 +56,20 @@ open class ServiceHelper{
             }
         }else{
             return Observable<DataResponse<Any>>.create {[weak self] observer in
-                let refreshToken = LoginRequest(identifier: self?._user.authorizationCode, password: self?._user.refreshToken, grantType: .refreshToken)
+                guard let strongSelf = self else {
+                    return Disposables.create{ }
+                }
+                    
+                let refreshToken: LoginRequest
+                
+                if strongSelf._user.isGuest{
+                    refreshToken = LoginRequest(grantType: .guest)
+                }else{
+                    refreshToken = LoginRequest(identifier: strongSelf._user.authorizationCode,
+                                                password: strongSelf._user.refreshToken,
+                                                grantType: .refreshToken)
+                }
+                
                 let loginParameter: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(refreshToken))) as? [String: Any] ?? [:]
                 header.add(HTTPHeader.authorization(username: "web", password: "secret"))
                 let request = ServiceHelper.dataRequest("\(PlatformConfig.hostString)/accounts/login", method: .post,parameters: loginParameter, encoding: JSONEncoding.default, headers: header) { response in
@@ -76,7 +89,7 @@ open class ServiceHelper{
                         self?._user.saveToken(accessToken: token.access_token, refreshToken: token.refresh_token, expiredTime: token.expires_in, tokenType: token.token_type)
                         
                         DispatchQueue.main.async {
-                            header.add(name: "Authorization", value: "\(self?._user.tokenType ?? "") \(self?._user.authorizationCode ?? "")")
+                            header.add(name: "Authorization", value: "\(strongSelf._user.tokenType ?? "") \(strongSelf._user.authorizationCode ?? "")")
                             let requestb = ServiceHelper.dataRequest(baseURL, method: method, parameters: param, headers: header) { (response) in
                                 observer.onNext(response)
                                 observer.onCompleted()

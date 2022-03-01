@@ -15,6 +15,10 @@
 		68A5F81727B4930000F6728E /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F81627B4930000F6728E /* LoginRequest.swift */; };
 		68A5F81927B4934800F6728E /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F81827B4934800F6728E /* LoginAPI.swift */; };
 		68A5F81E27B4D13200F6728E /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F81D27B4D13200F6728E /* ProfileAPI.swift */; };
+		68A5F84927BD708800F6728E /* RegisterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F84827BD708700F6728E /* RegisterAPI.swift */; };
+		68A5F84D27BD712D00F6728E /* CheckUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F84C27BD712D00F6728E /* CheckUserRequest.swift */; };
+		68A5F85527BF536300F6728E /* ChallengerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F85427BF536200F6728E /* ChallengerRequest.swift */; };
+		68A5F86527C4E55100F6728E /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F86427C4E55100F6728E /* RegisterRequest.swift */; };
 		E58A228660A25FFE7605C813 /* Pods_ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD58E04E01F009D2188EEE85 /* Pods_ServiceWrapper.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +46,10 @@
 		68A5F81627B4930000F6728E /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		68A5F81827B4934800F6728E /* LoginAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
 		68A5F81D27B4D13200F6728E /* ProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
+		68A5F84827BD708700F6728E /* RegisterAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAPI.swift; sourceTree = "<group>"; };
+		68A5F84C27BD712D00F6728E /* CheckUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserRequest.swift; sourceTree = "<group>"; };
+		68A5F85427BF536200F6728E /* ChallengerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengerRequest.swift; sourceTree = "<group>"; };
+		68A5F86427C4E55100F6728E /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		AD58E04E01F009D2188EEE85 /* Pods_ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5D1A4D35E1DEA98AACAAF47 /* Pods-ServiceWrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.debug.xcconfig"; path = "Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +112,7 @@
 				68A5F80D27B3B13E00F6728E /* ServiceHelper.swift */,
 				68A5F81527B492E600F6728E /* Login */,
 				68A5F81C27B4D11300F6728E /* Profile */,
+				68A5F84727BD705700F6728E /* Register */,
 			);
 			path = ServiceWrapper;
 			sourceTree = "<group>";
@@ -123,6 +132,17 @@
 				68A5F81D27B4D13200F6728E /* ProfileAPI.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		68A5F84727BD705700F6728E /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				68A5F84827BD708700F6728E /* RegisterAPI.swift */,
+				68A5F86427C4E55100F6728E /* RegisterRequest.swift */,
+				68A5F84C27BD712D00F6728E /* CheckUserRequest.swift */,
+				68A5F85427BF536200F6728E /* ChallengerRequest.swift */,
+			);
+			path = Register;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,9 +252,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68A5F85527BF536300F6728E /* ChallengerRequest.swift in Sources */,
 				68A5F80227B3AB8500F6728E /* ServiceWrapper.docc in Sources */,
+				68A5F86527C4E55100F6728E /* RegisterRequest.swift in Sources */,
 				68A5F80E27B3B13E00F6728E /* ServiceHelper.swift in Sources */,
 				68A5F81E27B4D13200F6728E /* ProfileAPI.swift in Sources */,
+				68A5F84927BD708800F6728E /* RegisterAPI.swift in Sources */,
+				68A5F84D27BD712D00F6728E /* CheckUserRequest.swift in Sources */,
 				68A5F81927B4934800F6728E /* LoginAPI.swift in Sources */,
 				68A5F81727B4930000F6728E /* LoginRequest.swift in Sources */,
 			);
