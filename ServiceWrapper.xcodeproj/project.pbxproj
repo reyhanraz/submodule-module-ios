@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		687A509F27D60E2D00A7A124 /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A509E27D60E2D00A7A124 /* ResetPasswordRequest.swift */; };
+		687A50A127D60EB100A7A124 /* ResetPasswordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A50A027D60EB100A7A124 /* ResetPasswordAPI.swift */; };
+		68A3BC3A27D1EA5A00CEBF1F /* ForgotPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC3927D1EA5900CEBF1F /* ForgotPasswordRequest.swift */; };
+		68A3BC3C27D1EB0E00CEBF1F /* ForgotPasswordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC3B27D1EB0E00CEBF1F /* ForgotPasswordAPI.swift */; };
+		68A3BC3E27D1EB9000CEBF1F /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC3D27D1EB9000CEBF1F /* Endpoint.swift */; };
 		68A5F80227B3AB8500F6728E /* ServiceWrapper.docc in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F80127B3AB8500F6728E /* ServiceWrapper.docc */; };
 		68A5F80327B3AB8500F6728E /* ServiceWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 68A5F80027B3AB8500F6728E /* ServiceWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		68A5F80A27B3B0FE00F6728E /* Platform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F80927B3B0FE00F6728E /* Platform.framework */; };
@@ -38,6 +43,11 @@
 
 /* Begin PBXFileReference section */
 		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
+		687A509E27D60E2D00A7A124 /* ResetPasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequest.swift; sourceTree = "<group>"; };
+		687A50A027D60EB100A7A124 /* ResetPasswordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordAPI.swift; sourceTree = "<group>"; };
+		68A3BC3927D1EA5900CEBF1F /* ForgotPasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForgotPasswordRequest.swift; path = ../../../../../../Desktop/ForgotPasswordRequest.swift; sourceTree = "<group>"; };
+		68A3BC3B27D1EB0E00CEBF1F /* ForgotPasswordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordAPI.swift; sourceTree = "<group>"; };
+		68A3BC3D27D1EB9000CEBF1F /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		68A5F7FD27B3AB8500F6728E /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68A5F80027B3AB8500F6728E /* ServiceWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceWrapper.h; sourceTree = "<group>"; };
 		68A5F80127B3AB8500F6728E /* ServiceWrapper.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ServiceWrapper.docc; sourceTree = "<group>"; };
@@ -86,6 +96,24 @@
 			path = ../App/Pods;
 			sourceTree = "<group>";
 		};
+		687A509D27D60E0000A7A124 /* ResetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				687A509E27D60E2D00A7A124 /* ResetPasswordRequest.swift */,
+				687A50A027D60EB100A7A124 /* ResetPasswordAPI.swift */,
+			);
+			path = ResetPassword;
+			sourceTree = "<group>";
+		};
+		68A3BC3827D1EA2300CEBF1F /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				68A3BC3927D1EA5900CEBF1F /* ForgotPasswordRequest.swift */,
+				68A3BC3B27D1EB0E00CEBF1F /* ForgotPasswordAPI.swift */,
+			);
+			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
 		68A5F7F327B3AB8500F6728E = {
 			isa = PBXGroup;
 			children = (
@@ -110,9 +138,12 @@
 				68A5F80027B3AB8500F6728E /* ServiceWrapper.h */,
 				68A5F80127B3AB8500F6728E /* ServiceWrapper.docc */,
 				68A5F80D27B3B13E00F6728E /* ServiceHelper.swift */,
+				68A3BC3D27D1EB9000CEBF1F /* Endpoint.swift */,
 				68A5F81527B492E600F6728E /* Login */,
 				68A5F81C27B4D11300F6728E /* Profile */,
 				68A5F84727BD705700F6728E /* Register */,
+				68A3BC3827D1EA2300CEBF1F /* ForgotPassword */,
+				687A509D27D60E0000A7A124 /* ResetPassword */,
 			);
 			path = ServiceWrapper;
 			sourceTree = "<group>";
@@ -252,13 +283,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				687A509F27D60E2D00A7A124 /* ResetPasswordRequest.swift in Sources */,
+				687A50A127D60EB100A7A124 /* ResetPasswordAPI.swift in Sources */,
 				68A5F85527BF536300F6728E /* ChallengerRequest.swift in Sources */,
 				68A5F80227B3AB8500F6728E /* ServiceWrapper.docc in Sources */,
 				68A5F86527C4E55100F6728E /* RegisterRequest.swift in Sources */,
 				68A5F80E27B3B13E00F6728E /* ServiceHelper.swift in Sources */,
 				68A5F81E27B4D13200F6728E /* ProfileAPI.swift in Sources */,
+				68A3BC3E27D1EB9000CEBF1F /* Endpoint.swift in Sources */,
+				68A3BC3A27D1EA5A00CEBF1F /* ForgotPasswordRequest.swift in Sources */,
 				68A5F84927BD708800F6728E /* RegisterAPI.swift in Sources */,
 				68A5F84D27BD712D00F6728E /* CheckUserRequest.swift in Sources */,
+				68A3BC3C27D1EB0E00CEBF1F /* ForgotPasswordAPI.swift in Sources */,
 				68A5F81927B4934800F6728E /* LoginAPI.swift in Sources */,
 				68A5F81727B4930000F6728E /* LoginRequest.swift in Sources */,
 			);

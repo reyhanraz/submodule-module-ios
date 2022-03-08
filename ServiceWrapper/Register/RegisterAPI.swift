@@ -16,25 +16,25 @@ open class RegisterAPI: ServiceHelper{
     }
     
     public func postRegister(request: RegisterRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("accounts/register", method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
+        return super.request(Endpoint.register, method: .post ,parameters: request, encoding: JSONEncoding.default, isBasicAuth: true).retry(3).map { result in
             return (result.data, result.response)
         }
     }
     
     public func checkUser(request: CheckUserRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("api/v1/users/find", method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
+        return super.request(Endpoint.findUser, method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
             return (result.data, result.response)
         }
     }
     
     public func requestOTP(request: ChallengerRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("api/challenges", method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
+        return super.request(Endpoint.challenges, method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
             return (result.data, result.response)
         }
     }
     
     public func validateOTP(request: ChallengerRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("api/challenges/validate", method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
+        return super.request(Endpoint.validateChallenge, method: .post ,parameters: request, encoding: JSONEncoding.default).retry(3).map { result in
             return (result.data, result.response)
         }
     }

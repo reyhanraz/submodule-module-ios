@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3C26699013F3536D30568A94 /* Pods_ForgotPassword.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B2639DB190C0C1E494F5A8 /* Pods_ForgotPassword.framework */; };
+		687A509C27D60DEE00A7A124 /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A509B27D60DEE00A7A124 /* ResetPasswordViewModel.swift */; };
+		687A50A327D6FF9C00A7A124 /* ResetPasswordCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A50A227D6FF9C00A7A124 /* ResetPasswordCloudService.swift */; };
+		68A3BC4027D1EFE600CEBF1F /* NewForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC3F27D1EFE600CEBF1F /* NewForgotPasswordViewModel.swift */; };
+		68A3BC4227D1F08400CEBF1F /* ForgotPasswordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC4127D1F08400CEBF1F /* ForgotPasswordResponse.swift */; };
+		68A3BC4427D1F69500CEBF1F /* NewForgotPasswordCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC4327D1F69500CEBF1F /* NewForgotPasswordCloudService.swift */; };
 		A71DF3AF22902B5A002BE155 /* ForgotPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = A71DF3AD22902B5A002BE155 /* ForgotPassword.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A71DF3BB229032A5002BE155 /* ForgotPasswordApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71DF3BA229032A5002BE155 /* ForgotPasswordApi.swift */; };
 		A71DF3BD22903306002BE155 /* ForgotPasswordCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71DF3BC22903306002BE155 /* ForgotPasswordCloudService.swift */; };
@@ -21,7 +26,12 @@
 
 /* Begin PBXFileReference section */
 		22B2639DB190C0C1E494F5A8 /* Pods_ForgotPassword.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ForgotPassword.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		52EEBA1DBC35D298CE5632D4 /* Pods-ForgotPassword.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ForgotPassword.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-ForgotPassword/Pods-ForgotPassword.debug.xcconfig"; sourceTree = "<group>"; };
+		52EEBA1DBC35D298CE5632D4 /* Pods-ForgotPassword.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ForgotPassword.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-ForgotPassword/Pods-ForgotPassword.debug.xcconfig"; sourceTree = "<group>"; };
+		687A509B27D60DEE00A7A124 /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
+		687A50A227D6FF9C00A7A124 /* ResetPasswordCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCloudService.swift; sourceTree = "<group>"; };
+		68A3BC3F27D1EFE600CEBF1F /* NewForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		68A3BC4127D1F08400CEBF1F /* ForgotPasswordResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordResponse.swift; sourceTree = "<group>"; };
+		68A3BC4327D1F69500CEBF1F /* NewForgotPasswordCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewForgotPasswordCloudService.swift; sourceTree = "<group>"; };
 		A71DF3AA22902B5A002BE155 /* ForgotPassword.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ForgotPassword.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71DF3AD22902B5A002BE155 /* ForgotPassword.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgotPassword.h; sourceTree = "<group>"; };
 		A71DF3AE22902B5A002BE155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,7 +43,7 @@
 		A7DC214823273FB900D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC214A23273FBF00D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC214C23273FC300D06C1F /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5FE25F3714DE0022233D6BC /* Pods-ForgotPassword.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ForgotPassword.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-ForgotPassword/Pods-ForgotPassword.release.xcconfig"; sourceTree = "<group>"; };
+		B5FE25F3714DE0022233D6BC /* Pods-ForgotPassword.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ForgotPassword.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-ForgotPassword/Pods-ForgotPassword.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +97,8 @@
 				A71DF3B92290327D002BE155 /* ViewModel */,
 				A71DF3BA229032A5002BE155 /* ForgotPasswordApi.swift */,
 				A71DF3BC22903306002BE155 /* ForgotPasswordCloudService.swift */,
+				68A3BC4327D1F69500CEBF1F /* NewForgotPasswordCloudService.swift */,
+				687A50A227D6FF9C00A7A124 /* ResetPasswordCloudService.swift */,
 				A71DF3AD22902B5A002BE155 /* ForgotPassword.h */,
 				A71DF3AE22902B5A002BE155 /* Info.plist */,
 			);
@@ -98,6 +110,8 @@
 			children = (
 				A71DF3BE229037D9002BE155 /* ForgotPasswordViewModelType.swift */,
 				A71DF3C0229037E6002BE155 /* ForgotPasswordViewModel.swift */,
+				68A3BC3F27D1EFE600CEBF1F /* NewForgotPasswordViewModel.swift */,
+				687A509B27D60DEE00A7A124 /* ResetPasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -106,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				A71DF3C322904320002BE155 /* ForgotPasswordRequest.swift */,
+				68A3BC4127D1F08400CEBF1F /* ForgotPasswordResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -159,7 +174,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = "Adrena Teknologi Indonesia";
+				ORGANIZATIONNAME = "PT. Perintis Teknologi Nusantara";
 				TargetAttributes = {
 					A71DF3A922902B5A002BE155 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -224,9 +239,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68A3BC4027D1EFE600CEBF1F /* NewForgotPasswordViewModel.swift in Sources */,
 				A71DF3C422904320002BE155 /* ForgotPasswordRequest.swift in Sources */,
+				687A50A327D6FF9C00A7A124 /* ResetPasswordCloudService.swift in Sources */,
+				687A509C27D60DEE00A7A124 /* ResetPasswordViewModel.swift in Sources */,
 				A71DF3C1229037E6002BE155 /* ForgotPasswordViewModel.swift in Sources */,
 				A71DF3BD22903306002BE155 /* ForgotPasswordCloudService.swift in Sources */,
+				68A3BC4427D1F69500CEBF1F /* NewForgotPasswordCloudService.swift in Sources */,
+				68A3BC4227D1F08400CEBF1F /* ForgotPasswordResponse.swift in Sources */,
 				A71DF3BF229037D9002BE155 /* ForgotPasswordViewModelType.swift in Sources */,
 				A71DF3BB229032A5002BE155 /* ForgotPasswordApi.swift in Sources */,
 			);

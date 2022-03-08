@@ -26,13 +26,13 @@ open class ServiceHelper{
         })
     }
     
-    public func request<R: Encodable> (_ endPoint: String, method: HTTPMethod = .get, parameters: R?, encoding: ParameterEncoding = URLEncoding.default) -> Observable<DataResponse<Any>>  {
+    public func request<R: Encodable> (_ endPoint: String, method: HTTPMethod = .get, parameters: R?, encoding: ParameterEncoding = URLEncoding.default, isBasicAuth: Bool = false) -> Observable<DataResponse<Any>>  {
         let baseURL = "\(PlatformConfig.hostString)/\(endPoint)"
         var header = HTTPHeaders(PlatformConfig.defaultHttpHeaders)
         
         let param: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(parameters))) as? [String: Any] ?? [:]
         
-        if endPoint == "accounts/login" || endPoint == "accounts/register"{
+        if isBasicAuth{
             header.add(HTTPHeader.authorization(username: "web", password: "secret"))
             return Observable<DataResponse<Any>>.create { observer in
                 let request = ServiceHelper.dataRequest(baseURL, method: .post, parameters: param, encoding: JSONEncoding.default, headers: header) { response in
