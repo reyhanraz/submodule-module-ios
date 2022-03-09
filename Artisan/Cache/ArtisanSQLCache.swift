@@ -177,4 +177,14 @@ public class ArtisanSQLCache: Cache {
             assertionFailure()
         }
     }
+    
+    public static func dropTable(db: Database, tableName: String) throws{
+        try db.execute(sql: """
+            DROP TABLE IF EXISTS \(tableName);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.service);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.category);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.categoryType);
+        """)
+    }
+
 }

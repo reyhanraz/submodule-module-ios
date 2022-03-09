@@ -137,6 +137,17 @@ open class BookingSQLCache: Cache {
         }
     }
     
+    public static func dropOldTable(db: Database, tableName: String) throws{
+        try db.execute(sql: """
+            DROP TABLE IF EXISTS \(tableName);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Booking.Relation.artisan);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Booking.Relation.customer);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Booking.Relation.address);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Booking.Relation.bookingService);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Booking.Relation.customizeRequestService);
+        """)
+    }
+    
     public func get(request: BookingListRequest?) -> Booking? {
         let bookings = getList(request: request)
         
