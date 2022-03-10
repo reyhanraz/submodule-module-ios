@@ -110,9 +110,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
                     if result.2.isEmpty{
                         return .just(.empty)
                     }
-                    guard result.2.starts(with: "0"),
-                          let _ = try? phoneNumberKit.parse(result.2, withRegion: phone.1)
-                    else {
+                    guard let _ = try? phoneNumberKit.parse(result.2, withRegion: phone.1) else {
                         return .just(.failed(message: "invalid_phone".l10n()))
                     }
                     

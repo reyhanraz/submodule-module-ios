@@ -16,7 +16,7 @@ open class LoginAPI: ServiceHelper{
     }
     
     public func requstLogin(request: LoginRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("accounts/login", method: .post ,parameters: request).retry(3).map { result in
+        return super.request(Endpoint.login, method: .post ,parameters: request, isBasicAuth: true).retry(3).map { result in
             return (result.data, result.response)
         }
     }
