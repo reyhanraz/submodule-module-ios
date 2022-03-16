@@ -79,8 +79,7 @@ public struct PostRegisterViewModel: PostRegistrationViewModelType, PostRegistra
                                                       email: request.email,
                                                       password: request.password,
                                                       gender: request.gender,
-                                                      challenge_token: challenge_token,
-                                                      type: request.type)
+                                                      challenge_token: challenge_token)
         
         _requestProperty.onNext(_request)
     }

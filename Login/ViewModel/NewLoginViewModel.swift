@@ -17,10 +17,10 @@ import GoogleSignIn
 import FBSDKLoginKit
 import AuthenticationServices
 
-public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
+public struct NewLoginViewModel: LoginViewModelType, LoginViewModelOutput {
     public typealias T = Token
     
-    public typealias Outputs = LoginCustomerViewModel
+    public typealias Outputs = NewLoginViewModel
     
     public var outputs: Outputs { return self }
     
