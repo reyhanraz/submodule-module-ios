@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		28529F3FA54F5F7F53FA5CC9 /* Pods_Login.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7EA275672AA26B5BEE53C7 /* Pods_Login.framework */; };
-		68A5F7F027B247F700F6728E /* LoginCustomerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F7EF27B247F700F6728E /* LoginCustomerViewModel.swift */; };
+		68A5F7F027B247F700F6728E /* NewLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F7EF27B247F700F6728E /* NewLoginViewModel.swift */; };
 		68A5F81027B3C8D900F6728E /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F80F27B3C8D900F6728E /* ServiceWrapper.framework */; };
 		68A5F81127B3C8D900F6728E /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F80F27B3C8D900F6728E /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68A5F81B27B4CFAB00F6728E /* NewLoginCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A5F81A27B4CFAA00F6728E /* NewLoginCloudService.swift */; };
@@ -40,7 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		68A5F7EF27B247F700F6728E /* LoginCustomerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCustomerViewModel.swift; sourceTree = "<group>"; };
+		68A5F7EF27B247F700F6728E /* NewLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLoginViewModel.swift; sourceTree = "<group>"; };
 		68A5F80F27B3C8D900F6728E /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68A5F81A27B4CFAA00F6728E /* NewLoginCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLoginCloudService.swift; sourceTree = "<group>"; };
 		A74BA888228AD805005F2ADF /* Login.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Login.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,9 +56,9 @@
 		A7FDB043228AE0DC00F9CDF2 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		A7FDB045228AE4B200F9CDF2 /* LoginViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelType.swift; sourceTree = "<group>"; };
 		A7FDB047228AE4BB00F9CDF2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		B41F998BB1F421DDFA390F2C /* Pods-Login.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Login.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Login/Pods-Login.release.xcconfig"; sourceTree = "<group>"; };
+		B41F998BB1F421DDFA390F2C /* Pods-Login.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Login.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Login/Pods-Login.release.xcconfig"; sourceTree = "<group>"; };
 		BB7EA275672AA26B5BEE53C7 /* Pods_Login.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Login.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C959404079555DE5F515EBA4 /* Pods-Login.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Login.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Login/Pods-Login.debug.xcconfig"; sourceTree = "<group>"; };
+		C959404079555DE5F515EBA4 /* Pods-Login.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Login.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Login/Pods-Login.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +145,7 @@
 			children = (
 				A7FDB045228AE4B200F9CDF2 /* LoginViewModelType.swift */,
 				A7FDB047228AE4BB00F9CDF2 /* LoginViewModel.swift */,
-				68A5F7EF27B247F700F6728E /* LoginCustomerViewModel.swift */,
+				68A5F7EF27B247F700F6728E /* NewLoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -256,7 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68A5F7F027B247F700F6728E /* LoginCustomerViewModel.swift in Sources */,
+				68A5F7F027B247F700F6728E /* NewLoginViewModel.swift in Sources */,
 				A7FDB046228AE4B200F9CDF2 /* LoginViewModelType.swift in Sources */,
 				68A5F81B27B4CFAB00F6728E /* NewLoginCloudService.swift in Sources */,
 				A7FDB042228AE0D200F9CDF2 /* Login.swift in Sources */,
