@@ -28,9 +28,10 @@ public class ArtisanSQLCache: Cache {
         try db.create(table: tableName) { body in
             body.column(CommonColumns._id.rawValue, .integer).primaryKey()
             body.column(Artisan.Columns.id.rawValue, .integer).notNull().unique(onConflict: .replace)
-            body.column(Artisan.Columns.name.rawValue, .text).notNull()
-            body.column(Artisan.Columns.email.rawValue, .text).notNull()
-            body.column(Artisan.Columns.phone.rawValue, .text).notNull()
+            body.column(Artisan.Columns.name.rawValue, .text)
+            body.column(Artisan.Columns.username.rawValue, .text)
+            body.column(Artisan.Columns.email.rawValue, .text)
+            body.column(Artisan.Columns.phone.rawValue, .text)
             body.column(Artisan.Columns.dob.rawValue, .integer)
             body.column(Artisan.Columns.about.rawValue, .text)
             body.column(Artisan.Columns.status.rawValue, .text).notNull()
@@ -176,4 +177,14 @@ public class ArtisanSQLCache: Cache {
             assertionFailure()
         }
     }
+    
+    public static func dropTable(db: Database, tableName: String) throws{
+        try db.execute(sql: """
+            DROP TABLE IF EXISTS \(tableName);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.service);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.category);
+            DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.categoryType);
+        """)
+    }
+
 }

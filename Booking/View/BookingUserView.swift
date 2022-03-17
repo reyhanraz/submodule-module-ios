@@ -175,7 +175,8 @@ class BookingUserView: UIView {
     
     @objc func showContactOptions() {
         if let artisan = artisan {
-            delegate?.showContactOptions(name: artisan.name, phone: artisan.phone)
+            guard let phone = artisan.phone else { return }
+            delegate?.showContactOptions(name: artisan.name, phone: phone)
         } else if let customer = customer {
             delegate?.showContactOptions(name: customer.name, phone: customer.phone)
         }

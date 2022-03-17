@@ -37,7 +37,9 @@ public struct PaymentHistoryDetail: Codable, ResponseType {
             public let transactionFee: Decimal
             public let transactionReceivedAmount: Decimal?
             public let createdAt: Date
-            public let booking: String?
+            public let bookingName: String?
+            public let bookingReferenceId: String?
+            public let customer: User?
             
             public init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -55,8 +57,10 @@ public struct PaymentHistoryDetail: Codable, ResponseType {
                 bookingId = try container.decodeIfPresent(Int.self, forKey: .bookingId)
                 artisanId = try container.decodeIfPresent(Int.self, forKey: .artisanId)
                 customerId = try container.decodeIfPresent(Int.self, forKey: .customerId)
-                booking = try container.decodeIfPresent(String.self, forKey: .booking)
-                
+                bookingName = try container.decodeIfPresent(String.self, forKey: .bookingName)
+                bookingReferenceId = try container.decodeIfPresent(String.self, forKey: .bookingReferenceId)
+                customer = try container.decodeIfPresent(User.self, forKey: .customer)
+
                 createdAt = decodedCreatedAt.toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") ?? Date()
                 
                 if let amount = decodedChargedAmount {
@@ -96,7 +100,9 @@ public struct PaymentHistoryDetail: Codable, ResponseType {
                 case transactionFee
                 case transactionReceivedAmount
                 case createdAt
-                case booking
+                case bookingName = "booking_name"
+                case bookingReferenceId = "booking_reference_id"
+                case customer
             }
         }
         

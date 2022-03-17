@@ -17,6 +17,7 @@ extension Artisan: MultiTableRecord {
         var params: [String : DatabaseValueConvertible?] = [
             Artisan.Columns.id.rawValue: id,
             Artisan.Columns.name.rawValue: name,
+            Artisan.Columns.username.rawValue: username,
             Artisan.Columns.email.rawValue: email,
             Artisan.Columns.phone.rawValue: phone,
             Artisan.Columns.dob.rawValue: dob,
@@ -185,6 +186,7 @@ extension Artisan: MultiTableRecord {
                 id: row[Artisan.Columns.id],
                 email: row[Artisan.Columns.email],
                 name: row[Artisan.Columns.name],
+                username: row[Artisan.Columns.name],
                 phone: row[Artisan.Columns.phone],
                 verified: nil,
                 avatar: media,
