@@ -35,7 +35,7 @@ public struct RegisterRequest: Encodable {
         self.dateofbirth = nil
     }
     
-    public init(name: String, email: String, password: String, phone: String? = nil, gender: User.Gender, challenge_token: String? = nil, instagram: String?, username: String, dateofbirth: String){
+    public init(name: String, email: String, password: String, phone: String? = nil, gender: User.Gender, challenge_token: String? = nil, instagram: String, username: String, dateofbirth: String){
         self.name = name
         self.email = email
         self.password = password
