@@ -224,7 +224,7 @@ public class BookingView: UIView {
                 imgAvatar.isHidden = false
                 ratingView.isHidden = false
                 
-                lblName.text = booking.artisan?.name
+                lblName.text = booking.artisan?.username
                 imgAvatar.loadMedia(url: booking.artisan?.avatar?.small, failure: UIImage(named: "Avatar", bundle: LogoView.self))
                 ratingView.rating = booking.artisan?.reviewRating
             }

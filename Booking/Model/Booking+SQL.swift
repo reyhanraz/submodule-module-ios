@@ -131,6 +131,7 @@ extension Booking: MultiTableRecord {
                     id: artisanRow[Artisan.Columns.id],
                     email: artisanRow[Artisan.Columns.email],
                     name: artisanRow[Artisan.Columns.name],
+                    username: artisanRow[Artisan.Columns.username],
                     phone: artisanRow[Artisan.Columns.phone],
                     verified: nil,
                     avatar: artisanAvatar,
