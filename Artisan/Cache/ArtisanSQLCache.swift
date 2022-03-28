@@ -29,6 +29,7 @@ public class ArtisanSQLCache: Cache {
             body.column(CommonColumns._id.rawValue, .integer).primaryKey()
             body.column(Artisan.Columns.id.rawValue, .integer).notNull().unique(onConflict: .replace)
             body.column(Artisan.Columns.name.rawValue, .text)
+            body.column(Artisan.Columns.username.rawValue, .text)
             body.column(Artisan.Columns.email.rawValue, .text)
             body.column(Artisan.Columns.phone.rawValue, .text)
             body.column(Artisan.Columns.dob.rawValue, .integer)
@@ -177,7 +178,7 @@ public class ArtisanSQLCache: Cache {
         }
     }
     
-    public static func dropOldTable(db: Database, tableName: String) throws{
+    public static func dropTable(db: Database, tableName: String) throws{
         try db.execute(sql: """
             DROP TABLE IF EXISTS \(tableName);
             DROP TABLE IF EXISTS \(tableName)\(TableNames.Artisan.Relation.service);
