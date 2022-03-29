@@ -35,6 +35,7 @@ public struct NewLoginViewModel: LoginViewModelType, LoginViewModelOutput {
     public var unauthorized: Driver<Unauthorized>
     public let exception: Driver<Exception>
     public let success: Driver<T>
+    public let failed: Driver<ValidationResult>
     
     public let dismissResponder: Driver<Bool>
     
@@ -56,12 +57,14 @@ public struct NewLoginViewModel: LoginViewModelType, LoginViewModelOutput {
         let unauthorizedProperty = PublishSubject<Unauthorized>()
         let exceptionProperty = PublishSubject<Exception>()
         let dismissResponderProperty = PublishSubject<Bool>()
+        let failedProperty = PublishSubject<ValidationResult>()
         
         loading = loadingProperty.asDriver(onErrorDriveWith: .empty())
         success = successProperty.asDriver(onErrorDriveWith: .empty())
         unauthorized = unauthorizedProperty.asDriver(onErrorDriveWith: .empty())
         exception = exceptionProperty.asDriver(onErrorDriveWith: .empty())
         dismissResponder = dismissResponderProperty.asDriver(onErrorJustReturn: false)
+            failed = failedProperty.asDriver(onErrorDriveWith: .empty())
         
         validatedEmail = email.flatMapLatest { email in
             guard let email = email else { return .empty() }
@@ -118,8 +121,8 @@ public struct NewLoginViewModel: LoginViewModelType, LoginViewModelOutput {
                     exceptionProperty.onNext(Exception(title: "login_failed".l10n(), message: "login_error_message".l10n(), error: error))
                 case .unauthorized:
                     unauthorizedProperty.onNext(Unauthorized(title: "login_failed".l10n(), message: "login_unauthorized".l10n(), showLogin: false))
-                case .fail(status: _, errors: _):
-                    unauthorizedProperty.onNext(Unauthorized(title: "login_failed".l10n(), message: "login_unauthorized".l10n(), showLogin: false))
+                case let .fail(status: response, errors: _):
+                    failedProperty.onNext(.failed(message: response.message))
                 }
                 
                 return .empty()
