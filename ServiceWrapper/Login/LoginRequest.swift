@@ -15,9 +15,10 @@ public struct LoginRequest: Encodable {
         case facebook
         case apple
         case refreshToken = "refresh_token"
-        case artisanPassword = "artisan_password"
+        case artisanPassword = "password_artisan"
         case artisanGoogle = "google_artisan"
         case artisanFacebook = "facebook_artisan"
+        case artisanApple = "apple_artisan"
         case guest
         
     }

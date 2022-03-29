@@ -10,6 +10,7 @@ public struct CheckUserRequest: Encodable {
     public enum FindType: String{
         case email
         case phoneNumber
+        case username
     }
 
     let identifier: String

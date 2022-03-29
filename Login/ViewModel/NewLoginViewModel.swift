@@ -17,10 +17,10 @@ import GoogleSignIn
 import FBSDKLoginKit
 import AuthenticationServices
 
-public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
+public struct NewLoginViewModel: LoginViewModelType, LoginViewModelOutput {
     public typealias T = Token
     
-    public typealias Outputs = LoginCustomerViewModel
+    public typealias Outputs = NewLoginViewModel
     
     public var outputs: Outputs { return self }
     
@@ -41,12 +41,15 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
     var signInConfig: GIDConfiguration?
     
     private let _requestProperty = PublishSubject<ServiceWrapper.LoginRequest>()
+    private let _userKind: User.Kind
     
     public init<U: UseCase>(
         email: Driver<String?>,
         password: Driver<String?>,
-        useCase: U
+        useCase: U, userKind: User.Kind = .customer
         ) where U.R == ServiceWrapper.LoginRequest, U.T == T, U.E == Error {
+            
+        _userKind = userKind
         
         let loadingProperty = PublishSubject<Loading>()
         let successProperty = PublishSubject<T>()
@@ -140,9 +143,12 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
             guard let idToken = user?.authentication.idToken else {
                 return
             }
-            
-            // TODO: idtoken for identifier field (endpoint: accounts/login)
-            execute(idetifier: idToken, grantType: .google)
+            switch _userKind{
+            case .customer:
+                execute(idetifier: idToken, grantType: .google)
+            case .artisan:
+                execute(idetifier: idToken, grantType: .artisanGoogle)
+            }
         }
     }
     
@@ -151,9 +157,12 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
             guard let token = result?.token?.tokenString else {
                 return
             }
-            
-            // TODO: token for identifier field (endpoint: accounts/login)
-            execute(idetifier: token, grantType: .facebook)
+            switch _userKind{
+            case .customer:
+                execute(idetifier: token, grantType: .facebook)
+            case .artisan:
+                execute(idetifier: token, grantType: .artisanFacebook)
+            }
         }
     }
     
@@ -166,8 +175,6 @@ public struct LoginCustomerViewModel: LoginViewModelType, LoginViewModelOutput {
             let authorizationController = ASAuthorizationController(authorizationRequests: [request])
             authorizationController.delegate = vc as? ASAuthorizationControllerDelegate
             authorizationController.performRequests()
-        } else {
-            // Fallback on earlier versions
         }
     }
     

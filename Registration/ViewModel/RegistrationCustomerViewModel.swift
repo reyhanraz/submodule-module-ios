@@ -181,8 +181,7 @@ public struct RegisterCustomerViewModel: RegisterProfileViewModelType, RegisterP
                                                    email: email,
                                                    password: password,
                                                    phone: formattedPhone,
-                                                   gender: gender == "male".l10n() ? .male : .female,
-                                                   type: "customer"),
+                                                   gender: gender == "male".l10n() ? .male : .female),
                     mobilePhone)
         }
             
