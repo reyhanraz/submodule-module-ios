@@ -18,6 +18,7 @@
 		6862045327FC160000C2FBF6 /* UploadMediaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862045227FC160000C2FBF6 /* UploadMediaRequest.swift */; };
 		6862045527FC163100C2FBF6 /* UploadConfirmedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862045427FC163100C2FBF6 /* UploadConfirmedRequest.swift */; };
 		6862045727FC172800C2FBF6 /* UploadAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862045627FC172800C2FBF6 /* UploadAPI.swift */; };
+		6872A42D27FD92AA002EC72A /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872A42C27FD92AA002EC72A /* CalendarAPI.swift */; };
 		687A509F27D60E2D00A7A124 /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A509E27D60E2D00A7A124 /* ResetPasswordRequest.swift */; };
 		687A50A127D60EB100A7A124 /* ResetPasswordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A50A027D60EB100A7A124 /* ResetPasswordAPI.swift */; };
 		68A3BC3A27D1EA5A00CEBF1F /* ForgotPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3BC3927D1EA5900CEBF1F /* ForgotPasswordRequest.swift */; };
@@ -64,7 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
+		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
 		6862042927FB5B6700C2FBF6 /* AddressRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRequest.swift; sourceTree = "<group>"; };
 		6862042B27FB5E4000C2FBF6 /* AddressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAPI.swift; sourceTree = "<group>"; };
 		6862043627FB63EB00C2FBF6 /* ArtisanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanFilter.swift; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		6862045227FC160000C2FBF6 /* UploadMediaRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadMediaRequest.swift; sourceTree = "<group>"; };
 		6862045427FC163100C2FBF6 /* UploadConfirmedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadConfirmedRequest.swift; sourceTree = "<group>"; };
 		6862045627FC172800C2FBF6 /* UploadAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAPI.swift; sourceTree = "<group>"; };
+		6872A42C27FD92AA002EC72A /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
 		687A509E27D60E2D00A7A124 /* ResetPasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequest.swift; sourceTree = "<group>"; };
 		687A50A027D60EB100A7A124 /* ResetPasswordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordAPI.swift; sourceTree = "<group>"; };
 		68A3BC3927D1EA5900CEBF1F /* ForgotPasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRequest.swift; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 		68BA613C27FD46D800DA70F8 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		68BA614727FD699700DA70F8 /* PaymentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAPI.swift; sourceTree = "<group>"; };
 		AD58E04E01F009D2188EEE85 /* Pods_ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5D1A4D35E1DEA98AACAAF47 /* Pods-ServiceWrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.debug.xcconfig"; path = "Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.debug.xcconfig"; sourceTree = "<group>"; };
+		C5D1A4D35E1DEA98AACAAF47 /* Pods-ServiceWrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.debug.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +236,7 @@
 		68A5F7FF27B3AB8500F6728E /* ServiceWrapper */ = {
 			isa = PBXGroup;
 			children = (
+				68BA614927FD924D00DA70F8 /* Calendar */,
 				6862042827FB5B3D00C2FBF6 /* Address */,
 				6862043527FB63DA00C2FBF6 /* Artisan */,
 				68BA611827FC882900DA70F8 /* ArtisanService */,
@@ -344,6 +347,14 @@
 				68BA614727FD699700DA70F8 /* PaymentAPI.swift */,
 			);
 			path = Payment;
+			sourceTree = "<group>";
+		};
+		68BA614927FD924D00DA70F8 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				6872A42C27FD92AA002EC72A /* CalendarAPI.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -468,6 +479,7 @@
 				68A5F86527C4E55100F6728E /* RegisterRequest.swift in Sources */,
 				68A5F80E27B3B13E00F6728E /* ServiceHelper.swift in Sources */,
 				68A5F81E27B4D13200F6728E /* ProfileAPI.swift in Sources */,
+				6872A42D27FD92AA002EC72A /* CalendarAPI.swift in Sources */,
 				6862045727FC172800C2FBF6 /* UploadAPI.swift in Sources */,
 				68A3BC3E27D1EB9000CEBF1F /* Endpoint.swift in Sources */,
 				6862045327FC160000C2FBF6 /* UploadMediaRequest.swift in Sources */,

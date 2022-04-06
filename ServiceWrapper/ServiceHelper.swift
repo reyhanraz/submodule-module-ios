@@ -21,6 +21,7 @@ open class ServiceHelper{
     private static func dataRequest(_ urlString: String, method: HTTPMethod = .get, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders, onCompleted:@escaping (DataResponse<Any>) -> Void) -> DataRequest {
         AF.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers).responseJSON { response in
             #if DEBUG
+            print("ServiceWrapper: Request Headers: \(response.request?.headers)")
             print("ServiceWrapper: Response: \(response.debugDescription)")
             #endif
             onCompleted(response)

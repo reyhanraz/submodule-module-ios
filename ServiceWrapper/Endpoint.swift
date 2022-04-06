@@ -79,4 +79,6 @@ struct Endpoint{
     static let bookingPaymentSummaryHistories = "bookingPaymentSummaryHistories"
     static let bookingPaymentSummaryHistory = "bookingPaymentSummaryHistory"
     
+    static let artisanCalendar = "artisanCalendar"
+    
 }
