@@ -2,8 +2,8 @@
 //  ForgotPasswordViewModel.swift
 //  ForgotPassword
 //
-//  Created by Fandy Gotama on 18/05/19.
-//  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
+//  Created by Reyhan Rifqi Azzami on 04/03/22.
+//  Copyright © 2022 PT. Perintis Teknologi Nusantara. All rights reserved.
 //
 
 import RxSwift
@@ -12,9 +12,11 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
 
-public struct ForgotPasswordViewModel<T: ResponseType>: ForgotPasswordViewModelType, ForgotPasswordViewModelOutput {
-    public typealias Outputs = ForgotPasswordViewModel<T>
+public struct ForgotPasswordViewModel {
+    public typealias Outputs = ForgotPasswordViewModel
+    public typealias T = Detail<ForgotPasswordResponse>
     
     public var outputs: Outputs { return self }
     
@@ -31,10 +33,11 @@ public struct ForgotPasswordViewModel<T: ResponseType>: ForgotPasswordViewModelT
     
     public let dismissResponder: Driver<Bool>
     
+    public let _requestProperty = PublishSubject<ServiceWrapper.ForgotPasswordRequest>()
+    
     public init<U: UseCase>(
         email: Driver<String>,
-        resetSignal: Signal<()>,
-        useCase: U) where U.R == ForgotPasswordRequest, U.T == T, U.E == Error {
+        useCase: U) where U.R == ServiceWrapper.ForgotPasswordRequest, U.T == T, U.E == Error {
         
         let loadingProperty = PublishSubject<Loading>()
         let successProperty = PublishSubject<T>()
@@ -60,13 +63,14 @@ public struct ForgotPasswordViewModel<T: ResponseType>: ForgotPasswordViewModelT
         
         resetEnabled = validatedEmail.map { $0.isValid }.distinctUntilChanged()
         
-        reset = resetSignal.withLatestFrom(email)
+        reset = _requestProperty
+                .asDriver(onErrorDriveWith: .empty())
             .do(onNext: { _ in
                 loadingProperty.onNext(Loading(start: true, text: "resetting".l10n()))
                 dismissResponderProperty.onNext(false)
             })
-            .flatMapLatest { email in
-                return useCase.execute(request: ForgotPasswordRequest(email: email)).asDriver(onErrorDriveWith: .empty())
+            .flatMapLatest { request in
+                return useCase.execute(request: request).asDriver(onErrorDriveWith: .empty())
             }
             .do(onNext: { _ in loadingProperty.onNext(Loading(start: false, text: "reset_password".l10n())) })
             .flatMapLatest { result in
@@ -84,7 +88,12 @@ public struct ForgotPasswordViewModel<T: ResponseType>: ForgotPasswordViewModelT
                 return .empty()
         }
     }
+    
+    public func executeRequest(email: String?){
+        guard let email = email else { return }
+
+        let type = "config.path".l10n()
+        let form = ServiceWrapper.ForgotPasswordRequest(email: email, type: type)
+        _requestProperty.onNext(form)
+    }
 }
-
-
-

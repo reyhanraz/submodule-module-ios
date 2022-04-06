@@ -3,38 +3,35 @@
 // Copyright (c) 2020 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct GetPaymentURLCloudService<CloudResponse: ResponseType>: ServiceType {
+public class GetPaymentURLCloudService<CloudResponse: ResponseType>: PaymentAPI, ServiceType {
     public typealias R = PaymentRequest
 
     public typealias T = CloudResponse
     public typealias E = Error
 
-    private let _service: MoyaProvider<PaymentApi>
-
-    public init(service: MoyaProvider<PaymentApi> = MoyaProvider<PaymentApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init(){
+        super.init()
     }
 
     public func get(request: PaymentRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
 
-        let response: Single<Response>
+        let response: Observable<(Data?, HTTPURLResponse?)>
 
         if request.refund {
-            response = _service.rx.request(.getRefundURL(bookingId: request.bookingId))
+            response = super.getRefundURL(bookingId: request.bookingId)
         } else {
-            response = _service.rx.request(.getInvoiceURL(bookingId: request.bookingId, artisanId: request.artisanId))
+            response = super.getInvoiceURL(bookingId: request.bookingId, artisanId: request.artisanId)
         }
 
         return response
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

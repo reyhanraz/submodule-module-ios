@@ -12,6 +12,7 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
 
 public struct PostArtisanServiceViewModel<T: ResponseType>: PostArtisanServiceViewModelType, PostArtisanServiceViewModelOutput {
     public typealias Outputs = PostArtisanServiceViewModel<T>

@@ -6,31 +6,27 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct ChangePasswordCloudService<CloudResponse: ResponseType>: ServiceType {
+public class ChangePasswordCloudService<CloudResponse: ResponseType>: ChangePasswordAPI, ServiceType {
     public typealias R = ChangePasswordRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
-    
-    private let _service: MoyaProvider<ChangePasswordApi>
-    
-    public init(service: MoyaProvider<ChangePasswordApi> = MoyaProvider<ChangePasswordApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+        
+    public override init() {
+        super.init()
     }
     
     public func get(request: ChangePasswordRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        return _service.rx
-            .request(.change(request: request))
+        return super.postChangePassword(request: request)
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

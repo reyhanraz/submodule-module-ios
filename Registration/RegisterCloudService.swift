@@ -1,37 +1,33 @@
 //
-//  RegisterCloudService.swift
+//  NewRegisterCloudService.swift
 //  Registration
 //
-//  Created by Fandy Gotama on 13/05/19.
-//  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
+//  Created by Reyhan Rifqi Azzami on 22/02/22.
+//  Copyright © 2022 PT. Perintis Teknologi Nusantara. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct RegisterCloudService<CloudResponse: ResponseType>: ServiceType {
-    public typealias R = RegisterRequest
-    
-    public typealias T = CloudResponse
+public class RegisterCloudService: RegisterAPI, ServiceType {
+    public typealias R = ServiceWrapper.RegisterRequest
+
+    public typealias T = RegisterResponse
     public typealias E = Error
-    
-    private let _service: MoyaProvider<RegisterApi>
-    
-    public init(service: MoyaProvider<RegisterApi> = MoyaProvider<RegisterApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+
+
+    public override init() {
+        super.init()
     }
     
-    public func get(request: RegisterRequest?) -> Observable<Result<T, Error>> {
+    public func get(request: ServiceWrapper.RegisterRequest?) -> Observable<Result<RegisterResponse, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
-        
-        return _service.rx
-            .request(.register(request: request))
-            .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
-            .catchError { error in return .just(.error(error)) }
-            .asObservable()
+
+        return self.postRegister(request: request).map { (data, response) in
+            self.parse(data: data, statusCode: response?.statusCode)
+        }
     }
+
 }

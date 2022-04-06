@@ -6,38 +6,35 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct UpdateFavoriteCloudService<CloudResponse: ResponseType>: ServiceType {
+public class UpdateFavoriteCloudService<CloudResponse: ResponseType>: FavoriteAPI, ServiceType {
     public typealias R = FavoriteRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<FavoriteApi>
-    
-    public init(service: MoyaProvider<FavoriteApi> = MoyaProvider<FavoriteApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init() {
+        super.init()
     }
     
     public func get(request: FavoriteRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        let response: Single<Response>
+        let response: Observable<(Data?, HTTPURLResponse?)>
         
         if request.action == .add {
-            response = _service.rx.request(.add(artisanId: request.id))
+            response = super.setFavorite(artisanID: request.id)
         } else {
-            response = _service.rx.request(.remove(artisanId: request.id))
+            response = super.removeFavorite(artisanID: request.id)
         }
         
         return response
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

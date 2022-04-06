@@ -13,13 +13,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		56F759D2FEBE0A35F9E4818E /* Pods-BubbleShowCase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleShowCase.debug.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-BubbleShowCase/Pods-BubbleShowCase.debug.xcconfig"; sourceTree = "<group>"; };
+		56F759D2FEBE0A35F9E4818E /* Pods-BubbleShowCase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleShowCase.debug.xcconfig"; path = "Target Support Files/Pods-BubbleShowCase/Pods-BubbleShowCase.debug.xcconfig"; sourceTree = "<group>"; };
 		AF2260A62D0748211BF2D6B4 /* Pods_BubbleShowCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BubbleShowCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0EE5290213E89F7003E84EC /* BubbleShowCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BubbleShowCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0EE5293213E89F7003E84EC /* ShowCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShowCase.h; sourceTree = "<group>"; };
 		B0EE5294213E89F7003E84EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0EE529B213E8A97003E84EC /* BubbleShowCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleShowCase.swift; sourceTree = "<group>"; };
-		CF4211B903FB110D12AA149E /* Pods-BubbleShowCase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleShowCase.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-BubbleShowCase/Pods-BubbleShowCase.release.xcconfig"; sourceTree = "<group>"; };
+		CF4211B903FB110D12AA149E /* Pods-BubbleShowCase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleShowCase.release.xcconfig"; path = "Target Support Files/Pods-BubbleShowCase/Pods-BubbleShowCase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

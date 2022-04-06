@@ -16,7 +16,12 @@ open class ResetPasswordAPI: ServiceHelper{
     }
     
     public func resetPassword(request: ResetPasswordRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.resetPassword, method: .post ,parameters: request, encoding: JSONEncoding.default, isBasicAuth: true).retry(3).map { result in
+        return super.request(Endpoint.resetPassword,
+                             method: .post,
+                             parameter: request,
+                             encoding: JSONEncoding.default,
+                             isBasicAuth: true)
+        .retry(3).map { result in
             return (result.data, result.response)
         }
     }

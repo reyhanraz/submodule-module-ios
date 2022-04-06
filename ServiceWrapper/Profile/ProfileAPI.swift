@@ -11,7 +11,7 @@ import RxSwift
 import Alamofire
 import L10n_swift
 
-open class ProfileAPI: ServiceHelper{
+open class ProfileAPI<R: Encodable>: ServiceHelper{
     public override init(){
         super.init()
     }
@@ -21,9 +21,19 @@ open class ProfileAPI: ServiceHelper{
         if let id = request{
             param["id"] = id
         }
-        return super.request("\("config.path".l10n())Profile", parameters: param).retry(3).map { result in
+        return super.request("\("config.path".l10n())Profile", parameter: param).retry(3).map { result in
             return (result.data, result.response)
         }
+    }
+    
+    public func updateProfile(request: R) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request("\("config.path".l10n())Profile",
+                             method: HTTPMethod.put,
+                             parameter: request,
+                             encoding: JSONEncoding.default)
+            .retry(3).map { result in
+                return (result.data, result.response)
+            }
     }
     
 }

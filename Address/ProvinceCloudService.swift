@@ -6,29 +6,25 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import Platform
 
-public struct ProvinceCloudService<CloudResponse: ResponseType>: ServiceType {
+public class ProvinceCloudService<CloudResponse: ResponseType>: AddressAPI, ServiceType {
     public typealias R = ListRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<AddressApi>
-    
-    public init(service: MoyaProvider<AddressApi> = MoyaProvider<AddressApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init(){
+        super.init()
     }
     
     public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
         
-        return _service.rx
-            .request(.getProvinceList)
+        return super.getProvinceList()
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

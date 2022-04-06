@@ -11,7 +11,7 @@ import SkeletonView
 import SwipeCellKit
 import Platform
 
-protocol AddressAdapterDelegate: class {
+protocol AddressAdapterDelegate: AnyObject {
     func addressTapped(address: Address)
     func addressDeleted(address: Address)
     func buttonDisclosureTapped(address: Address)

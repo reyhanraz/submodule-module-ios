@@ -11,6 +11,7 @@ import RxCocoa
 import Platform
 import Common
 import Domain
+import ServiceWrapper
 
 public struct ChangePasswordViewModel<T: ResponseType>: ChangePasswordViewModelType, ChangePasswordViewModelOutput {
     public typealias Outputs = ChangePasswordViewModel<T>

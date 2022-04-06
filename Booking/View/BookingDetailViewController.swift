@@ -17,7 +17,7 @@ import Toast_Swift
 import Payment
 import FittedSheets
 
-public protocol BookingDetailViewControllerDelegate: class {
+public protocol BookingDetailViewControllerDelegate: AnyObject {
     func statusUpdated(booking: Booking)
     func paymentUpdated(booking: Booking)
     func editBooking(booking: Booking)

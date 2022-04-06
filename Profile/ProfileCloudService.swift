@@ -11,7 +11,7 @@ import L10n_swift
 import Platform
 import ServiceWrapper
 
-public class ProfileCloudService<Request: Encodable, CloudResponse: ResponseType>: ServiceWrapper.ProfileAPI, ServiceType {
+public class ProfileCloudService<Request: Encodable, CloudResponse: ResponseType>: ProfileAPI<Request>, ServiceType {
     
     public typealias R = Int
     

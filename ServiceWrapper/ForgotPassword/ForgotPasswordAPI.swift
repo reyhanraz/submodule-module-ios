@@ -16,7 +16,12 @@ open class ForgotPasswordAPI: ServiceHelper{
     }
     
     public func forgotPassword(request: ForgotPasswordRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.forgotPassword, method: .post ,parameters: request, encoding: JSONEncoding.default, isBasicAuth: true).retry(3).map { result in
+        return super.request(Endpoint.forgotPassword,
+                             method: HTTPMethod.post,
+                             parameter: request,
+                             encoding: JSONEncoding.default,
+                             isBasicAuth: true)
+        .retry(3).map { result in
             return (result.data, result.response)
         }
     }

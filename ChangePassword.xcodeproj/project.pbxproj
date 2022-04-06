@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2DFA7D4388A053F00FCC7942 /* Pods_ChangePassword.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48257AF99C8C2F9AFD97A848 /* Pods_ChangePassword.framework */; };
+		68BA612327FCA38E00DA70F8 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA612227FCA38E00DA70F8 /* ServiceWrapper.framework */; };
+		68BA612427FCA38E00DA70F8 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA612227FCA38E00DA70F8 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A748F6DD22E37D1700410436 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748F6DC22E37D1700410436 /* ChangePasswordViewController.swift */; };
 		A748F6E122E380CE00410436 /* ChangePasswordViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748F6E022E380CE00410436 /* ChangePasswordViewModelType.swift */; };
 		A748F6E322E3811300410436 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748F6E222E3811300410436 /* ChangePasswordViewModel.swift */; };
-		A748F6E622E3819800410436 /* ChangePasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748F6E522E3819800410436 /* ChangePasswordRequest.swift */; };
-		A748F6E822E3831C00410436 /* ChangePasswordApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748F6E722E3831C00410436 /* ChangePasswordApi.swift */; };
 		A748F6EA22E3837600410436 /* ChangePasswordCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748F6E922E3837600410436 /* ChangePasswordCloudService.swift */; };
 		A76C86F422E37BD00067EA6B /* ChangePassword.h in Headers */ = {isa = PBXBuildFile; fileRef = A76C86F222E37BD00067EA6B /* ChangePassword.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A7DC21672327406700D06C1F /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21662327406700D06C1F /* Common.framework */; };
@@ -21,20 +21,32 @@
 		A7DC216D2327407200D06C1F /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC216C2327407200D06C1F /* Domain.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		68BA612527FCA38E00DA70F8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				68BA612427FCA38E00DA70F8 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		48257AF99C8C2F9AFD97A848 /* Pods_ChangePassword.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChangePassword.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BEAFE161DE33568EF85714C /* Pods-ChangePassword.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.debug.xcconfig"; sourceTree = "<group>"; };
-		7AC0C54A5C259D19836F103B /* Pods-ChangePassword.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.release.xcconfig"; sourceTree = "<group>"; };
+		5BEAFE161DE33568EF85714C /* Pods-ChangePassword.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.debug.xcconfig"; sourceTree = "<group>"; };
+		68BA612227FCA38E00DA70F8 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AC0C54A5C259D19836F103B /* Pods-ChangePassword.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChangePassword.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-ChangePassword/Pods-ChangePassword.release.xcconfig"; sourceTree = "<group>"; };
 		A748F6DC22E37D1700410436 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		A748F6E022E380CE00410436 /* ChangePasswordViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModelType.swift; sourceTree = "<group>"; };
 		A748F6E222E3811300410436 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
-		A748F6E522E3819800410436 /* ChangePasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordRequest.swift; sourceTree = "<group>"; };
-		A748F6E722E3831C00410436 /* ChangePasswordApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordApi.swift; sourceTree = "<group>"; };
 		A748F6E922E3837600410436 /* ChangePasswordCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCloudService.swift; sourceTree = "<group>"; };
 		A76C86EF22E37BD00067EA6B /* ChangePassword.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ChangePassword.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76C86F222E37BD00067EA6B /* ChangePassword.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangePassword.h; sourceTree = "<group>"; };
 		A76C86F322E37BD00067EA6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7D80C6222EFED94004A3E0F /* UpdateAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpdateAddressViewModel.swift; path = ../Address/ViewModel/UpdateAddressViewModel.swift; sourceTree = "<group>"; };
 		A7DC21662327406700D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21682327406A00D06C1F /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC216A2327406E00D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68BA612327FCA38E00DA70F8 /* ServiceWrapper.framework in Frameworks */,
 				A7DC216D2327407200D06C1F /* Domain.framework in Frameworks */,
 				A7DC216B2327406E00D06C1F /* Platform.framework in Frameworks */,
 				A7DC21692327406A00D06C1F /* CommonUI.framework in Frameworks */,
@@ -64,14 +77,6 @@
 				7AC0C54A5C259D19836F103B /* Pods-ChangePassword.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		A748F6DB22E37CBA00410436 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A748F6E522E3819800410436 /* ChangePasswordRequest.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		A748F6DE22E37D1C00410436 /* View */ = {
@@ -114,10 +119,7 @@
 			children = (
 				A748F6DF22E380B600410436 /* ViewModel */,
 				A748F6DE22E37D1C00410436 /* View */,
-				A748F6DB22E37CBA00410436 /* Model */,
-				A748F6E722E3831C00410436 /* ChangePasswordApi.swift */,
 				A748F6E922E3837600410436 /* ChangePasswordCloudService.swift */,
-				A7D80C6222EFED94004A3E0F /* UpdateAddressViewModel.swift */,
 				A76C86F222E37BD00067EA6B /* ChangePassword.h */,
 				A76C86F322E37BD00067EA6B /* Info.plist */,
 			);
@@ -127,6 +129,7 @@
 		C1C9AF9B6F29CDC94B618DD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68BA612227FCA38E00DA70F8 /* ServiceWrapper.framework */,
 				A7DC216C2327407200D06C1F /* Domain.framework */,
 				A7DC216A2327406E00D06C1F /* Platform.framework */,
 				A7DC21682327406A00D06C1F /* CommonUI.framework */,
@@ -159,6 +162,7 @@
 				A76C86EB22E37BD00067EA6B /* Sources */,
 				A76C86EC22E37BD00067EA6B /* Frameworks */,
 				A76C86ED22E37BD00067EA6B /* Resources */,
+				68BA612527FCA38E00DA70F8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -241,8 +245,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A748F6E622E3819800410436 /* ChangePasswordRequest.swift in Sources */,
-				A748F6E822E3831C00410436 /* ChangePasswordApi.swift in Sources */,
 				A748F6DD22E37D1700410436 /* ChangePasswordViewController.swift in Sources */,
 				A748F6E322E3811300410436 /* ChangePasswordViewModel.swift in Sources */,
 				A748F6EA22E3837600410436 /* ChangePasswordCloudService.swift in Sources */,

@@ -8,24 +8,39 @@
 
 /* Begin PBXBuildFile section */
 		4401ECB67AC6F4CFE12C6EFF /* Pods_EventTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA03BB88BE969065AA4887E9 /* Pods_EventTracking.framework */; };
+		68BA612C27FCA79F00DA70F8 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA612B27FCA79F00DA70F8 /* ServiceWrapper.framework */; };
+		68BA612D27FCA79F00DA70F8 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA612B27FCA79F00DA70F8 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A7BACA73237A9D090056B8D0 /* EventTracking.h in Headers */ = {isa = PBXBuildFile; fileRef = A7BACA71237A9D090056B8D0 /* EventTracking.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A7BACA7D237A9E460056B8D0 /* EventTrackingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BACA7C237A9E460056B8D0 /* EventTrackingApi.swift */; };
 		A7BACA82237AA3EF0056B8D0 /* EventTrackingCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BACA81237AA3EF0056B8D0 /* EventTrackingCloudService.swift */; };
 		A7BACA87237AA4810056B8D0 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BACA86237AA4810056B8D0 /* Domain.framework */; };
 		A7BACA8B237AA4960056B8D0 /* Platform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BACA8A237AA4960056B8D0 /* Platform.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		68BA612E27FCA79F00DA70F8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				68BA612D27FCA79F00DA70F8 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1A83C6A00A06334107C447D6 /* Pods-EventTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.debug.xcconfig"; path = "Target Support Files/Pods-EventTracking/Pods-EventTracking.debug.xcconfig"; sourceTree = "<group>"; };
+		1A83C6A00A06334107C447D6 /* Pods-EventTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-EventTracking/Pods-EventTracking.debug.xcconfig"; sourceTree = "<group>"; };
+		68BA612B27FCA79F00DA70F8 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BACA6E237A9D090056B8D0 /* EventTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EventTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BACA71237A9D090056B8D0 /* EventTracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventTracking.h; sourceTree = "<group>"; };
 		A7BACA72237A9D090056B8D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7BACA7C237A9E460056B8D0 /* EventTrackingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTrackingApi.swift; sourceTree = "<group>"; };
 		A7BACA81237AA3EF0056B8D0 /* EventTrackingCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTrackingCloudService.swift; sourceTree = "<group>"; };
 		A7BACA86237AA4810056B8D0 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BACA8A237AA4960056B8D0 /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA03BB88BE969065AA4887E9 /* Pods_EventTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED556EB752D774FA005665F7 /* Pods-EventTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.release.xcconfig"; path = "Target Support Files/Pods-EventTracking/Pods-EventTracking.release.xcconfig"; sourceTree = "<group>"; };
+		ED556EB752D774FA005665F7 /* Pods-EventTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventTracking.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-EventTracking/Pods-EventTracking.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +50,7 @@
 			files = (
 				A7BACA87237AA4810056B8D0 /* Domain.framework in Frameworks */,
 				4401ECB67AC6F4CFE12C6EFF /* Pods_EventTracking.framework in Frameworks */,
+				68BA612C27FCA79F00DA70F8 /* ServiceWrapper.framework in Frameworks */,
 				A7BACA8B237AA4960056B8D0 /* Platform.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,6 +61,7 @@
 		7645FD3FF7D7E4C514FA47F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68BA612B27FCA79F00DA70F8 /* ServiceWrapper.framework */,
 				A7BACA8A237AA4960056B8D0 /* Platform.framework */,
 				A7BACA86237AA4810056B8D0 /* Domain.framework */,
 				DA03BB88BE969065AA4887E9 /* Pods_EventTracking.framework */,
@@ -83,7 +100,6 @@
 		A7BACA70237A9D090056B8D0 /* EventTracking */ = {
 			isa = PBXGroup;
 			children = (
-				A7BACA7C237A9E460056B8D0 /* EventTrackingApi.swift */,
 				A7BACA81237AA3EF0056B8D0 /* EventTrackingCloudService.swift */,
 				A7BACA71237A9D090056B8D0 /* EventTracking.h */,
 				A7BACA72237A9D090056B8D0 /* Info.plist */,
@@ -114,6 +130,7 @@
 				A7BACA6A237A9D090056B8D0 /* Sources */,
 				A7BACA6B237A9D090056B8D0 /* Frameworks */,
 				A7BACA6C237A9D090056B8D0 /* Resources */,
+				68BA612E27FCA79F00DA70F8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -198,7 +215,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7BACA82237AA3EF0056B8D0 /* EventTrackingCloudService.swift in Sources */,
-				A7BACA7D237A9E460056B8D0 /* EventTrackingApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
