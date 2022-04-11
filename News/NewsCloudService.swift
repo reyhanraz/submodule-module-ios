@@ -6,37 +6,34 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import Platform
 
-public struct NewsCloudService<CloudResponse: ResponseType>: ServiceType {
+public class NewsCloudService<CloudResponse: ResponseType>: NewsAPI, ServiceType {
     public typealias R = ListRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
-    
-    private let _service: MoyaProvider<NewsApi>
-    
-    public init(service: MoyaProvider<NewsApi> = MoyaProvider<NewsApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+        
+    public override init() {
+        super.init()
     }
     
     public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        let response: Single<Response>
+        let response: Observable<(Data?, HTTPURLResponse?)>
         
         if let id = request.id {
-            response = _service.rx.request(.getDetail(id: id))
+            response = super.getNewsDetail(id: id)
         } else {
-            response = _service.rx.request(.getList(page: request.page, limit: request.limit, timestamp: request.timestamp))
+            response = super.getNewsList(page: request.page, limit: request.limit, timestamp: request.timestamp)
         }
         
         return response
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

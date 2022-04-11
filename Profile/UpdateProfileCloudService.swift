@@ -6,31 +6,27 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct UpdateProfileCloudService<Request: Encodable, CloudResponse: ResponseType>: ServiceType {
+public class UpdateProfileCloudService<Request: Encodable, CloudResponse: ResponseType>: ProfileAPI<Request>, ServiceType {
     public typealias R = Request
     
     public typealias T = CloudResponse
     public typealias E = Error
-    
-    private let _service: MoyaProvider<ProfileApi<Request>>
-    
-    public init(service: MoyaProvider<ProfileApi<Request>> = MoyaProvider<ProfileApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+        
+    public override init() {
+        super.init()
     }
     
     public func get(request: Request?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        return _service.rx
-            .request(.update(request: request))
+        return super.updateProfile(request: request)
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

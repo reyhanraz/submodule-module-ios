@@ -6,30 +6,26 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import Platform
 
-public struct DeleteGalleryCloudService<CloudResponse: ResponseType>: ServiceType {
+public class DeleteGalleryCloudService<CloudResponse: ResponseType>: GalleryAPI, ServiceType {
     public typealias R = [Int]
     
     public typealias T = CloudResponse
     public typealias E = Error
-    
-    private let _service: MoyaProvider<GalleryApi>
-    
-    public init(service: MoyaProvider<GalleryApi> = MoyaProvider<GalleryApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+        
+    public override init() {
+        super.init()
     }
     
     public func get(request: [Int]?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        return _service.rx
-            .request(.deleteGalleries(ids: request))
+        return super.deleteGallery(ids: request)
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

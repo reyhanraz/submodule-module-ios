@@ -17,20 +17,59 @@ open class ServiceHelper{
     public init(){
         
     }
-    
-    public static let shared = ServiceHelper()
-    
+        
     private static func dataRequest(_ urlString: String, method: HTTPMethod = .get, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders, onCompleted:@escaping (DataResponse<Any>) -> Void) -> DataRequest {
-        AF.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers).responseJSON(completionHandler: { (response) in
+        AF.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers).responseJSON { response in
+            #if DEBUG
+            print("ServiceWrapper: Request Headers: \(response.request?.headers)")
+            print("ServiceWrapper: Response: \(response.debugDescription)")
+            #endif
             onCompleted(response)
-        })
+        }
     }
     
-    public func request<R: Encodable> (_ endPoint: String, method: HTTPMethod = .get, parameters: R?, encoding: ParameterEncoding = URLEncoding.default, isBasicAuth: Bool = false) -> Observable<DataResponse<Any>>  {
-        let baseURL = "\(PlatformConfig.hostString)/\(endPoint)"
-        var header = HTTPHeaders(PlatformConfig.defaultHttpHeaders)
+    public func upload(host: URL, path: URL, header: HTTPHeaders) -> Observable<DataResponse<Any>>{
+        return Observable<DataResponse<Any>>.create { observer in
+            let request = AF.upload(path, to: host, method: .put, headers: header).responseJSON(completionHandler: { response in
+                observer.onNext(response)
+                observer.onCompleted()
+            })
+            
+            return Disposables.create{
+                request.cancel()
+            }
+        }
+    }
+    
+    //Request Using Encodable Model
+    public func request<R: Encodable> (_ endPoint: String,
+                                       method: HTTPMethod = .get,
+                                       parameter: R?,
+                                       encoding: ParameterEncoding = URLEncoding.queryString,
+                                       httpHeader: HTTPHeaders = HTTPHeaders(PlatformConfig.defaultHttpHeaders),
+                                       isBasicAuth: Bool = false) -> Observable<DataResponse<Any>>  {
         
-        let param: [String: Any] = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(parameters))) as? [String: Any] ?? [:]
+        let param = (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(parameter))) as? [String: Any] ?? [:]
+        return request(endPoint,
+                       method: method,
+                       parameter: param,
+                       encoding: encoding,
+                       httpHeader: httpHeader,
+                       isBasicAuth: isBasicAuth)
+    }
+    
+    //Request Using Dict of Any
+    public func request(_ endPoint: String,
+                        method: HTTPMethod = .get,
+                        parameter: [String: Any]?,
+                        encoding: ParameterEncoding = URLEncoding.queryString,
+                        httpHeader: HTTPHeaders = HTTPHeaders(PlatformConfig.defaultHttpHeaders),
+                        isBasicAuth: Bool = false) -> Observable<DataResponse<Any>>  {
+        
+        let baseURL = "\(PlatformConfig.hostString)/\(endPoint)"
+        
+        var header = httpHeader
+        let param = parameter
         
         if isBasicAuth{
             header.add(HTTPHeader.authorization(username: "web", password: "secret"))

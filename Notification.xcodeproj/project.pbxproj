@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68BA613F27FD4A7700DA70F8 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA613E27FD4A7700DA70F8 /* ServiceWrapper.framework */; };
+		68BA614027FD4A7700DA70F8 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA613E27FD4A7700DA70F8 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A701BC1023685A9C00C34EF4 /* NotificationCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = A701BC0F23685A9C00C34EF4 /* NotificationCount.swift */; };
 		A701BC1223685AEF00C34EF4 /* NotificationCountCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A701BC1123685AEF00C34EF4 /* NotificationCountCloudService.swift */; };
 		A7265F932363051C0084128B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7265F922363051C0084128B /* Notification.swift */; };
@@ -15,7 +17,6 @@
 		A7CDDC502362DD38009C77EB /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CDDC4F2362DD38009C77EB /* Common.framework */; };
 		A7CDDC542362DD3C009C77EB /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CDDC532362DD3C009C77EB /* Domain.framework */; };
 		A7CDDC572362DD42009C77EB /* Platform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CDDC562362DD42009C77EB /* Platform.framework */; };
-		A7CDDC5A2362DD96009C77EB /* NotificationApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CDDC592362DD96009C77EB /* NotificationApi.swift */; };
 		A7CDDC5C2362DE88009C77EB /* RegisterTokenCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CDDC5B2362DE88009C77EB /* RegisterTokenCloudService.swift */; };
 		A7D406C12363332200957AA1 /* NotificationCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D406C02363332200957AA1 /* NotificationCloudService.swift */; };
 		A7D406C3236333BA00957AA1 /* CommonUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D406C2236333BA00957AA1 /* CommonUI.framework */; };
@@ -27,8 +28,23 @@
 		E337D6FBAC6FA9433B655B49 /* DeleteNotificationCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E337D9E845282C12E4E443DF /* DeleteNotificationCloudService.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		68BA614127FD4A7700DA70F8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				68BA614027FD4A7700DA70F8 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3172929EBBEB1F9B4048B276 /* Pods_Notification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68BA613E27FD4A7700DA70F8 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A701BC0F23685A9C00C34EF4 /* NotificationCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCount.swift; sourceTree = "<group>"; };
 		A701BC1123685AEF00C34EF4 /* NotificationCountCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCountCloudService.swift; sourceTree = "<group>"; };
 		A7265F922363051C0084128B /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -39,7 +55,6 @@
 		A7CDDC4F2362DD38009C77EB /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CDDC532362DD3C009C77EB /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CDDC562362DD42009C77EB /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A7CDDC592362DD96009C77EB /* NotificationApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationApi.swift; sourceTree = "<group>"; };
 		A7CDDC5B2362DE88009C77EB /* RegisterTokenCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTokenCloudService.swift; sourceTree = "<group>"; };
 		A7D406C02363332200957AA1 /* NotificationCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCloudService.swift; sourceTree = "<group>"; };
 		A7D406C2236333BA00957AA1 /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,8 +62,8 @@
 		A7FE20EE23632B1100B568F2 /* NotificationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewController.swift; sourceTree = "<group>"; };
 		A7FE20F023632C2200B568F2 /* NotificationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAdapter.swift; sourceTree = "<group>"; };
 		A7FE20F223632C2C00B568F2 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
-		C468E9C061E191EC746AC29B /* Pods-Notification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notification.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-Notification/Pods-Notification.release.xcconfig"; sourceTree = "<group>"; };
-		C4F2719C94A924E24D1B7AE1 /* Pods-Notification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notification.debug.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-Notification/Pods-Notification.debug.xcconfig"; sourceTree = "<group>"; };
+		C468E9C061E191EC746AC29B /* Pods-Notification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notification.release.xcconfig"; path = "Target Support Files/Pods-Notification/Pods-Notification.release.xcconfig"; sourceTree = "<group>"; };
+		C4F2719C94A924E24D1B7AE1 /* Pods-Notification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notification.debug.xcconfig"; path = "Target Support Files/Pods-Notification/Pods-Notification.debug.xcconfig"; sourceTree = "<group>"; };
 		E337D9E845282C12E4E443DF /* DeleteNotificationCloudService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteNotificationCloudService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68BA613F27FD4A7700DA70F8 /* ServiceWrapper.framework in Frameworks */,
 				A7CDDC542362DD3C009C77EB /* Domain.framework in Frameworks */,
 				D837FF6C3D8EDEF36DA0E041 /* Pods_Notification.framework in Frameworks */,
 				A7D406C3236333BA00957AA1 /* CommonUI.framework in Frameworks */,
@@ -109,7 +125,6 @@
 				A7FE20ED23632AF700B568F2 /* View */,
 				A7265F9623631DF20084128B /* Cache */,
 				A7265F91236305090084128B /* Model */,
-				A7CDDC592362DD96009C77EB /* NotificationApi.swift */,
 				A7CDDC5B2362DE88009C77EB /* RegisterTokenCloudService.swift */,
 				A7D406C02363332200957AA1 /* NotificationCloudService.swift */,
 				A701BC1123685AEF00C34EF4 /* NotificationCountCloudService.swift */,
@@ -144,6 +159,7 @@
 		ECEACA012F14D365B82FF05E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68BA613E27FD4A7700DA70F8 /* ServiceWrapper.framework */,
 				A7D406C2236333BA00957AA1 /* CommonUI.framework */,
 				A7CDDC562362DD42009C77EB /* Platform.framework */,
 				A7CDDC532362DD3C009C77EB /* Domain.framework */,
@@ -176,6 +192,7 @@
 				A7CDDC3E2362D99B009C77EB /* Sources */,
 				A7CDDC3F2362D99B009C77EB /* Frameworks */,
 				A7CDDC402362D99B009C77EB /* Resources */,
+				68BA614127FD4A7700DA70F8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -267,7 +284,6 @@
 				A7FE20F123632C2200B568F2 /* NotificationAdapter.swift in Sources */,
 				A7CDDC5C2362DE88009C77EB /* RegisterTokenCloudService.swift in Sources */,
 				A701BC1223685AEF00C34EF4 /* NotificationCountCloudService.swift in Sources */,
-				A7CDDC5A2362DD96009C77EB /* NotificationApi.swift in Sources */,
 				A7265F932363051C0084128B /* Notification.swift in Sources */,
 				A7FE20F323632C2C00B568F2 /* NotificationCell.swift in Sources */,
 				E337D6FBAC6FA9433B655B49 /* DeleteNotificationCloudService.swift in Sources */,

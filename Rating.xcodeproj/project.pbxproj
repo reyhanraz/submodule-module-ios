@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6862044027FBB57100C2FBF6 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6862043F27FBB57100C2FBF6 /* ServiceWrapper.framework */; };
+		6862044127FBB57100C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6862043F27FBB57100C2FBF6 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A71F280D231B8CC9002EF3B7 /* Rating.h in Headers */ = {isa = PBXBuildFile; fileRef = A71F280B231B8CC9002EF3B7 /* Rating.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A71F2817231BECF1002EF3B7 /* RatingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F2816231BECF1002EF3B7 /* RatingApi.swift */; };
-		A71F281A231BED45002EF3B7 /* RatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F2819231BED45002EF3B7 /* RatingRequest.swift */; };
 		A71F281C231BEDD2002EF3B7 /* UpdateRatingCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F281B231BEDD2002EF3B7 /* UpdateRatingCloudService.swift */; };
 		A71F281F231BEE55002EF3B7 /* UpdateRatingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F281E231BEE55002EF3B7 /* UpdateRatingViewModelType.swift */; };
 		A71F2821231BEEEE002EF3B7 /* UpdateRatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71F2820231BEEEE002EF3B7 /* UpdateRatingViewModel.swift */; };
@@ -22,15 +22,28 @@
 		E3A32E5ABF4F4E7AA0B8C3B2 /* Pods_Rating.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5D30AD1C3370E8AD1FB36C /* Pods_Rating.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6862044227FBB57200C2FBF6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6862044127FBB57100C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00CF71471DFF91A72F5024DC /* Pods-Rating.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rating.release.xcconfig"; path = "Target Support Files/Pods-Rating/Pods-Rating.release.xcconfig"; sourceTree = "<group>"; };
 		4F5D30AD1C3370E8AD1FB36C /* Pods_Rating.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rating.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6862043F27FBB57100C2FBF6 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E41901A10147699C9996F1 /* Pods-Rating.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rating.debug.xcconfig"; path = "Target Support Files/Pods-Rating/Pods-Rating.debug.xcconfig"; sourceTree = "<group>"; };
 		A71F2808231B8CC9002EF3B7 /* Rating.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rating.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71F280B231B8CC9002EF3B7 /* Rating.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rating.h; sourceTree = "<group>"; };
 		A71F280C231B8CC9002EF3B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A71F2816231BECF1002EF3B7 /* RatingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingApi.swift; sourceTree = "<group>"; };
-		A71F2819231BED45002EF3B7 /* RatingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRequest.swift; sourceTree = "<group>"; };
 		A71F281B231BEDD2002EF3B7 /* UpdateRatingCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRatingCloudService.swift; sourceTree = "<group>"; };
 		A71F281E231BEE55002EF3B7 /* UpdateRatingViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRatingViewModelType.swift; sourceTree = "<group>"; };
 		A71F2820231BEEEE002EF3B7 /* UpdateRatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRatingViewModel.swift; sourceTree = "<group>"; };
@@ -50,6 +63,7 @@
 				A7DC21C82327C34B00D06C1F /* Platform.framework in Frameworks */,
 				A7DC21C62327C34500D06C1F /* Domain.framework in Frameworks */,
 				A7DC21C42327C34200D06C1F /* Common.framework in Frameworks */,
+				6862044027FBB57100C2FBF6 /* ServiceWrapper.framework in Frameworks */,
 				E3A32E5ABF4F4E7AA0B8C3B2 /* Pods_Rating.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,6 +74,7 @@
 		72F393062EA29C1433231D15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6862043F27FBB57100C2FBF6 /* ServiceWrapper.framework */,
 				A7DC21C72327C34B00D06C1F /* Platform.framework */,
 				A7DC21C52327C34500D06C1F /* Domain.framework */,
 				A7DC21C32327C34200D06C1F /* Common.framework */,
@@ -92,7 +107,6 @@
 				A749802B231FA34F008F17EB /* Cache */,
 				A71F281D231BEE33002EF3B7 /* ViewModel */,
 				A71F2818231BED3A002EF3B7 /* Model */,
-				A71F2816231BECF1002EF3B7 /* RatingApi.swift */,
 				A71F282A231C17F7002EF3B7 /* RatingCloudService.swift */,
 				A71F281B231BEDD2002EF3B7 /* UpdateRatingCloudService.swift */,
 				A71F280B231B8CC9002EF3B7 /* Rating.h */,
@@ -105,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				A7498029231FA323008F17EB /* Rating.swift */,
-				A71F2819231BED45002EF3B7 /* RatingRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -160,6 +173,7 @@
 				A71F2804231B8CC9002EF3B7 /* Sources */,
 				A71F2805231B8CC9002EF3B7 /* Frameworks */,
 				A71F2806231B8CC9002EF3B7 /* Resources */,
+				6862044227FBB57200C2FBF6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,8 +260,6 @@
 				A71F2821231BEEEE002EF3B7 /* UpdateRatingViewModel.swift in Sources */,
 				A749802A231FA324008F17EB /* Rating.swift in Sources */,
 				A71F281F231BEE55002EF3B7 /* UpdateRatingViewModelType.swift in Sources */,
-				A71F281A231BED45002EF3B7 /* RatingRequest.swift in Sources */,
-				A71F2817231BECF1002EF3B7 /* RatingApi.swift in Sources */,
 				A71F282B231C17F7002EF3B7 /* RatingCloudService.swift in Sources */,
 				A71F281C231BEDD2002EF3B7 /* UpdateRatingCloudService.swift in Sources */,
 			);

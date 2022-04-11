@@ -6,28 +6,24 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import Platform
 
-public struct CategoryCloudService<CloudResponse: ResponseType>: ServiceType {
+public class CategoryCloudService<CloudResponse: ResponseType>: CategoryAPI, ServiceType {
     public typealias R = ListRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<CategoryApi>
-    
-    public init(service: MoyaProvider<CategoryApi> = MoyaProvider<CategoryApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init() {
+        super.init()
     }
     
     public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
-        return _service.rx
-            .request(.getCategories)
+        return super.getCategories()
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

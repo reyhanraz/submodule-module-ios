@@ -12,6 +12,7 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
 
 public struct UpdateAddressViewModel<T: ResponseType>: UpdateAddressViewModelType, UpdateAddressViewModelOutput {
     public typealias Outputs = UpdateAddressViewModel<T>

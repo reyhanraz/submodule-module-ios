@@ -12,6 +12,7 @@ import Platform
 import CoreLocation
 import MapKit
 import LocationPicker
+import ServiceWrapper
 
 public protocol UpdateAddressViewControllerDelegate: class {
     func updateSuccess(address: Address)

@@ -13,7 +13,7 @@ import Domain
 import Common
 import CommonUI
 import Alamofire
-import Moya
+import ServiceWrapper
 
 public struct AddressViewModel{
     public typealias Request = ListRequest
@@ -35,7 +35,6 @@ public struct AddressViewModel{
     private let _getListProperty = PublishSubject<Request>()
     private let _loadMoreProperty = PublishSubject<Request>()
     
-    public let deleteSuccess = PublishSubject<Void>()
     public let validatedAddressName = PublishSubject<ValidationResult>()
     public let validatedAddressNote = PublishSubject<ValidationResult>()
     public let latlong = PublishSubject<(lat: Double, lon: Double, address: String)?>()
@@ -43,7 +42,6 @@ public struct AddressViewModel{
     
     private let _submitProperty = PublishSubject<Void>()
     
-    private let _service = MoyaProvider<AddressApi>()
     private let delegate = UIApplication.shared.delegate as! AppDelegateType
     private let activityIndicator: ActivityIndicator
 
@@ -138,17 +136,6 @@ public struct AddressViewModel{
             arrayResultProperty.onNext(items)
             
             return (request, items, dataResponse.data?.paging, isFromInitialCache)
-        }
-    }
-    
-    public func deleteAddress(addressID: Int){
-        _service.request(.delete(id: addressID)) { result in
-            switch result{
-            case .success(_):
-                deleteSuccess.onNext(())
-            case .failure(_):
-                break
-            }
         }
     }
     

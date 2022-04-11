@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2FE39A3456CF2003166B8447 /* Pods_Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8B4E7FF7837825B19F280E /* Pods_Gallery.framework */; };
+		6862045D27FC3A3200C2FBF6 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6862045C27FC3A3200C2FBF6 /* ServiceWrapper.framework */; };
+		6862045E27FC3A3300C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6862045C27FC3A3200C2FBF6 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A704C85622CDD47A000EA2C9 /* Gallery.h in Headers */ = {isa = PBXBuildFile; fileRef = A704C85422CDD47A000EA2C9 /* Gallery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A70DCA2822DD75FE00DE9070 /* DeleteGalleryCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70DCA2722DD75FE00DE9070 /* DeleteGalleryCloudService.swift */; };
 		A76C86DE22E3709A0067EA6B /* GalleryUploadConfirmed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C86DD22E3709A0067EA6B /* GalleryUploadConfirmed.swift */; };
 		A782966C22D994BE002F84D8 /* Gallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782966B22D994BE002F84D8 /* Gallery.swift */; };
-		A782966E22D998C5002F84D8 /* GalleryApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782966D22D998C5002F84D8 /* GalleryApi.swift */; };
 		A782967022D999B4002F84D8 /* GalleryCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782966F22D999B4002F84D8 /* GalleryCloudService.swift */; };
 		A782967522D9A00D002F84D8 /* GallerySQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782967422D9A00D002F84D8 /* GallerySQLCache.swift */; };
 		A782967A22D9A685002F84D8 /* GalleryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782967922D9A685002F84D8 /* GalleryAdapter.swift */; };
@@ -26,17 +27,31 @@
 		A7DC215F2327403500D06C1F /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC215E2327403500D06C1F /* Domain.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6862045F27FC3A3300C2FBF6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6862045E27FC3A3300C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0B8B4E7FF7837825B19F280E /* Pods_Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		683FDF29FC2344F1FFF6AE2A /* Pods-Gallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gallery.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Gallery/Pods-Gallery.release.xcconfig"; sourceTree = "<group>"; };
-		699E8873B1A2EEA3F2D95168 /* Pods-Gallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gallery.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Gallery/Pods-Gallery.debug.xcconfig"; sourceTree = "<group>"; };
+		683FDF29FC2344F1FFF6AE2A /* Pods-Gallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gallery.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Gallery/Pods-Gallery.release.xcconfig"; sourceTree = "<group>"; };
+		6862045C27FC3A3200C2FBF6 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		699E8873B1A2EEA3F2D95168 /* Pods-Gallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gallery.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Gallery/Pods-Gallery.debug.xcconfig"; sourceTree = "<group>"; };
 		A704C85122CDD47A000EA2C9 /* Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A704C85422CDD47A000EA2C9 /* Gallery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gallery.h; sourceTree = "<group>"; };
 		A704C85522CDD47A000EA2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A70DCA2722DD75FE00DE9070 /* DeleteGalleryCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteGalleryCloudService.swift; sourceTree = "<group>"; };
 		A76C86DD22E3709A0067EA6B /* GalleryUploadConfirmed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryUploadConfirmed.swift; sourceTree = "<group>"; };
 		A782966B22D994BE002F84D8 /* Gallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gallery.swift; sourceTree = "<group>"; };
-		A782966D22D998C5002F84D8 /* GalleryApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryApi.swift; path = Model/GalleryApi.swift; sourceTree = "<group>"; };
 		A782966F22D999B4002F84D8 /* GalleryCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCloudService.swift; sourceTree = "<group>"; };
 		A782967422D9A00D002F84D8 /* GallerySQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GallerySQLCache.swift; sourceTree = "<group>"; };
 		A782967922D9A685002F84D8 /* GalleryAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAdapter.swift; sourceTree = "<group>"; };
@@ -59,6 +74,7 @@
 				A7DC215F2327403500D06C1F /* Domain.framework in Frameworks */,
 				A7DC215D2327403200D06C1F /* Platform.framework in Frameworks */,
 				A7DC215B2327402D00D06C1F /* CommonUI.framework in Frameworks */,
+				6862045D27FC3A3200C2FBF6 /* ServiceWrapper.framework in Frameworks */,
 				2FE39A3456CF2003166B8447 /* Pods_Gallery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,7 +107,6 @@
 				A782967822D9A677002F84D8 /* View */,
 				A782967122D99A11002F84D8 /* Cache */,
 				A782966622D993AD002F84D8 /* Model */,
-				A782966D22D998C5002F84D8 /* GalleryApi.swift */,
 				A782966F22D999B4002F84D8 /* GalleryCloudService.swift */,
 				A70DCA2722DD75FE00DE9070 /* DeleteGalleryCloudService.swift */,
 				A704C85422CDD47A000EA2C9 /* Gallery.h */,
@@ -141,6 +156,7 @@
 		F34AC8F78FC7B280F66A7765 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6862045C27FC3A3200C2FBF6 /* ServiceWrapper.framework */,
 				A7DC215E2327403500D06C1F /* Domain.framework */,
 				A7DC215C2327403200D06C1F /* Platform.framework */,
 				A7DC215A2327402D00D06C1F /* CommonUI.framework */,
@@ -173,6 +189,7 @@
 				A704C84D22CDD47A000EA2C9 /* Sources */,
 				A704C84E22CDD47A000EA2C9 /* Frameworks */,
 				A704C84F22CDD47A000EA2C9 /* Resources */,
+				6862045F27FC3A3300C2FBF6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -264,7 +281,6 @@
 				A70DCA2822DD75FE00DE9070 /* DeleteGalleryCloudService.swift in Sources */,
 				A782967C22D9A68D002F84D8 /* GalleryCell.swift in Sources */,
 				A76C86DE22E3709A0067EA6B /* GalleryUploadConfirmed.swift in Sources */,
-				A782966E22D998C5002F84D8 /* GalleryApi.swift in Sources */,
 				A782969222D9D33E002F84D8 /* MyGalleryViewController.swift in Sources */,
 				A782967A22D9A685002F84D8 /* GalleryAdapter.swift in Sources */,
 			);

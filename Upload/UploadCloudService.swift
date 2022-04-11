@@ -6,31 +6,27 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
 import RxSwift
 import Platform
+import ServiceWrapper
 
-public struct UploadCloudService<CloudResponse: ResponseType>: ServiceType {
+public class UploadCloudService<CloudResponse: ResponseType>: UploadAPI, ServiceType {
     public typealias R = UploadMediaRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<UploadApi>
     private let _confirmAfterUpload: Bool
     
-    public init(service: MoyaProvider<UploadApi> = MoyaProvider<UploadApi>(plugins: [NetworkLoggerPlugin(verbose: true)]), confirmAfterUpload: Bool = true) {
-        _service = service
+    public init(confirmAfterUpload: Bool = true) {
         _confirmAfterUpload = confirmAfterUpload
     }
     
     public func get(request: UploadMediaRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        let response = _service.rx
-            .request(.getSignedURL(request: request))
+        let response = super.getSignedURL(request: request)
             .retry(3)
-            .map(MediaSigned.self)
             .map { response in self.parse(result: response) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
@@ -50,14 +46,13 @@ public struct UploadCloudService<CloudResponse: ResponseType>: ServiceType {
     }
     
     private func upload(request: UploadMediaRequest, signed: MediaSigned.Signed) -> Observable<Result<T, Error>> {
-        let response = _service.rx
-            .request(.upload(mime: request.mimeType, url: signed.url, path: request.url))
+        let response = super.upload(mime: request.mimeType, url: signed.url, path: request.url)
             .retry(3)
             .asObservable()
-        
+
         if _confirmAfterUpload {
             return response.flatMap { result -> Observable<Result<T, Error>> in
-                if result.statusCode == 200 {
+                if result.1?.statusCode == 200 {
                     return self.confirmed(request: request, signed: signed)
                 } else {
                     return .just(.error(ServiceError.invalidRequest))
@@ -65,18 +60,16 @@ public struct UploadCloudService<CloudResponse: ResponseType>: ServiceType {
             }
         } else {
             return response
-                .map { Status(status: Status.Detail(code: $0.response?.statusCode ?? 404, message: "")) as! CloudResponse }
+                .map { Status(status: Status.Detail(code: $0.1?.statusCode ?? 404, message: "")) as! CloudResponse }
                 .map { response in self.parse(result: response) }
                 .catchError { error in return .just(.error(error)) }
         }
     }
     
     private func confirmed(request: UploadMediaRequest, signed: MediaSigned.Signed) -> Observable<Result<T, Error>> {
-        return _service.rx
-            .request(.confirmed(uploadPath: request.uploadType.rawValue, request: UploadConfirmedRequest(id: request.id, temporaryObjectName: signed.temporaryObjectName)))
+        return super.confirmed(uploadPath: request.uploadType.rawValue, request: UploadConfirmedRequest(id: request.id, temporaryObjectName: signed.temporaryObjectName))
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

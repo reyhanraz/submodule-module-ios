@@ -2,35 +2,34 @@
 //  ForgotPasswordCloudService.swift
 //  ForgotPassword
 //
-//  Created by Fandy Gotama on 18/05/19.
-//  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
+//  Created by Reyhan Rifqi Azzami on 04/03/22.
+//  Copyright © 2022 PT. Perintis Teknologi Nusantara. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct ForgotPasswordCloudService<CloudResponse: ResponseType>: ServiceType {
-    public typealias R = ForgotPasswordRequest
+public class ForgotPasswordCloudService: ForgotPasswordAPI, ServiceType {
     
-    public typealias T = CloudResponse
+    public typealias R = ServiceWrapper.ForgotPasswordRequest
+    
+    public typealias T = Detail<ForgotPasswordResponse>
     public typealias E = Error
     
-    private let _service: MoyaProvider<ForgotPasswordApi>
     
-    public init(service: MoyaProvider<ForgotPasswordApi> = MoyaProvider<ForgotPasswordApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init() {
+        super.init()
     }
     
-    public func get(request: ForgotPasswordRequest?) -> Observable<Result<T, Error>> {
+    public func get(request: ServiceWrapper.ForgotPasswordRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
-        
-        return _service.rx
-            .request(.forgotPassword(request: request))
+        return super.forgotPassword(request: request)
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { data, response in
+                self.parse(data: data, statusCode: response?.statusCode)
+            }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

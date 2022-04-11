@@ -18,7 +18,6 @@
 		A76C86D822E34E0E0067EA6B /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C86D722E34E0E0067EA6B /* ProfileRequest.swift */; };
 		A76C86DC22E357A90067EA6B /* UpdateProfileCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76C86DB22E357A90067EA6B /* UpdateProfileCloudService.swift */; };
 		A7BF4FF422E2C8AD0077F6C8 /* Profile.h in Headers */ = {isa = PBXBuildFile; fileRef = A7BF4FF222E2C8AD0077F6C8 /* Profile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A7BF4FFE22E2CFE70077F6C8 /* ProfileApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BF4FFD22E2CFE70077F6C8 /* ProfileApi.swift */; };
 		A7BF500122E2D0D70077F6C8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BF500022E2D0D70077F6C8 /* Profile.swift */; };
 		A7BF500322E2D1100077F6C8 /* ProfileCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BF500222E2D1100077F6C8 /* ProfileCloudService.swift */; };
 		A7DC21612327405200D06C1F /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21602327405200D06C1F /* Common.framework */; };
@@ -59,7 +58,6 @@
 		A7BF4FEF22E2C8AD0077F6C8 /* Profile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Profile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7BF4FF222E2C8AD0077F6C8 /* Profile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
 		A7BF4FF322E2C8AD0077F6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7BF4FFD22E2CFE70077F6C8 /* ProfileApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApi.swift; sourceTree = "<group>"; };
 		A7BF500022E2D0D70077F6C8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		A7BF500222E2D1100077F6C8 /* ProfileCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCloudService.swift; sourceTree = "<group>"; };
 		A7DC21602327405200D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,7 +130,6 @@
 			children = (
 				A76C86D222E34B370067EA6B /* ViewModel */,
 				A7BF4FFF22E2D0CA0077F6C8 /* Model */,
-				A7BF4FFD22E2CFE70077F6C8 /* ProfileApi.swift */,
 				A7BF500222E2D1100077F6C8 /* ProfileCloudService.swift */,
 				A76C86DB22E357A90067EA6B /* UpdateProfileCloudService.swift */,
 				A7BF4FF222E2C8AD0077F6C8 /* Profile.h */,
@@ -272,7 +269,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7BF500322E2D1100077F6C8 /* ProfileCloudService.swift in Sources */,
-				A7BF4FFE22E2CFE70077F6C8 /* ProfileApi.swift in Sources */,
 				A71A634823150F60001A724B /* ArtisanProfile.swift in Sources */,
 				A76C86DC22E357A90067EA6B /* UpdateProfileCloudService.swift in Sources */,
 				A7E33C8D23699E2000366578 /* UpdateIdentityViewModelType.swift in Sources */,

@@ -6,31 +6,29 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct AddressCloudService<CloudResponse: ResponseType>: ServiceType {
+public class AddressCloudService<CloudResponse: ResponseType>: AddressAPI, ServiceType {
+    
     public typealias R = ListRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<AddressApi>
-    
-    public init(service: MoyaProvider<AddressApi> = MoyaProvider<AddressApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init() {
+        super.init()
     }
     
     public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
         guard request != nil else { return .just(.error(ServiceError.invalidRequest)) }
-        
-        return _service.rx
-            .request(.getAddressList)
+        return super.getAddressList()
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { data, response in
+                self.parse(data: data, statusCode: response?.statusCode)
+            }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

@@ -12,6 +12,7 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
 
 public struct UpdateRatingViewModel<T: ResponseType>: UpdateRatingViewModelType, UpdateRatingViewModelInput, UpdateRatingViewModelOutput {
     public typealias Outputs = UpdateRatingViewModel<T>

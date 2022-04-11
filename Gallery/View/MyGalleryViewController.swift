@@ -13,6 +13,7 @@ import Upload
 import Domain
 import Platform
 import Lightbox
+import ServiceWrapper
 
 public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptionsViewControllerDelegate, GalleryAdapterDelegate {
     private let _preference = ArtisanPreference()

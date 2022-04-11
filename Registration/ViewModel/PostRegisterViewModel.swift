@@ -113,7 +113,7 @@ public protocol PostRegistrationViewModelOutput {
 }
 
 protocol PostRegistrationViewModelType {
-    associatedtype Outputs = RegistrationViewModelOutput
+    associatedtype Outputs = PostRegistrationViewModelOutput
     
     var outputs: Outputs { get }
 }

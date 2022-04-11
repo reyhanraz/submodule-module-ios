@@ -8,6 +8,7 @@
 
 import GRDB
 import Platform
+import ServiceWrapper
 
 extension Artisan: MultiTableRecord {
     public typealias R = ArtisanFilter

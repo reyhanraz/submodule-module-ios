@@ -6,29 +6,26 @@
 //  Copyright © 2020 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import Platform
 
-public struct GetPaymentHistoriesCloudService<CloudResponse: ResponseType>: ServiceType {
+public class GetPaymentHistoriesCloudService<CloudResponse: ResponseType>: PaymentAPI, ServiceType {
     public typealias R = ListRequest
 
     public typealias T = CloudResponse
     public typealias E = Error
 
-    private let _service: MoyaProvider<PaymentApi>
-
-    public init(service: MoyaProvider<PaymentApi> = MoyaProvider<PaymentApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init(){
+        super.init()
     }
 
     public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
 
-        return _service.rx.request(.getPaymentHistories(page: request.page, limit: request.limit))
+        return super.getPaymentHistories(page: request.page, limit: request.limit)
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

@@ -8,20 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		04E6C8FD96FA9D94ECD462A6 /* Pods_Artisan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57EDCD51A230D3C9916C5F64 /* Pods_Artisan.framework */; };
+		6862043227FB631300C2FBF6 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6862043127FB631300C2FBF6 /* ServiceWrapper.framework */; };
+		6862043327FB631300C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6862043127FB631300C2FBF6 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A70544442330BD3D00C95BB0 /* SearchArtisanSQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70544432330BD3D00C95BB0 /* SearchArtisanSQLCache.swift */; };
 		A72CB1C722FAD2EF008FE20D /* ArtisanSQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72CB1C622FAD2EF008FE20D /* ArtisanSQLCache.swift */; };
 		A72CB1C922FAD62D008FE20D /* Artisan+SQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72CB1C822FAD62D008FE20D /* Artisan+SQL.swift */; };
 		A79368D322FAB9A800CE7D72 /* Artisan.h in Headers */ = {isa = PBXBuildFile; fileRef = A79368D122FAB9A800CE7D72 /* Artisan.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A79368E122FAC6D900CE7D72 /* ArtisanApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79368E022FAC6D900CE7D72 /* ArtisanApi.swift */; };
 		A79368E322FAC73000CE7D72 /* ArtisanCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79368E222FAC73000CE7D72 /* ArtisanCloudService.swift */; };
 		A7C686E62306EB8B00116787 /* ArtisanCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C686E52306EB8B00116787 /* ArtisanCacheService.swift */; };
 		A7C686E82306EBFF00116787 /* ArtisanDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C686E72306EBFF00116787 /* ArtisanDetail.swift */; };
-		A7D48FDB230FC1120030FE80 /* ArtisanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D48FDA230FC1120030FE80 /* ArtisanFilter.swift */; };
 		A7DC217D232740BA00D06C1F /* Platform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC217C232740BA00D06C1F /* Platform.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6862043427FB631300C2FBF6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6862043327FB631300C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		57EDCD51A230D3C9916C5F64 /* Pods_Artisan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Artisan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6862043127FB631300C2FBF6 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70D1512DE7FE2EE1F3FD8777 /* Pods-Artisan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artisan.debug.xcconfig"; path = "Target Support Files/Pods-Artisan/Pods-Artisan.debug.xcconfig"; sourceTree = "<group>"; };
 		99F75ED9DD2A81954B9D2020 /* Pods-Artisan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artisan.release.xcconfig"; path = "Target Support Files/Pods-Artisan/Pods-Artisan.release.xcconfig"; sourceTree = "<group>"; };
 		A70544432330BD3D00C95BB0 /* SearchArtisanSQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtisanSQLCache.swift; sourceTree = "<group>"; };
@@ -30,11 +45,9 @@
 		A79368CE22FAB9A800CE7D72 /* Artisan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Artisan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A79368D122FAB9A800CE7D72 /* Artisan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Artisan.h; sourceTree = "<group>"; };
 		A79368D222FAB9A800CE7D72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A79368E022FAC6D900CE7D72 /* ArtisanApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanApi.swift; sourceTree = "<group>"; };
 		A79368E222FAC73000CE7D72 /* ArtisanCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanCloudService.swift; sourceTree = "<group>"; };
 		A7C686E52306EB8B00116787 /* ArtisanCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanCacheService.swift; sourceTree = "<group>"; };
 		A7C686E72306EBFF00116787 /* ArtisanDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanDetail.swift; sourceTree = "<group>"; };
-		A7D48FDA230FC1120030FE80 /* ArtisanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanFilter.swift; sourceTree = "<group>"; };
 		A7DC217C232740BA00D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7E33C7D2369478B00366578 /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -44,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6862043227FB631300C2FBF6 /* ServiceWrapper.framework in Frameworks */,
 				A7DC217D232740BA00D06C1F /* Platform.framework in Frameworks */,
 				04E6C8FD96FA9D94ECD462A6 /* Pods_Artisan.framework in Frameworks */,
 			);
@@ -95,7 +109,6 @@
 			children = (
 				A72CB1C522FAD2DB008FE20D /* Cache */,
 				A79368DB22FABD3600CE7D72 /* Model */,
-				A79368E022FAC6D900CE7D72 /* ArtisanApi.swift */,
 				A79368E222FAC73000CE7D72 /* ArtisanCloudService.swift */,
 				A79368D122FAB9A800CE7D72 /* Artisan.h */,
 				A79368D222FAB9A800CE7D72 /* Info.plist */,
@@ -108,7 +121,6 @@
 			children = (
 				A7C686E72306EBFF00116787 /* ArtisanDetail.swift */,
 				A72CB1C822FAD62D008FE20D /* Artisan+SQL.swift */,
-				A7D48FDA230FC1120030FE80 /* ArtisanFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -116,6 +128,7 @@
 		C34515BFA687F44369E97B5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6862043127FB631300C2FBF6 /* ServiceWrapper.framework */,
 				A7E33C7D2369478B00366578 /* CommonUI.framework */,
 				A7DC217C232740BA00D06C1F /* Platform.framework */,
 				57EDCD51A230D3C9916C5F64 /* Pods_Artisan.framework */,
@@ -146,6 +159,7 @@
 				A79368CA22FAB9A800CE7D72 /* Sources */,
 				A79368CB22FAB9A800CE7D72 /* Frameworks */,
 				A79368CC22FAB9A800CE7D72 /* Resources */,
+				6862043427FB631300C2FBF6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -233,9 +247,7 @@
 				A70544442330BD3D00C95BB0 /* SearchArtisanSQLCache.swift in Sources */,
 				A7C686E82306EBFF00116787 /* ArtisanDetail.swift in Sources */,
 				A79368E322FAC73000CE7D72 /* ArtisanCloudService.swift in Sources */,
-				A79368E122FAC6D900CE7D72 /* ArtisanApi.swift in Sources */,
 				A72CB1C922FAD62D008FE20D /* Artisan+SQL.swift in Sources */,
-				A7D48FDB230FC1120030FE80 /* ArtisanFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 import GRDB
 import Platform
+import ServiceWrapper
 
 public class SearchArtisanSQLCache: ArtisanSQLCache {
     

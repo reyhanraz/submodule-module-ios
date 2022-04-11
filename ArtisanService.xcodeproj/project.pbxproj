@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4C39B7A65B873328DEC98B66 /* Pods_ArtisanService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */; };
+		68BA611527FC880400DA70F8 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA611427FC880400DA70F8 /* ServiceWrapper.framework */; };
+		68BA611627FC880400DA70F8 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA611427FC880400DA70F8 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A738DC8323116B850051B127 /* PostArtisanServiceViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */; };
 		A738DC8523116B910051B127 /* PostArtisanServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */; };
-		A738DC8723116D210051B127 /* ArtisanServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8623116D210051B127 /* ArtisanServiceRequest.swift */; };
-		A738DC892311713A0051B127 /* ArtisanServiceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC882311713A0051B127 /* ArtisanServiceApi.swift */; };
 		A738DC8B231172910051B127 /* PostArtisanServiceCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */; };
 		A738DC8D2311859F0051B127 /* ArtisanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8C2311859F0051B127 /* ArtisanService.swift */; };
 		A738DC8F231185B20051B127 /* ArtisanServiceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8E231185B20051B127 /* ArtisanServiceDetail.swift */; };
@@ -27,13 +27,26 @@
 		A7DC21732327408800D06C1F /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC21722327408800D06C1F /* Domain.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		68BA611727FC880500DA70F8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				68BA611627FC880400DA70F8 /* ServiceWrapper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
+		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
 		5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtisanService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68BA611427FC880400DA70F8 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModelType.swift; sourceTree = "<group>"; };
 		A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModel.swift; sourceTree = "<group>"; };
-		A738DC8623116D210051B127 /* ArtisanServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceRequest.swift; sourceTree = "<group>"; };
-		A738DC882311713A0051B127 /* ArtisanServiceApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceApi.swift; sourceTree = "<group>"; };
 		A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceCloudService.swift; sourceTree = "<group>"; };
 		A738DC8C2311859F0051B127 /* ArtisanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanService.swift; sourceTree = "<group>"; };
 		A738DC8E231185B20051B127 /* ArtisanServiceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceDetail.swift; sourceTree = "<group>"; };
@@ -49,7 +62,7 @@
 		A7DC216E2327408100D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21702327408500D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21722327408800D06C1F /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
+		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68BA611527FC880400DA70F8 /* ServiceWrapper.framework in Frameworks */,
 				A7DC21732327408800D06C1F /* Domain.framework in Frameworks */,
 				A7DC21712327408500D06C1F /* Platform.framework in Frameworks */,
 				A7BACA8F237AA9230056B8D0 /* CommonUI.framework in Frameworks */,
@@ -71,6 +85,7 @@
 		20B0EB2F96AA0149C01BF4C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68BA611427FC880400DA70F8 /* ServiceWrapper.framework */,
 				A7BACA8E237AA9230056B8D0 /* CommonUI.framework */,
 				A7DC21722327408800D06C1F /* Domain.framework */,
 				A7DC21702327408500D06C1F /* Platform.framework */,
@@ -131,7 +146,6 @@
 				A738DC9023124C900051B127 /* Cache */,
 				A7D49028231128D00030FE80 /* ViewModel */,
 				A7D49027231128CB0030FE80 /* Model */,
-				A738DC882311713A0051B127 /* ArtisanServiceApi.swift */,
 				A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */,
 				A7C313522313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift */,
 				A738DC9D231267190051B127 /* ArtisanServiceCloudService.swift */,
@@ -144,7 +158,6 @@
 		A7D49027231128CB0030FE80 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A738DC8623116D210051B127 /* ArtisanServiceRequest.swift */,
 				A738DC8E231185B20051B127 /* ArtisanServiceDetail.swift */,
 				A738DC8C2311859F0051B127 /* ArtisanService.swift */,
 				A738DC95231258B00051B127 /* ArtisanService+SQL.swift */,
@@ -184,6 +197,7 @@
 				A7D490142311278E0030FE80 /* Sources */,
 				A7D490152311278E0030FE80 /* Frameworks */,
 				A7D490162311278E0030FE80 /* Resources */,
+				68BA611727FC880500DA70F8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -272,12 +286,10 @@
 				A7C313562313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift in Sources */,
 				A738DC8F231185B20051B127 /* ArtisanServiceDetail.swift in Sources */,
 				A7C313532313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift in Sources */,
-				A738DC8723116D210051B127 /* ArtisanServiceRequest.swift in Sources */,
 				A738DC8B231172910051B127 /* PostArtisanServiceCloudService.swift in Sources */,
 				A738DC8D2311859F0051B127 /* ArtisanService.swift in Sources */,
 				A738DC96231258B00051B127 /* ArtisanService+SQL.swift in Sources */,
 				A738DC9223124CA60051B127 /* ArtisanServiceSQLCache.swift in Sources */,
-				A738DC892311713A0051B127 /* ArtisanServiceApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

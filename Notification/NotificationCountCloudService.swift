@@ -6,29 +6,25 @@
 //  Copyright © 2019 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct NotificationCountCloudService<CloudResponse: ResponseType>: ServiceType {
+public class NotificationCountCloudService<CloudResponse: ResponseType>: NotificationAPI, ServiceType {
     public typealias R = Any
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<NotificationApi>
-    
-    public init(service: MoyaProvider<NotificationApi> = MoyaProvider<NotificationApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
+    public override init(){
+        super.init()
     }
     
     public func get(request: Any?) -> Observable<Result<T, Error>> {
-        return _service.rx
-            .request(.getUnread)
+        return super.getUnread()
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }
