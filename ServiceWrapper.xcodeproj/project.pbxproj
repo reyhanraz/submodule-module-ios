@@ -98,7 +98,7 @@
 		68BA611227FC439E00DA70F8 /* MediaSigned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSigned.swift; sourceTree = "<group>"; };
 		68BA611927FC883E00DA70F8 /* ArtisanServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceRequest.swift; sourceTree = "<group>"; };
 		68BA611B27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceAPI.swift; sourceTree = "<group>"; };
-		68BA611E27FCA0B600DA70F8 /* ChangePasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePasswordRequest.swift; path = ../../../../../ChangePasswordRequest.swift; sourceTree = "<group>"; };
+		68BA611E27FCA0B600DA70F8 /* ChangePasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordRequest.swift; sourceTree = "<group>"; };
 		68BA612027FCA13500DA70F8 /* ChangePasswordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordAPI.swift; sourceTree = "<group>"; };
 		68BA612927FCA6C400DA70F8 /* EventTrackingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTrackingAPI.swift; sourceTree = "<group>"; };
 		68BA612F27FCA95300DA70F8 /* FavoriteRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRequest.swift; sourceTree = "<group>"; };
