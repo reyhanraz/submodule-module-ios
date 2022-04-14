@@ -10,6 +10,7 @@
 		06CA220BE8F61966F0DF021F /* Pods_Category.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468312C49CC72A1760306AB0 /* Pods_Category.framework */; };
 		6862044727FBB88700C2FBF6 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6862044627FBB88700C2FBF6 /* ServiceWrapper.framework */; };
 		6862044827FBB88700C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6862044627FBB88700C2FBF6 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6872A4732806D0EB002EC72A /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872A4722806D0EB002EC72A /* CategoryListViewModel.swift */; };
 		A7D48FC5230E9CF70030FE80 /* CategoryTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D48FC4230E9CF60030FE80 /* CategoryTypes.swift */; };
 		A7D48FC7230E9CFF0030FE80 /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D48FC6230E9CFF0030FE80 /* CategoryType.swift */; };
 		A7D48FC9230E9E2D0030FE80 /* CategoryTypesSQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D48FC8230E9E2D0030FE80 /* CategoryTypesSQLCache.swift */; };
@@ -41,7 +42,8 @@
 /* Begin PBXFileReference section */
 		468312C49CC72A1760306AB0 /* Pods_Category.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Category.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6862044627FBB88700C2FBF6 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7559EE4CA6EB18BD96F56F0B /* Pods-Category.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Category.release.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Category/Pods-Category.release.xcconfig"; sourceTree = "<group>"; };
+		6872A4722806D0EB002EC72A /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
+		7559EE4CA6EB18BD96F56F0B /* Pods-Category.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Category.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Category/Pods-Category.release.xcconfig"; sourceTree = "<group>"; };
 		A7D48FC4230E9CF60030FE80 /* CategoryTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypes.swift; sourceTree = "<group>"; };
 		A7D48FC6230E9CFF0030FE80 /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		A7D48FC8230E9E2D0030FE80 /* CategoryTypesSQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypesSQLCache.swift; sourceTree = "<group>"; };
@@ -56,7 +58,7 @@
 		A7E4AE3C229058A600B2A6B7 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		A7E4AE582290668600B2A6B7 /* CategoryCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCloudService.swift; sourceTree = "<group>"; };
 		A7E4AE5A229066C700B2A6B7 /* CategoryCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCacheService.swift; sourceTree = "<group>"; };
-		DAA25BE44E62DFF15EEE887A /* Pods-Category.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Category.debug.xcconfig"; path = "../App/Pods/Target Support Files/Pods-Category/Pods-Category.debug.xcconfig"; sourceTree = "<group>"; };
+		DAA25BE44E62DFF15EEE887A /* Pods-Category.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Category.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Category/Pods-Category.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6872A4712806D0D3002EC72A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6872A4722806D0EB002EC72A /* CategoryListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		A7E4AE1D229054A000B2A6B7 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +123,7 @@
 		A7E4AE29229054A000B2A6B7 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				6872A4712806D0D3002EC72A /* ViewModel */,
 				A7E4AE372290561300B2A6B7 /* Cache */,
 				A7E4AE362290560E00B2A6B7 /* Model */,
 				A7E4AE2A229054A000B2A6B7 /* Category.h */,
@@ -186,7 +197,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = "Adrena Teknologi Indonesia";
+				ORGANIZATIONNAME = "PT. Perintis Teknologi Nusantara";
 				TargetAttributes = {
 					A7E4AE26229054A000B2A6B7 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -257,6 +268,7 @@
 				A7D48FC7230E9CFF0030FE80 /* CategoryType.swift in Sources */,
 				A7D48FC9230E9E2D0030FE80 /* CategoryTypesSQLCache.swift in Sources */,
 				A7D48FC5230E9CF70030FE80 /* CategoryTypes.swift in Sources */,
+				6872A4732806D0EB002EC72A /* CategoryListViewModel.swift in Sources */,
 				A7E4AE3D229058A600B2A6B7 /* Category.swift in Sources */,
 				A7D48FCD230EA3ED0030FE80 /* CategoryTypeCacheService.swift in Sources */,
 				A7D48FCB230EA20D0030FE80 /* CategoryTypeCloudService.swift in Sources */,

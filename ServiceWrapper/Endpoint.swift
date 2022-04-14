@@ -40,7 +40,7 @@ struct Endpoint{
     static let getRatingList = "artisanReviewList"
     
     //Category
-    static let getCategories = "serviceCategoryList"
+    static let getCategories = "api/v1/categories"
     static let getCategoryTypes = "serviceCategoryTypeList"
     
     //Favorite

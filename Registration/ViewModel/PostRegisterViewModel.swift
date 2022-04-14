@@ -75,24 +75,9 @@ public struct PostRegisterViewModel: PostRegistrationViewModelType, PostRegistra
     public func execute(request: ServiceWrapper.RegisterRequest?, challenge_token: String){
         guard let request = request else { return }
         
-        let _request: ServiceWrapper.RegisterRequest
-        
-        if let instagram = request.instagram, let username = request.username, let dob = request.dateofbirth{
-            _request = ServiceWrapper.RegisterRequest(name: request.name,
-                                                          email: request.email,
-                                                          password: request.password,
-                                                          gender: request.gender,
-                                                          challenge_token: challenge_token,
-                                                          instagram: instagram,
-                                                          username: username,
-                                                          dateofbirth: dob)
-        } else {
-            _request = ServiceWrapper.RegisterRequest(name: request.name,
-                                                          email: request.email,
-                                                          password: request.password,
-                                                          gender: request.gender,
-                                                          challenge_token: challenge_token)
-        }
+        var _request = request
+        _request.phone = nil
+        _request.challenge_token = challenge_token
         
         _requestProperty.onNext(_request)
     }

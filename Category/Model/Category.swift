@@ -9,31 +9,40 @@
 import Platform
 import GRDB
 
-public struct Category: Codable, Hashable, FetchableRecord, PersistableRecord, CustomStringConvertible, Nameable {
+public final class Category: Codable, Hashable, FetchableRecord, PersistableRecord, CustomStringConvertible, Nameable {
     
     public let id: Int
     public let name: String
-    public let icon: URL
-    public let order: Int
+    public let icon: URL?
     public let status: ItemStatus
-    public let timestamp: TimeInterval?
+    public let childrens: [Category]?
+    public let parent: Category?
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case name
+        case icon = "icon_url"
+        case status
+        case childrens
+        case parent
+    }
     
     enum Columns: String, ColumnExpression {
         case id
         case name
         case icon
-        case order
         case status
-        case timestamp
+        case childrens
+        case parent
     }
     
-    public init(id: Int, name: String, icon: URL, order: Int, status: ItemStatus, timestamp: TimeInterval?) {
+    public init(id: Int, name: String, icon: URL?, status: ItemStatus, childrens: [Category]?, parent: Category?) {
         self.id = id
         self.name = name
         self.icon = icon
-        self.order = order
         self.status = status
-        self.timestamp = timestamp
+        self.childrens = childrens
+        self.parent = parent
     }
     
     public init(from decoder: Decoder) throws {
@@ -43,15 +52,18 @@ public struct Category: Codable, Hashable, FetchableRecord, PersistableRecord, C
         
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        order = try container.decode(Int.self, forKey: .order)
         status = ItemStatus(string: decodedStatus)
-        icon = try container.decode(URL.self, forKey: .icon)
-        
-        timestamp = try container.decodeIfPresent(TimeInterval.self, forKey: .timestamp)
+        childrens = try container.decodeIfPresent([Category].self, forKey: .childrens)
+        parent = try container.decodeIfPresent(Category.self, forKey: .parent)
+        icon = try container.decodeIfPresent(URL.self, forKey: .icon)
     }
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+    public static func == (lhs: Category, rhs: Category) -> Bool {
+        true
     }
 }
 
