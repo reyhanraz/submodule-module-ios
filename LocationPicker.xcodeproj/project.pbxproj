@@ -123,9 +123,9 @@
 			buildConfigurationList = B62463151B68A4DE00646DE2 /* Build configuration list for PBXNativeTarget "LocationPicker" */;
 			buildPhases = (
 				DDBE3B08A78AFDD8A71EB497 /* [CP] Check Pods Manifest.lock */,
+				B62462FC1B68A4DE00646DE2 /* Headers */,
 				B62462FA1B68A4DE00646DE2 /* Sources */,
 				B62462FB1B68A4DE00646DE2 /* Frameworks */,
-				B62462FC1B68A4DE00646DE2 /* Headers */,
 				B62462FD1B68A4DE00646DE2 /* Resources */,
 			);
 			buildRules = (

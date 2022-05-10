@@ -10,47 +10,28 @@ import Platform
 
 public struct AddressRequest: Encodable, Editable {
     public let id: Int?
-    public let name: String?
-    public let detail: String?
-    public let areaId: Int?
-    public let rawAddress: [String: String]?
-    public let location: Location?
-    public let note: String?
+    public let name: String
+    public let address: String
+    public let notes: String
+    public let latitude: Double?
+    public let longitude: Double?
     
-    //MARK: - INIT For Insert Address
-    public init(addressID: Int?, name: String?, note: String?, lat: Double?, lon: Double?, address: String?, areaId: Int? = nil, rawAddress: [String: String]? = nil){
+    public init(addressID: Int?, name: String, notes: String, lat: Double?, lon: Double?, address: String){
         self.name = name
-        self.note = note
-        self.rawAddress = rawAddress
-        self.location = Location(latitude: lat,
-                                 longitude: lon,
-                                 address: address)
+        self.notes = notes
+        self.address = address
+        self.latitude = lat
+        self.longitude = lon
 
         id = addressID
-        detail = address
-        self.areaId = areaId
     }
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case detail
-        case areaId
-        case location
-        case rawAddress
-        case note
-    }
-    
-    public struct Location: Encodable{
-        public let latitude: Double?
-        public let longitude: Double?
-        public let address: String?
-        
-        enum CodingKeys: String, CodingKey{
-            case latitude
-            case longitude
-            case address
-        }
-
+        case address
+        case notes
+        case latitude
+        case longitude
     }
 }
