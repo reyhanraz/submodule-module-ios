@@ -19,8 +19,7 @@ open class ForgotPasswordAPI: ServiceHelper{
         return super.request(Endpoint.forgotPassword,
                              method: HTTPMethod.post,
                              parameter: request,
-                             encoding: JSONEncoding.default,
-                             isBasicAuth: true)
+                             encoding: JSONEncoding.default)
         .retry(3).map { result in
             return (result.data, result.response)
         }

@@ -17,9 +17,7 @@ public class CategorySQLCache: SQLCache<ListRequest, Category> {
             body.column(Category.Columns.id.rawValue, .integer).unique(onConflict: .replace)
             body.column(Category.Columns.name.rawValue, .text).notNull().collate(.localizedCaseInsensitiveCompare)
             body.column(Category.Columns.status.rawValue, .integer).notNull()
-            body.column(Category.Columns.order.rawValue, .integer).notNull()
             body.column(Category.Columns.icon.rawValue, .integer)
-            body.column(CommonColumns.timestamp.rawValue, .integer).notNull()
         }
     }
     
@@ -47,9 +45,8 @@ public class CategorySQLCache: SQLCache<ListRequest, Category> {
                     try Category(id: category.id,
                                  name: category.name,
                                  icon: category.icon,
-                                 order: category.order,
                                  status: category.status,
-                                 timestamp: timestamp).insert(db)
+                                 childrens: nil, parent: nil)
                 }
                 
                 return .commit

@@ -19,8 +19,7 @@ open class ResetPasswordAPI: ServiceHelper{
         return super.request(Endpoint.resetPassword,
                              method: .post,
                              parameter: request,
-                             encoding: JSONEncoding.default,
-                             isBasicAuth: true)
+                             encoding: JSONEncoding.default)
         .retry(3).map { result in
             return (result.data, result.response)
         }

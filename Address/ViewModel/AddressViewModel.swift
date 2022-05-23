@@ -25,7 +25,6 @@ public struct AddressViewModel{
     public var failed: Driver<Status.Detail>
     public var arrayResult: Driver<[Addresses.Data.T]>
     
-    public var failedUpdate: Driver<(Status.Detail, [DataError]?)>
     public var exception: Driver<Exception>
     public var success: Driver<Detail>
     public var unauthorized: Driver<Unauthorized>
@@ -56,7 +55,6 @@ public struct AddressViewModel{
         arrayResult = arrayResultProperty.asDriver(onErrorDriveWith: .empty())
         result = PublishSubject<(ListRequest, [Addresses.Data.T], Paging?, Bool)>().asDriver(onErrorDriveWith: .empty())
         
-        failedUpdate = PublishSubject<(Status.Detail, [DataError]?)>().asDriver(onErrorDriveWith: .empty())
         exception = PublishSubject<Exception>().asDriver(onErrorDriveWith: .empty())
         success = PublishSubject<Detail>().asDriver(onErrorDriveWith: .empty())
         unauthorized = PublishSubject<Unauthorized>().asDriver(onErrorDriveWith: .empty())
@@ -151,9 +149,7 @@ public struct AddressViewModel{
     public func checkAddressNameValidation(addressName: String) {
         if addressName.isEmpty {
             validatedAddressName.onNext(.failed(message: "Please add a name for this address"))
-        } else if addressName.count < 2 {
-            validatedAddressName.onNext(.failed(message: "invalid_length".l10n(args: [2, 20])))
-        } else {
+        }  else {
             validatedAddressName.onNext(.ok(message: nil))
         }
     }
@@ -161,9 +157,7 @@ public struct AddressViewModel{
     public func checkAddressNoteValidation(addressNote: String) {
         if addressNote.isEmpty {
             validatedAddressNote.onNext(.failed(message: "Please add note for more information related to your address"))
-        } else if addressNote.count < 2 {
-            validatedAddressNote.onNext(.failed(message: "invalid_length".l10n(args: [2, 100])))
-        }else {
+        } else {
             validatedAddressNote.onNext(.ok(message: nil))
         }
     }
@@ -190,13 +184,13 @@ public struct AddressViewModel{
         
         let loadingProperty = PublishSubject<Loading>()
         let successProperty = PublishSubject<Detail>()
-        let failedProperty = PublishSubject<(Status.Detail, [DataError]?)>()
+        let failedProperty = PublishSubject<Status.Detail>()
         let exceptionProperty = PublishSubject<Exception>()
         let dismissResponderProperty = PublishSubject<Bool>()
         let unauthorizedProperty = PublishSubject<Unauthorized>()
         
         loading = loadingProperty.asDriver(onErrorDriveWith: .empty())
-        failedUpdate = failedProperty.asDriver(onErrorDriveWith: .empty())
+        failed = failedProperty.asDriver(onErrorDriveWith: .empty())
         exception = exceptionProperty.asDriver(onErrorDriveWith: .empty())
         success = successProperty.asDriver(onErrorDriveWith: .empty())
         unauthorized = unauthorizedProperty.asDriver(onErrorDriveWith: .empty())
@@ -230,8 +224,15 @@ public struct AddressViewModel{
             name.isValid && detail.isValid  && coordinates.isValid
         }.distinctUntilChanged()
         
-        let forms = Driver.combineLatest(name, detail, coordinates) { name, detail, coordinates in
-            AddressRequest(addressID: id, name: name, note: detail, lat: coordinates?.lat, lon: coordinates?.lon, address: coordinates?.address, rawAddress: nil)
+        let forms: Driver<AddressRequest?> = Driver.combineLatest(name, detail, coordinates) { name, detail, coordinates in
+            guard let name = name, let detail = detail, let coordinates = coordinates else { return nil }
+            
+            return AddressRequest(addressID: id,
+                           name: name,
+                           notes: detail,
+                           lat: coordinates.lat,
+                           lon: coordinates.lon,
+                           address: coordinates.address)
         }
         
         update = _submitProperty.asDriver(onErrorJustReturn: ()).withLatestFrom(forms)
@@ -247,8 +248,8 @@ public struct AddressViewModel{
                 switch result {
                 case let .success(register):
                     successProperty.onNext(register)
-                case let .fail(status, errors):
-                    failedProperty.onNext((status, errors))
+                case let .fail(status, _):
+                    failedProperty.onNext(status)
                 case let .error(error):
                     exceptionProperty.onNext(Exception(title: "submit_failed".l10n(), message: "submit_error_message".l10n(), error: error))
                 case .unauthorized:

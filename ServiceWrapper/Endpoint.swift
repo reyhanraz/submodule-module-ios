@@ -24,7 +24,7 @@ struct Endpoint{
     
     //Address
     static let getAddressList = "\("config.path".l10n())Addresses"
-    static let addressDetails = "\("config.path".l10n())Address"
+    static let addressDetails = "api/v1/profile/address"
     static let updateLocation = "updateArtisanGeoLocation"
     static let searchLocation = "locationAreaList"
     static let getProvinceList = "locationProvinceList"
@@ -40,7 +40,7 @@ struct Endpoint{
     static let getRatingList = "artisanReviewList"
     
     //Category
-    static let getCategories = "serviceCategoryList"
+    static let getCategories = "api/v1/categories"
     static let getCategoryTypes = "serviceCategoryTypeList"
     
     //Favorite

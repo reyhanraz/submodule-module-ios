@@ -27,6 +27,13 @@ open class RegisterAPI: ServiceHelper{
     }
     
     public func checkUser(request: CheckUserRequest) -> Observable<(Data?, HTTPURLResponse?)>{
+        guard !request.identifier.isEmpty else {
+            return Observable.create { observer in
+                observer.onNext((nil, nil))
+                observer.onCompleted()
+                return Disposables.create()
+            }
+        }
         return super.request(Endpoint.findUser,
                              method: .post,
                              parameter: request,
