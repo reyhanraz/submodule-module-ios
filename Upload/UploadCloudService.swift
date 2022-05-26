@@ -10,10 +10,10 @@ import RxSwift
 import Platform
 import ServiceWrapper
 
-public class UploadCloudService<CloudResponse: ResponseType>: UploadAPI, ServiceType {
+public class UploadCloudService: UploadAPI, ServiceType {
     public typealias R = UploadMediaRequest
     
-    public typealias T = CloudResponse
+    public typealias T = Detail<UploadConfirmation>
     public typealias E = Error
     
     private let _confirmAfterUpload: Bool
@@ -25,49 +25,63 @@ public class UploadCloudService<CloudResponse: ResponseType>: UploadAPI, Service
     public func get(request: UploadMediaRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        let response = super.getSignedURL(request: request)
+        let response = super.createMedia(request: request)
             .retry(3)
-            .map { response in self.parse(result: response) }
-            .catchError { error in return .just(.error(error)) }
             .asObservable()
         
         return response.flatMap { result -> Observable<Result<T, Error>> in
-            switch result {
-            case let .success(response):
-                if let signed = response.data?.signed {
-                    return self.upload(request: request, signed: signed)
-                } else {
-                    return .just(.error(ServiceError.invalidRequest))
-                }
-            default:
-                return .just(.error(ServiceError.invalidRequest))
-            }
+            return self.upload(request: request, signed: result)
         }
     }
     
-    private func upload(request: UploadMediaRequest, signed: MediaSigned.Signed) -> Observable<Result<T, Error>> {
-        let response = super.upload(mime: request.mimeType, url: signed.url, path: request.url)
+    private func upload(request: UploadMediaRequest, signed: MediaSigned) -> Observable<Result<T, Error>> {
+        guard let response = super.uploadFile(url: signed.url, request: request)?
             .retry(3)
             .asObservable()
+        else {
+            let subject = PublishSubject<Result<T, Error>>()
+            subject.onNext(Result.fail(status: Status.Detail(code: 501, message: "Failed to Upload File"), errors: nil))
+            return subject.asObservable()
+        }
+        
 
         if _confirmAfterUpload {
             return response.flatMap { result -> Observable<Result<T, Error>> in
                 if result.1?.statusCode == 200 {
-                    return self.confirmed(request: request, signed: signed)
+                    return self.confirmed(typeId: request.id, fileName: signed.filename)
                 } else {
                     return .just(.error(ServiceError.invalidRequest))
                 }
             }
         } else {
-            return response
-                .map { Status(status: Status.Detail(code: $0.1?.statusCode ?? 404, message: "")) as! CloudResponse }
-                .map { response in self.parse(result: response) }
-                .catchError { error in return .just(.error(error)) }
+            return response.map { (data, response) in
+                if response?.statusCode == 200{
+                    let mime: String
+                    
+                    if let data = request.data {
+                        mime = data.mimeType
+                    } else if let url = request.url {
+                        mime = url.mimeType
+                    } else { mime = "" }
+                    
+                    let model = UploadConfirmation(fileName: signed.filename,
+                                                    mediaType: mime,
+                                                    type: request.uploadType.rawValue,
+                                                    uploaded: true,
+                                                    typeID: request.id,
+                                                    url: nil)
+                    let detail = Detail(data: model)
+                    
+                    return Result<T,E>.success(detail)
+                } else {
+                    return Result<T,E>.fail(status: Status.Detail(code: response?.statusCode ?? 500, message: "Upload Failed"), errors: nil)
+                }
+            }
         }
     }
     
-    private func confirmed(request: UploadMediaRequest, signed: MediaSigned.Signed) -> Observable<Result<T, Error>> {
-        return super.confirmed(uploadPath: request.uploadType.rawValue, request: UploadConfirmedRequest(id: request.id, temporaryObjectName: signed.temporaryObjectName))
+    public func confirmed(typeId: String, fileName: String) -> Observable<Result<T, Error>> {
+        return super.confirmed(request: UploadConfirmedRequest(id: typeId, filename: fileName))
             .retry(3)
             .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }

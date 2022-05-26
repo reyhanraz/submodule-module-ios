@@ -28,12 +28,25 @@ open class ServiceHelper{
         }
     }
     
-    public func upload(host: URL, path: URL, header: HTTPHeaders) -> Observable<DataResponse<Any>>{
+    public func upload(host: URL, path: URL) -> Observable<DataResponse<Any>>{
         return Observable<DataResponse<Any>>.create { observer in
-            let request = AF.upload(path, to: host, method: .put, headers: header).responseJSON(completionHandler: { response in
+            let request = AF.upload(path, to: host, method: .put).responseJSON(completionHandler: { response in
                 observer.onNext(response)
                 observer.onCompleted()
             })
+            
+            return Disposables.create{
+                request.cancel()
+            }
+        }
+    }
+    
+    public func upload(host: URL, data: Data) -> Observable<DataResponse<Any>>{
+        return Observable<DataResponse<Any>>.create { observer in
+            let request = AF.upload(data, to: host, method: .put).responseJSON { response in
+                observer.onNext(response)
+                observer.onCompleted()
+            }
             
             return Disposables.create{
                 request.cancel()

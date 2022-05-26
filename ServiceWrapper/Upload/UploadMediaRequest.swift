@@ -8,27 +8,25 @@
 
 import Common
 
-public struct UploadMediaRequest: Encodable {
-    public enum UploadType: String, Encodable {
+public struct UploadMediaRequest {
+    public enum UploadType: String, Codable {
         case gallery = "Image"
-        case avatar = "Avatar"
+        case avatar
         case service = "ServiceCover"
-        case identity = "IdentityCard"
+        case identity = "identity-card"
+        case selfieWithID = "identity-selfie"
         case `default`
     }
     
-    public let url: URL
-    public let fileName: String
-    public let mimeType: String
+    public let url: URL?
+    public let data: Data?
     public let uploadType: UploadType
-    public let id: Int?
+    public let id: String
     
-    public init(id: Int? = nil, url: URL, uploadType: UploadType) {
+    public init(id: String, url: URL? = nil, data: Data? = nil, uploadType: UploadType) {
         self.id = id
         self.url = url
-        
-        self.fileName = url.lastPathComponent
-        self.mimeType = url.mimeType
         self.uploadType = uploadType
+        self.data = data
     }
 }

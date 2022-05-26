@@ -26,3 +26,19 @@ public class ProfileCloudService<Request: Encodable, CloudResponse: ResponseType
         return getDetailProfile(request: request).map { self.parse(data: $0.0, statusCode: $0.1?.statusCode)}
     }
 }
+
+public class NewProfileCloudService<Request: Encodable, CloudResponse: NewResponseType>: ProfileAPI<Request>, ServiceType {
+    
+    public typealias R = Int
+    
+    public typealias T = CloudResponse
+    public typealias E = Error
+    
+    public override init() {
+        super.init()
+    }
+    
+    public func get(request: Int?) -> Observable<Result<T, E>> {
+        return getDetailProfile(request: request).map { self.parse(data: $0.0, statusCode: $0.1?.statusCode)}
+    }
+}

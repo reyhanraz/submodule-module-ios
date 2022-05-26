@@ -15,31 +15,49 @@ open class UploadAPI: ServiceHelper{
     public override init() {
         super.init()
     }
-    
-    public func getSignedURL(request: UploadMediaRequest) -> Observable<MediaSigned>{
-        return super.request(Endpoint.getSignedURL,
+        
+    public func createMedia(request: UploadMediaRequest) -> Observable<MediaSigned> {
+        var mime = ""
+        
+        if let url = request.url{
+            mime = url.mimeType
+        } else if let data = request.data {
+            mime = data.mimeType
+        }
+        
+        let body = ["mime_type": mime]
+        return super.request("\(Endpoint.createMedia)/\(request.uploadType)",
                              method: HTTPMethod.post,
-                             parameter: request,
+                             parameter: body,
                              encoding: JSONEncoding.default)
         .retry(3).map { result in
-            let media = try! JSONDecoder().decode(MediaSigned.self, from: result.data ?? Data())
-            return media
+            let media = try! JSONDecoder().decode(Detail<MediaSigned>.self, from: result.data ?? Data())
+            return media.data
         }
     }
     
-    public func confirmed(uploadPath: String, request: UploadConfirmedRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("\("config.path".l10n())Confirm\(uploadPath)Upload",
-                             method: HTTPMethod.post,
+    public func uploadFile(url: URL, request: UploadMediaRequest) -> Observable<(Data?, HTTPURLResponse?)>?{
+        if let path = request.url{
+            return super.upload(host: url, path: path).retry(3).map { result in
+                return (result.data, result.response)
+            }
+        }
+        
+        if let data = request.data{
+            return super.upload(host: url, data: data).retry(3).map { result in
+                return (result.data, result.response)
+            }
+        }
+        
+        return nil
+    }
+    
+    public func confirmed(request: UploadConfirmedRequest) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request(Endpoint.confirmUpload,
+                             method: HTTPMethod.patch,
                              parameter: request,
                              encoding: JSONEncoding.default)
         .retry(3).map { result in
-            return (result.data, result.response)
-        }
-    }
-    
-    public func upload(mime: String, url: URL, path: URL) -> Observable<(Data?, HTTPURLResponse?)>{
-        let header = HTTPHeaders(["Content-Type": mime])
-        return super.upload(host: url, path: path, header: header).retry(3).map { result in
             return (result.data, result.response)
         }
     }

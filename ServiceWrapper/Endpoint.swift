@@ -13,7 +13,7 @@ struct Endpoint{
     static let register = "accounts/register"
     
     //Get My Profile
-    static let profile = "api/v1/profile"
+    static let profil = "api/v1/profile"
     static let findUser = "api/v1/users/find"
 
     static let challenges = "api/challenges"
@@ -49,6 +49,8 @@ struct Endpoint{
     
     //Upload
     static let getSignedURL = "uploadSignedUrl"
+    static let createMedia = "api/v1/media/image"
+    static let confirmUpload = "api/v1/media/confirm"
     
     //Service List
     static let artisanServicesList = "artisanServiceList"

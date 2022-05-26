@@ -21,7 +21,7 @@ open class ProfileAPI<R: Encodable>: ServiceHelper{
         if let id = request{
             param["id"] = id
         }
-        return super.request("\("config.path".l10n())Profile", parameter: param).retry(3).map { result in
+        return super.request(Endpoint.profil, parameter: param).retry(3).map { result in
             return (result.data, result.response)
         }
     }
