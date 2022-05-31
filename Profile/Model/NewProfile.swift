@@ -20,8 +20,6 @@ public struct NewProfile: Codable {
     public let category: [Category]?
     public let avatar: Media?
     public let isVerified: Bool?
-    public let bio: String?
-    public let idCard: String?
     public let status: String?
     public var hasAddress: Bool
 
@@ -34,8 +32,6 @@ public struct NewProfile: Codable {
         case type, metadata, favorite, jobDone, rating, category
         case avatar
         case isVerified
-        case bio
-        case idCard
         case status
     }
     
@@ -67,8 +63,6 @@ public struct NewProfile: Codable {
         }
         
         isVerified = try container.decodeIfPresent(Bool.self, forKey: .isVerified)
-        bio = try container.decodeIfPresent(String.self, forKey: .bio)
-        idCard = try container.decodeIfPresent(String.self, forKey: .idCard)
         status = try container.decodeIfPresent(String.self, forKey: .status)
         
         hasAddress = false
@@ -96,12 +90,18 @@ public struct NewProfile: Codable {
 
     // MARK: - Metadatum
     public struct Metadata: Codable {
-        public let categories, instagram, birthdate: String?
+        public let categories: String?
+        public let instagram: String?
+        public let birthdate: String?
+        public let idCard: String?
+        public let bio: String?
         
         enum CodingKeys: String, CodingKey{
             case categories
             case instagram
             case birthdate
+            case bio
+            case idCard = "id_card"
         }
         
         public init(from decoder: Decoder) throws {
@@ -110,6 +110,8 @@ public struct NewProfile: Codable {
             categories = try container.decodeIfPresent(String.self, forKey: .categories)
             instagram = try container.decodeIfPresent(String.self, forKey: .instagram)
             birthdate = try container.decodeIfPresent(String.self, forKey: .birthdate)
+            idCard = try container.decodeIfPresent(String.self, forKey: .idCard)
+            bio = try container.decodeIfPresent(String.self, forKey: .bio)
         }
     }
     
@@ -118,5 +120,35 @@ public struct NewProfile: Codable {
 extension NewProfile{
     public var categoryTitles: String? {
         return category?.map { $0.name }.joined(separator: ", ")
+    }
+    
+    public var bio: String? {
+        guard let metadata = metadata else { return nil }
+        for data in metadata{
+            if let bio = data.bio {
+                return bio
+            }
+        }
+        return nil
+    }
+    
+    public var haveID: Bool {
+        guard let metadata = metadata else { return false }
+        for data in metadata{
+            if data.idCard != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+    public var haveBio: Bool {
+        guard let metadata = metadata else { return false }
+        for data in metadata{
+            if data.bio != nil {
+                return true
+            }
+        }
+        return false
     }
 }

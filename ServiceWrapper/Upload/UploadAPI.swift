@@ -16,7 +16,7 @@ open class UploadAPI: ServiceHelper{
         super.init()
     }
         
-    public func createMedia(request: UploadMediaRequest) -> Observable<MediaSigned> {
+    public func createMedia(request: UploadMediaRequest) -> Observable<MediaSigned?> {
         var mime = ""
         
         if let url = request.url{
@@ -31,19 +31,21 @@ open class UploadAPI: ServiceHelper{
                              parameter: body,
                              encoding: JSONEncoding.default)
         .retry(3).map { result in
-            let media = try! JSONDecoder().decode(Detail<MediaSigned>.self, from: result.data ?? Data())
-            return media.data
+            if let media = try? JSONDecoder().decode(Detail<MediaSigned>.self, from: result.data ?? Data()){
+                return media.data
+            } else {
+                return nil
+            }
         }
     }
     
     public func uploadFile(url: URL, request: UploadMediaRequest) -> Observable<(Data?, HTTPURLResponse?)>?{
+        
         if let path = request.url{
             return super.upload(host: url, path: path).retry(3).map { result in
                 return (result.data, result.response)
             }
-        }
-        
-        if let data = request.data{
+        } else if let data = request.data{
             return super.upload(host: url, data: data).retry(3).map { result in
                 return (result.data, result.response)
             }

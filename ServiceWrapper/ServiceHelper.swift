@@ -11,6 +11,12 @@ import Platform
 import Alamofire
 import RxSwift
 
+class Connectivity {
+    class var isConnectedToInternet: Bool {
+        return NetworkReachabilityManager()?.isReachable ?? false
+    }
+}
+
 open class ServiceHelper{
     private let _user = UserPreference()
         
@@ -29,6 +35,17 @@ open class ServiceHelper{
     }
     
     public func upload(host: URL, path: URL) -> Observable<DataResponse<Any>>{
+        guard Connectivity.isConnectedToInternet else {
+            return Observable<DataResponse<Any>>.create { observer in
+                let _response = HTTPURLResponse(url: host, statusCode: 600, httpVersion: nil, headerFields: nil)
+                let _dataResponse: DataResponse<Any> = DataResponse(request: nil, response: _response, data: nil, metrics: nil, serializationDuration: TimeInterval(0), result: .failure(URLError(.cannotConnectToHost)))
+                observer.onNext(_dataResponse)
+                observer.onCompleted()
+                
+                return Disposables.create()
+            }
+        }
+        
         return Observable<DataResponse<Any>>.create { observer in
             let request = AF.upload(path, to: host, method: .put).responseJSON(completionHandler: { response in
                 observer.onNext(response)
@@ -42,6 +59,17 @@ open class ServiceHelper{
     }
     
     public func upload(host: URL, data: Data) -> Observable<DataResponse<Any>>{
+        guard Connectivity.isConnectedToInternet else {
+            return Observable<DataResponse<Any>>.create { observer in
+                let _response = HTTPURLResponse(url: host, statusCode: 600, httpVersion: nil, headerFields: nil)
+                let _dataResponse: DataResponse<Any> = DataResponse(request: nil, response: _response, data: nil, metrics: nil, serializationDuration: TimeInterval(0), result: .failure(URLError(.cannotConnectToHost)))
+                observer.onNext(_dataResponse)
+                observer.onCompleted()
+                
+                return Disposables.create()
+            }
+        }
+        
         return Observable<DataResponse<Any>>.create { observer in
             let request = AF.upload(data, to: host, method: .put).responseJSON { response in
                 observer.onNext(response)
@@ -57,7 +85,7 @@ open class ServiceHelper{
     //Request Using Encodable Model
     public func request<R: Encodable> (_ endPoint: String,
                                        method: HTTPMethod = .get,
-                                       parameter: R?,
+                                       parameter: R? = nil,
                                        encoding: ParameterEncoding = URLEncoding.queryString,
                                        httpHeader: HTTPHeaders = HTTPHeaders(PlatformConfig.defaultHttpHeaders),
                                        isBasicAuth: Bool = false) -> Observable<DataResponse<Any>>  {
@@ -74,7 +102,7 @@ open class ServiceHelper{
     //Request Using Dict of Any
     public func request(_ endPoint: String,
                         method: HTTPMethod = .get,
-                        parameter: [String: Any]?,
+                        parameter: [String: Any]? = nil,
                         encoding: ParameterEncoding = URLEncoding.queryString,
                         httpHeader: HTTPHeaders = HTTPHeaders(PlatformConfig.defaultHttpHeaders),
                         isBasicAuth: Bool = false) -> Observable<DataResponse<Any>>  {
@@ -83,6 +111,17 @@ open class ServiceHelper{
         
         var header = httpHeader
         let param = parameter
+        
+        guard Connectivity.isConnectedToInternet else {
+            return Observable<DataResponse<Any>>.create { observer in
+                let _response = HTTPURLResponse(url: URL(string: baseURL)!, statusCode: 600, httpVersion: nil, headerFields: nil)
+                let _dataResponse: DataResponse<Any> = DataResponse(request: nil, response: _response, data: nil, metrics: nil, serializationDuration: TimeInterval(0), result: .failure(URLError(.cannotConnectToHost)))
+                observer.onNext(_dataResponse)
+                observer.onCompleted()
+                
+                return Disposables.create()
+            }
+        }
         
         if isBasicAuth{
             header.add(HTTPHeader.authorization(username: "web", password: "secret"))
@@ -128,14 +167,9 @@ open class ServiceHelper{
                     switch response.result{
                     case .success(_):
                         guard let data = response.data, let token = try? JSONDecoder().decode(Token.self, from: data) else {
-                            switch response.response?.statusCode {
-                            case 403:
-                                return observer.onError(ServiceError.forbidden)
-                            case 404:
-                                return observer.onError(ServiceError.notFound)
-                            default:
-                                return observer.onError(AFError.explicitlyCancelled)
-                            }
+                            observer.onNext(response)
+                            observer.onCompleted()
+                            return
                         }
                         
                         self?._user.saveToken(accessToken: token.access_token, refreshToken: token.refresh_token, expiredTime: token.expires_in, tokenType: token.token_type)

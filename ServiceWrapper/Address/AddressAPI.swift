@@ -16,8 +16,7 @@ open class AddressAPI: ServiceHelper{
     }
     
     public func getAddressList() -> Observable<(Data?, HTTPURLResponse?)>{
-        let param = ["page": 1]
-        return super.request(Endpoint.getAddressList, parameter: param).retry(3).map { result in
+        return super.request(Endpoint.addressDetails, parameter: nil).retry(3).map { result in
             return (result.data, result.response)
         }
     }

@@ -15,6 +15,8 @@ struct Endpoint{
     //Get My Profile
     static let profil = "api/v1/profile"
     static let findUser = "api/v1/users/find"
+    static let metadata = "api/v1/profile/metadata"
+    static let resendEmailVerification = "api/v1/profile/resend-verification"
 
     static let challenges = "api/challenges"
     static let validateChallenge = "api/challenges/validate"

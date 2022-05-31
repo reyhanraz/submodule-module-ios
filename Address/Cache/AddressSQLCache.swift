@@ -8,7 +8,7 @@
 
 import GRDB
 import Platform
-
+//Temporary disable cache
 public class AddressSQLCache<R>: SQLCache<R, Address> {
     
     public override init(dbQueue: DatabaseQueue, expiredAfter: TimeInterval = CacheExpiryDate.oneMonth.rawValue) {
@@ -16,18 +16,18 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
     }
     
     public static func createTable(db: Database) throws {
-        try db.create(table: Address.databaseTableName) { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(Address.Columns.id.rawValue, .integer).unique(onConflict: .replace)
-            body.column(Address.Columns.userId.rawValue, .integer).notNull()
-            body.column(Address.Columns.name.rawValue, .text).notNull()
-            body.column(Address.Columns.detail.rawValue, .text).notNull()
-            body.column(Address.Columns.lat.rawValue, .double)
-            body.column(Address.Columns.lon.rawValue, .double)
-            body.column(CommonColumns.timestamp.rawValue, .integer).notNull()
-            body.column(Address.Columns.address.rawValue, .text)
-            body.column(Address.Columns.rawAddress.rawValue, .blob)
-        }
+//        try db.create(table: Address.databaseTableName) { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(Address.Columns.id.rawValue, .integer).unique(onConflict: .replace)
+//            body.column(Address.Columns.userId.rawValue, .integer).notNull()
+//            body.column(Address.Columns.name.rawValue, .text).notNull()
+//            body.column(Address.Columns.detail.rawValue, .text).notNull()
+//            body.column(Address.Columns.lat.rawValue, .double)
+//            body.column(Address.Columns.lon.rawValue, .double)
+//            body.column(CommonColumns.timestamp.rawValue, .integer).notNull()
+//            body.column(Address.Columns.address.rawValue, .text)
+//            body.column(Address.Columns.rawAddress.rawValue, .blob)
+//        }
     }
     
     public static func dropTable(db: Database) throws{
@@ -39,7 +39,8 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
     public override func getList(request: R? = nil) -> [Address] {
         do {
             let list = try dbQueue.read({ db in
-                try Address.order(CommonColumns.id.asc).fetchAll(db)
+//                try? Address.order(CommonColumns.id.asc).fetchAll(db)
+                [Address]()
             })
             
             return list
@@ -53,22 +54,22 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
     public override func update(model: Address) -> Bool {
         do {
             try dbQueue.write { db in
-                let timestamp = Date().timeIntervalSince1970
-                
-                try db.execute(sql: """
-                    UPDATE \(Address.databaseTableName) SET
-                    \(Address.Columns.name.rawValue) = ?,
-                    \(Address.Columns.detail.rawValue) = ?,
-                    \(Address.Columns.lat.rawValue) = ?,
-                    \(Address.Columns.lon.rawValue) = ?,
-                    \(CommonColumns.timestamp.rawValue) = ?
-                    WHERE
-                    \(Address.Columns.id.rawValue) = ?
-                    """, arguments: [model.name,
-                                     model.detail,
-                                     model.lat,
-                                     model.lon,
-                                     timestamp, model.id])
+//                let timestamp = Date().timeIntervalSince1970
+//
+//                try db.execute(sql: """
+//                    UPDATE \(Address.databaseTableName) SET
+//                    \(Address.Columns.name.rawValue) = ?,
+//                    \(Address.Columns.detail.rawValue) = ?,
+//                    \(Address.Columns.lat.rawValue) = ?,
+//                    \(Address.Columns.lon.rawValue) = ?,
+//                    \(CommonColumns.timestamp.rawValue) = ?
+//                    WHERE
+//                    \(Address.Columns.id.rawValue) = ?
+//                    """, arguments: [model.name,
+//                                     model.detail,
+//                                     model.lat,
+//                                     model.lon,
+//                                     timestamp, model.id])
             }
             
             return true
@@ -91,15 +92,15 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
                 
                 for record in models {
                     
-                    try Address(id: record.id,
-                                userId: record.userId,
-                                name: record.name,
-                                detail: record.detail,
-                                lat: record.lat,
-                                lon: record.lon,
-                                timestamp: timestamp,
-                                address: record.address,
-                                rawAddress: record.rawAddress).insert(db)
+//                    try Address(id: record.id,
+//                                userId: record.userId,
+//                                name: record.name,
+//                                detail: record.detail,
+//                                lat: record.lat,
+//                                lon: record.lon,
+//                                timestamp: timestamp,
+//                                address: record.address,
+//                                rawAddress: record.rawAddress).insert(db)
                 }
                 
                 return .commit
@@ -112,7 +113,7 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
     public override func remove(model: Address) {
         do {
             let _ = try dbQueue.write { db in
-                try Address.deleteOne(db, key: [Address.Columns.id.rawValue: model.id])
+//                try Address.deleteOne(db, key: [Address.Columns.id.rawValue: model.id])
             }
         } catch {
             assertionFailure()

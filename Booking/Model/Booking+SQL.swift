@@ -103,9 +103,9 @@ extension Booking: MultiTableRecord {
             let addressRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.address) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
             
             let address = EventAddress(name: addressRow?[Address.Columns.name],
-                                       latitude: addressRow?[Address.Columns.lat],
-                                       longitude: addressRow?[Address.Columns.lon],
-                                       addressNote: addressRow?[Address.Columns.detail],
+                                       latitude: addressRow?[Address.Columns.latitude],
+                                       longitude: addressRow?[Address.Columns.longitude],
+                                       addressNote: addressRow?[Address.Columns.notes],
                                        addressDetail: addressRow?[Address.Columns.address])
             
             let invoiceRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.Invoice.invoice) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
@@ -261,10 +261,10 @@ extension Booking: MultiTableRecord {
             return [
                 CommonColumns.fkId.rawValue: id,
                 Address.Columns.name.rawValue: eventAddress?.name,
-                Address.Columns.detail.rawValue: eventAddress?.addressNote,
+                Address.Columns.notes.rawValue: eventAddress?.addressNote,
                 Address.Columns.address.rawValue: eventAddress?.addressDetail,
-                Address.Columns.lat.rawValue: eventAddress?.latitude,
-                Address.Columns.lon.rawValue: eventAddress?.longitude
+                Address.Columns.latitude.rawValue: eventAddress?.latitude,
+                Address.Columns.longitude.rawValue: eventAddress?.longitude
             ]
         }
         

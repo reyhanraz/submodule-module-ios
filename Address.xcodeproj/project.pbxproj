@@ -10,6 +10,7 @@
 		6862042E27FB61A200C2FBF6 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6862042D27FB61A200C2FBF6 /* ServiceWrapper.framework */; };
 		6862042F27FB61A200C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6862042D27FB61A200C2FBF6 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		687D5E7A2719798800B4AC2B /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687D5E792719798800B4AC2B /* AddressViewModel.swift */; };
+		68A9B5722841246500AF8858 /* UpdateAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B5712841246500AF8858 /* UpdateAddressViewModel.swift */; };
 		859162E314777972221DEE3A /* Pods_Address.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DFB54ECD58E8B784D736E9 /* Pods_Address.framework */; };
 		A75B2A9D22FEEB2A008FB8CB /* ProvinceSQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75B2A9C22FEEB2A008FB8CB /* ProvinceSQLCache.swift */; };
 		A75B2A9F22FEEB5B008FB8CB /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75B2A9E22FEEB5B008FB8CB /* Province.swift */; };
@@ -22,13 +23,9 @@
 		A7D80C5922EF080B004A3E0F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C5822EF080B004A3E0F /* Location.swift */; };
 		A7D80C5F22EF0E4D004A3E0F /* LocationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C5E22EF0E4D004A3E0F /* LocationAdapter.swift */; };
 		A7D80C6922F00077004A3E0F /* UpdateAddressCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C6822F00077004A3E0F /* UpdateAddressCloudService.swift */; };
-		A7D80C6B22F01BD4004A3E0F /* Addresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C6A22F01BD4004A3E0F /* Addresses.swift */; };
 		A7D80C6F22F01D61004A3E0F /* AddressSQLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C6E22F01D61004A3E0F /* AddressSQLCache.swift */; };
 		A7D80C7122F01D6D004A3E0F /* AddressCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C7022F01D6D004A3E0F /* AddressCacheService.swift */; };
 		A7D80C7322F01F7A004A3E0F /* AddressCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C7222F01F7A004A3E0F /* AddressCloudService.swift */; };
-		A7D80C7922F021BD004A3E0F /* AddressAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C7822F021BD004A3E0F /* AddressAdapter.swift */; };
-		A7D80C7B22F021FE004A3E0F /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C7A22F021FE004A3E0F /* AddressCell.swift */; };
-		A7D80C7D22F044FA004A3E0F /* AddressDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C7C22F044FA004A3E0F /* AddressDetail.swift */; };
 		A7D80C7F22F05029004A3E0F /* DeleteAddressCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C7E22F05029004A3E0F /* DeleteAddressCloudService.swift */; };
 		A7D80C8422F06812004A3E0F /* UpdateAddressUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D80C8322F06812004A3E0F /* UpdateAddressUseCaseProvider.swift */; };
 		A7DC215123273FF300D06C1F /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7DC215023273FF300D06C1F /* Common.framework */; };
@@ -57,6 +54,7 @@
 		4A3003ABA9EC6F4A8315E033 /* Pods-Address.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Address.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Address/Pods-Address.release.xcconfig"; sourceTree = "<group>"; };
 		6862042D27FB61A200C2FBF6 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		687D5E792719798800B4AC2B /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		68A9B5712841246500AF8858 /* UpdateAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAddressViewModel.swift; sourceTree = "<group>"; };
 		6A99322DAD9ADBC2DF0CAE08 /* Pods-Address.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Address.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Address/Pods-Address.debug.xcconfig"; sourceTree = "<group>"; };
 		A75B2A9C22FEEB2A008FB8CB /* ProvinceSQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceSQLCache.swift; sourceTree = "<group>"; };
 		A75B2A9E22FEEB5B008FB8CB /* Province.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Province.swift; sourceTree = "<group>"; };
@@ -71,13 +69,9 @@
 		A7D80C5822EF080B004A3E0F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A7D80C5E22EF0E4D004A3E0F /* LocationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAdapter.swift; sourceTree = "<group>"; };
 		A7D80C6822F00077004A3E0F /* UpdateAddressCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAddressCloudService.swift; sourceTree = "<group>"; };
-		A7D80C6A22F01BD4004A3E0F /* Addresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Addresses.swift; sourceTree = "<group>"; };
 		A7D80C6E22F01D61004A3E0F /* AddressSQLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSQLCache.swift; sourceTree = "<group>"; };
 		A7D80C7022F01D6D004A3E0F /* AddressCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCacheService.swift; sourceTree = "<group>"; };
 		A7D80C7222F01F7A004A3E0F /* AddressCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCloudService.swift; sourceTree = "<group>"; };
-		A7D80C7822F021BD004A3E0F /* AddressAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAdapter.swift; sourceTree = "<group>"; };
-		A7D80C7A22F021FE004A3E0F /* AddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
-		A7D80C7C22F044FA004A3E0F /* AddressDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetail.swift; sourceTree = "<group>"; };
 		A7D80C7E22F05029004A3E0F /* DeleteAddressCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAddressCloudService.swift; sourceTree = "<group>"; };
 		A7D80C8322F06812004A3E0F /* UpdateAddressUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAddressUseCaseProvider.swift; sourceTree = "<group>"; };
 		A7DC215023273FF300D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,8 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				A7D80C5822EF080B004A3E0F /* Location.swift */,
-				A7D80C6A22F01BD4004A3E0F /* Addresses.swift */,
-				A7D80C7C22F044FA004A3E0F /* AddressDetail.swift */,
 				A75B2A9E22FEEB5B008FB8CB /* Province.swift */,
 			);
 			path = Model;
@@ -178,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				687D5E792719798800B4AC2B /* AddressViewModel.swift */,
+				68A9B5712841246500AF8858 /* UpdateAddressViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -206,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				A7D80C5E22EF0E4D004A3E0F /* LocationAdapter.swift */,
-				A7D80C7822F021BD004A3E0F /* AddressAdapter.swift */,
 			);
 			path = Adapter;
 			sourceTree = "<group>";
@@ -215,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				A7D80C5122EF05CE004A3E0F /* LocationCell.swift */,
-				A7D80C7A22F021FE004A3E0F /* AddressCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -347,13 +338,10 @@
 				687D5E7A2719798800B4AC2B /* AddressViewModel.swift in Sources */,
 				A7D80C5522EF07E2004A3E0F /* LocationSQLCache.swift in Sources */,
 				A7D80C8422F06812004A3E0F /* UpdateAddressUseCaseProvider.swift in Sources */,
-				A7D80C7D22F044FA004A3E0F /* AddressDetail.swift in Sources */,
-				A7D80C7B22F021FE004A3E0F /* AddressCell.swift in Sources */,
+				68A9B5722841246500AF8858 /* UpdateAddressViewModel.swift in Sources */,
 				A7D80C5922EF080B004A3E0F /* Location.swift in Sources */,
 				A7D80C6922F00077004A3E0F /* UpdateAddressCloudService.swift in Sources */,
 				A7D80C5222EF05CE004A3E0F /* LocationCell.swift in Sources */,
-				A7D80C7922F021BD004A3E0F /* AddressAdapter.swift in Sources */,
-				A7D80C6B22F01BD4004A3E0F /* Addresses.swift in Sources */,
 				A78AAF5D2321438200DD0192 /* UpdateLocationCloudService.swift in Sources */,
 				A7D80C6F22F01D61004A3E0F /* AddressSQLCache.swift in Sources */,
 				A75B2AA322FEEC21008FB8CB /* ProvinceCloudService.swift in Sources */,

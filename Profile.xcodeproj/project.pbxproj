@@ -10,6 +10,9 @@
 		68A5F82327B4FD4900F6728E /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */; };
 		68A5F82427B4FD4900F6728E /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68A9B555283B86B100AF8858 /* NewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B554283B86B100AF8858 /* NewProfile.swift */; };
+		68A9B5792841336300AF8858 /* MetadataCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B5782841336200AF8858 /* MetadataCloudService.swift */; };
+		68A9B57F2841511200AF8858 /* ResendEmailCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B57E2841511100AF8858 /* ResendEmailCloudService.swift */; };
+		68A9B581284151FD00AF8858 /* ResendEmailVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B580284151FD00AF8858 /* ResendEmailVerificationViewModel.swift */; };
 		A71A633E23150AB2001A724B /* UpdateArtisanProfileViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A633D23150AB2001A724B /* UpdateArtisanProfileViewModelType.swift */; };
 		A71A634023150ABD001A724B /* UpdateArtisanProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A633F23150ABD001A724B /* UpdateArtisanProfileViewModel.swift */; };
 		A71A634223150C4A001A724B /* ArtisanProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A634123150C4A001A724B /* ArtisanProfileRequest.swift */; };
@@ -47,6 +50,10 @@
 /* Begin PBXFileReference section */
 		68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68A9B554283B86B100AF8858 /* NewProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProfile.swift; sourceTree = "<group>"; };
+		68A9B5782841336200AF8858 /* MetadataCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataCloudService.swift; sourceTree = "<group>"; };
+		68A9B57E2841511100AF8858 /* ResendEmailCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailCloudService.swift; sourceTree = "<group>"; };
+		68A9B580284151FD00AF8858 /* ResendEmailVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailVerificationViewModel.swift; sourceTree = "<group>"; };
+		68CCE55528437FFE005F3FA6 /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		695BE480C54D83B62FC74C79 /* Pods-Profile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Profile.debug.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Profile/Pods-Profile.debug.xcconfig"; sourceTree = "<group>"; };
 		A1B8BC70720385D40DBA3CD1 /* Pods-Profile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Profile.release.xcconfig"; path = "../Partner/Pods/Target Support Files/Pods-Profile/Pods-Profile.release.xcconfig"; sourceTree = "<group>"; };
 		A71A633D23150AB2001A724B /* UpdateArtisanProfileViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateArtisanProfileViewModelType.swift; sourceTree = "<group>"; };
@@ -105,6 +112,7 @@
 				A76C86D522E34B650067EA6B /* UpdateProfileViewModel.swift */,
 				A7E33C8C23699E2000366578 /* UpdateIdentityViewModelType.swift */,
 				A7E33C8E23699E3200366578 /* UpdateIdentityViewModel.swift */,
+				68A9B580284151FD00AF8858 /* ResendEmailVerificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -133,6 +141,8 @@
 				A76C86D222E34B370067EA6B /* ViewModel */,
 				A7BF4FFF22E2D0CA0077F6C8 /* Model */,
 				A7BF500222E2D1100077F6C8 /* ProfileCloudService.swift */,
+				68A9B5782841336200AF8858 /* MetadataCloudService.swift */,
+				68A9B57E2841511100AF8858 /* ResendEmailCloudService.swift */,
 				A76C86DB22E357A90067EA6B /* UpdateProfileCloudService.swift */,
 				A7BF4FF222E2C8AD0077F6C8 /* Profile.h */,
 				A7BF4FF322E2C8AD0077F6C8 /* Info.plist */,
@@ -156,6 +166,7 @@
 		ECE340AE0EAE9F1DB4012B26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68CCE55528437FFE005F3FA6 /* CommonUI.framework */,
 				68A5F82227B4FD4800F6728E /* ServiceWrapper.framework */,
 				A7DC21642327405A00D06C1F /* Domain.framework */,
 				A7DC21622327405700D06C1F /* Platform.framework */,
@@ -276,10 +287,13 @@
 				A71A634823150F60001A724B /* ArtisanProfile.swift in Sources */,
 				A76C86DC22E357A90067EA6B /* UpdateProfileCloudService.swift in Sources */,
 				A7E33C8D23699E2000366578 /* UpdateIdentityViewModelType.swift in Sources */,
+				68A9B581284151FD00AF8858 /* ResendEmailVerificationViewModel.swift in Sources */,
 				A7E33C8F23699E3200366578 /* UpdateIdentityViewModel.swift in Sources */,
 				A76C86D422E34B560067EA6B /* UpdateProfileViewModelType.swift in Sources */,
 				A71A634223150C4A001A724B /* ArtisanProfileRequest.swift in Sources */,
 				A71A634023150ABD001A724B /* UpdateArtisanProfileViewModel.swift in Sources */,
+				68A9B57F2841511200AF8858 /* ResendEmailCloudService.swift in Sources */,
+				68A9B5792841336300AF8858 /* MetadataCloudService.swift in Sources */,
 				A7E33C8B23699BE200366578 /* IdentityRequest.swift in Sources */,
 				A76C86D622E34B650067EA6B /* UpdateProfileViewModel.swift in Sources */,
 				A7BF500122E2D0D70077F6C8 /* Profile.swift in Sources */,

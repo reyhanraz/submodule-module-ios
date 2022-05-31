@@ -36,4 +36,10 @@ open class ProfileAPI<R: Encodable>: ServiceHelper{
             }
     }
     
+    public func resendEmailVerification() -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request(Endpoint.resendEmailVerification).retry(3).map { result in
+            return (result.data, result.response)
+        }
+    }
+    
 }

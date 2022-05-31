@@ -17,84 +17,45 @@ import ServiceWrapper
 
 public struct AddressViewModel{
     public typealias Request = ListRequest
-    public typealias Response = Addresses.Data.T
-    public typealias Detail = AddressDetail
+    public typealias Response = NewList<Address>
 
     public var loading: Driver<Loading>
-    public var result: Driver<(ListRequest, [Addresses.Data.T], Paging?, Bool)>
+    public var result: Driver<(ListRequest, [Address], Bool)>
     public var failed: Driver<Status.Detail>
-    public var arrayResult: Driver<[Addresses.Data.T]>
-    
-    public var exception: Driver<Exception>
-    public var success: Driver<Detail>
-    public var unauthorized: Driver<Unauthorized>
-    public var dismissResponder: Driver<Bool>
-    public var update: Driver<Void>
     
     private let _getListProperty = PublishSubject<Request>()
     private let _loadMoreProperty = PublishSubject<Request>()
-    
-    public let validatedAddressName = PublishSubject<ValidationResult>()
-    public let validatedAddressNote = PublishSubject<ValidationResult>()
-    public let latlong = PublishSubject<(lat: Double, lon: Double, address: String)?>()
-    public var updateEnabled: Driver<Bool>
-    
-    private let _submitProperty = PublishSubject<Void>()
-    
+            
     private let delegate = UIApplication.shared.delegate as! AppDelegateType
-    private let activityIndicator: ActivityIndicator
 
     
     public init(activityIndicator: ActivityIndicator){
         let loadingProperty = PublishSubject<Loading>()
         let failedProperty = PublishSubject<Status.Detail>()
-        let arrayResultProperty = PublishSubject<[Addresses.Data.T]>()
 
         loading = loadingProperty.asDriver(onErrorJustReturn: Loading(start: false))
         failed = failedProperty.asDriver(onErrorDriveWith: .empty())
-        arrayResult = arrayResultProperty.asDriver(onErrorDriveWith: .empty())
-        result = PublishSubject<(ListRequest, [Addresses.Data.T], Paging?, Bool)>().asDriver(onErrorDriveWith: .empty())
         
-        exception = PublishSubject<Exception>().asDriver(onErrorDriveWith: .empty())
-        success = PublishSubject<Detail>().asDriver(onErrorDriveWith: .empty())
-        unauthorized = PublishSubject<Unauthorized>().asDriver(onErrorDriveWith: .empty())
-        dismissResponder = PublishSubject<Bool>().asDriver(onErrorDriveWith: .empty())
-        update = PublishSubject<Void>().asDriver(onErrorDriveWith: .empty())
-        updateEnabled = PublishSubject<Bool>().asDriver(onErrorDriveWith: .empty())
-        
-        self.activityIndicator = activityIndicator
-    }
-    
-    public mutating func getList(){
         let cache = AddressSQLCache<ListRequest>(dbQueue: delegate.dbQueue)
         
-        let _useCase = ListUseCaseProvider(
-            service: AddressCloudService<Addresses>(),
-            cacheService: AddressCacheService<Addresses, AddressSQLCache<ListRequest>>(cache: cache),
+        let _useCase = NewListUseCaseProvider(
+            service: AddressCloudService<NewList<Address>>(),
+            cacheService: AddressCacheService<NewList<Address>, AddressSQLCache<ListRequest>>(cache: cache),
             cache: cache,
             activityIndicator: activityIndicator)
         
-        var items = [Addresses.Data.T]()
+        var items = [Address]()
         var isShouldClearItems = false
-
-        let loadingProperty = PublishSubject<Loading>()
-        let failedProperty = PublishSubject<Status.Detail>()
-        let arrayResultProperty = PublishSubject<[Addresses.Data.T]>()
-
-        
-        loading = loadingProperty.asDriver(onErrorJustReturn: Loading(start: false))
-        failed = failedProperty.asDriver(onErrorDriveWith: .empty())
-        arrayResult = arrayResultProperty.asDriver(onErrorDriveWith: .empty())
         
         let initialRequest = _getListProperty
             .asDriver(onErrorDriveWith: .empty())
             .do(onNext: { _ in loadingProperty.onNext(Loading(start: true)) })
-            .flatMap { request -> Driver<(Request, Result<Addresses, Error>)> in
-                
-                return _useCase.execute(request: request).map { (request, $0) }.asDriver(onErrorDriveWith: .empty())
+            .flatMap { request -> Driver<(Request, Result<NewList<Address>, Error>)> in
+                return _useCase.execute(request: request)
+                    .map { (request, $0) }.asDriver(onErrorDriveWith: .empty())
             }
             .do(onNext: { _ in loadingProperty.onNext(Loading(start: false)) })
-            .flatMap({ result -> Driver<(Request, Addresses, Bool)> in
+            .flatMap({ result -> Driver<(Request, NewList<Address>, Bool)> in
                 switch result.1 {
                 case let .success(list):
                     return .just((result.0, list, false))
@@ -112,11 +73,11 @@ public struct AddressViewModel{
         let nextRequest = _loadMoreProperty
             .asDriver(onErrorDriveWith: .empty())
             .do(onNext: { _ in loadingProperty.onNext(Loading(start: true)) })
-            .flatMap { request -> Driver<(Request, Result<Addresses, Error>)> in
+            .flatMap { request -> Driver<(Request, Result<NewList<Address>, Error>)> in
                 return _useCase.execute(request: request).map { (request, $0) }.asDriver(onErrorDriveWith: .empty())
             }
             .do(onNext: { _ in loadingProperty.onNext(Loading(start: false)) })
-            .flatMap({ result -> Driver<(Request, Addresses, Bool)> in
+            .flatMap({ result -> Driver<(Request, NewList<Address>, Bool)> in
                 switch result.1 {
                 case let .success(list):
                     return .just((result.0, list, false))
@@ -130,14 +91,16 @@ public struct AddressViewModel{
                 items.removeAll()
             }
             
-            items += dataResponse.data?.list ?? []
-            arrayResultProperty.onNext(items)
+            items += dataResponse.data
             
-            return (request, items, dataResponse.data?.paging, isFromInitialCache)
+            return (request, items, isFromInitialCache)
         }
     }
     
-    public func get(request: ListRequest) {
+    public func get(addressID: Int? = nil) {
+        let request = ListRequest()
+        request.id = addressID
+        request.forceReload = true
         _getListProperty.onNext(request)
     }
     
@@ -146,122 +109,6 @@ public struct AddressViewModel{
 
     }
     
-    public func checkAddressNameValidation(addressName: String) {
-        if addressName.isEmpty {
-            validatedAddressName.onNext(.failed(message: "Please add a name for this address"))
-        }  else {
-            validatedAddressName.onNext(.ok(message: nil))
-        }
-    }
-    
-    public func checkAddressNoteValidation(addressNote: String) {
-        if addressNote.isEmpty {
-            validatedAddressNote.onNext(.failed(message: "Please add note for more information related to your address"))
-        } else {
-            validatedAddressNote.onNext(.ok(message: nil))
-        }
-    }
-    
-    public func updateLatLong(lat: Double?, long: Double?, address: String?){
-        guard let lat = lat, let long = long, let address = address else {return}
-        latlong.onNext((lat: lat, lon: long, address: address))
-    }
-    
-    public mutating func insertAddress(
-        id: Int?,
-        name: Driver<String?>,
-        detail: Driver<String?>,
-        coordinates: Driver<(lat: Double, lon: Double, address: String)?>,
-        activityIndicator: ActivityIndicator
-        ) {
-                    
-        let cache = AddressSQLCache<AddressRequest>(dbQueue: delegate.dbQueue)
-        
-        let useCase = UpdateAddressUseCaseProvider(
-            service: UpdateAddressCloudService<AddressDetail>(),
-            cache: cache,
-            activityIndicator: activityIndicator)
-        
-        let loadingProperty = PublishSubject<Loading>()
-        let successProperty = PublishSubject<Detail>()
-        let failedProperty = PublishSubject<Status.Detail>()
-        let exceptionProperty = PublishSubject<Exception>()
-        let dismissResponderProperty = PublishSubject<Bool>()
-        let unauthorizedProperty = PublishSubject<Unauthorized>()
-        
-        loading = loadingProperty.asDriver(onErrorDriveWith: .empty())
-        failed = failedProperty.asDriver(onErrorDriveWith: .empty())
-        exception = exceptionProperty.asDriver(onErrorDriveWith: .empty())
-        success = successProperty.asDriver(onErrorDriveWith: .empty())
-        unauthorized = unauthorizedProperty.asDriver(onErrorDriveWith: .empty())
-        dismissResponder = dismissResponderProperty.asDriver(onErrorJustReturn: false)
-        
-        let validatedCoordinates: Driver<ValidationResult> = coordinates.flatMapLatest { value in
-            if value == nil {
-                return .just(.empty)
-            }
-            
-            return .just(.ok(message: nil))
-        }
-        let validatedAddressName1: Driver<ValidationResult> = name.flatMapLatest { name in
-            guard let name = name else{return .just(.empty)}
-            if name.isEmpty{
-                return .just(.empty)
-            }
-            return .just(.ok(message: nil))
-        }
-        
-        let validatedAddressNote: Driver<ValidationResult> = detail.flatMapLatest { detail in
-            guard let detail = detail else{return .just(.empty)}
-            if detail.isEmpty{
-                return .just(.empty)
-            }
-            return .just(.ok(message: nil))
-        }
-        
-        updateEnabled = Driver.combineLatest(validatedAddressName1, validatedAddressNote, validatedCoordinates) {
-            name, detail, coordinates in
-            name.isValid && detail.isValid  && coordinates.isValid
-        }.distinctUntilChanged()
-        
-        let forms: Driver<AddressRequest?> = Driver.combineLatest(name, detail, coordinates) { name, detail, coordinates in
-            guard let name = name, let detail = detail, let coordinates = coordinates else { return nil }
-            
-            return AddressRequest(addressID: id,
-                           name: name,
-                           notes: detail,
-                           lat: coordinates.lat,
-                           lon: coordinates.lon,
-                           address: coordinates.address)
-        }
-        
-        update = _submitProperty.asDriver(onErrorJustReturn: ()).withLatestFrom(forms)
-            .do(onNext: { _ in
-                loadingProperty.onNext(Loading(start: true, text: "submitting".l10n()))
-                dismissResponderProperty.onNext(true)
-            })
-            .flatMapLatest { request in
-                return useCase.execute(request: request).asDriver(onErrorDriveWith: .empty())
-            }
-            .do(onNext: { _ in loadingProperty.onNext(Loading(start: false, text: "submit".l10n())) })
-            .flatMapLatest { result in
-                switch result {
-                case let .success(register):
-                    successProperty.onNext(register)
-                case let .fail(status, _):
-                    failedProperty.onNext(status)
-                case let .error(error):
-                    exceptionProperty.onNext(Exception(title: "submit_failed".l10n(), message: "submit_error_message".l10n(), error: error))
-                case .unauthorized:
-                    unauthorizedProperty.onNext(Unauthorized(title: "", message: "", showLogin: false))
-                }
-                return .empty()
-        }
-    }
-    
-    public func submit() {
-        _submitProperty.onNext(())
-    }
 }
 
 

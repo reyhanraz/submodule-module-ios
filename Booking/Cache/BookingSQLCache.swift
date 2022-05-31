@@ -25,79 +25,80 @@ open class BookingSQLCache: Cache {
     }
     
     public static func createTable(db: Database, tableName: String) throws {
-        try db.create(table: tableName) { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(Booking.Columns.id.rawValue, .integer).unique(onConflict: .replace)
-            body.column(Booking.Columns.bookingNumber.rawValue, .text)
-            body.column(Booking.Columns.eventName.rawValue, .text)
-            body.column(Booking.Columns.clientName.rawValue, .text)
-            body.column(Booking.Columns.status.rawValue, .text)
-            body.column(Booking.Columns.eventDate.rawValue, .text)
-            body.column(Booking.Columns.platformFee.rawValue, .text)
-            body.column(Booking.Columns.discount.rawValue, .double)
-            body.column(Booking.Columns.paymentURL.rawValue, .text)
-            body.column(Booking.Columns.totalDiscount.rawValue, .double)
-            body.column(Booking.Columns.grandTotal.rawValue, .text)
-            body.column(Paging.Columns.currentPage.rawValue, .integer)
-            body.column(Paging.Columns.limitPerPage.rawValue, .integer)
-            body.column(Paging.Columns.totalPage.rawValue, .integer)
-            body.column(CommonColumns.timestamp.rawValue, .integer)
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.bookingStatus)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Booking.BookingStatus.Columns.id.rawValue, .integer)
-            body.column(Booking.BookingStatus.Columns.title.rawValue, .text)
-            body.column(Booking.BookingStatus.Columns.description.rawValue, .text)
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.artisan)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Booking.Artisan.Columns.id.rawValue, .integer).notNull()
-            body.column(Booking.Artisan.Columns.name.rawValue, .text).notNull()
-            body.column(Booking.Artisan.Columns.avatar.rawValue, .text).notNull()
-            body.column(Booking.Artisan.Columns.ratings.rawValue, .double).notNull()
-            
-        }
-    
-        
-        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.address)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Address.Columns.name.rawValue, .text)
-            body.column(Address.Columns.detail.rawValue, .text)
-            body.column(Address.Columns.address.rawValue, .text)
-            body.column(Address.Columns.lat.rawValue, .double)
-            body.column(Address.Columns.lon.rawValue, .double)
-            
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.Invoice.invoice)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Booking.Invoice.Columns.id.rawValue, .text).unique(onConflict: .replace)
-            body.column(Booking.Invoice.Columns.number.rawValue, .text)
-            body.column(Booking.Invoice.Columns.subtotal.rawValue, .text)
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.Invoice.items)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .text).references("\(tableName)\(TableNames.Booking.Relation.Invoice.invoice)", column: Booking.Invoice.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Booking.Item.Columns.id.rawValue, .integer).unique()
-            body.column(Booking.Item.Columns.notes.rawValue, .text)
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.Invoice.service)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references("\(tableName)\(TableNames.Booking.Relation.Invoice.items)", column: Booking.Item.Columns.id.rawValue, onDelete: .cascade).notNull()
-            body.column(Booking.Service.Columns.name.rawValue, .text)
-            body.column(Booking.Service.Columns.qty.rawValue, .integer)
-            body.column(Booking.Service.Columns.price.rawValue, .text)
-            body.column(Booking.Service.Columns.discount.rawValue, .double)
-            body.column(Booking.Service.Columns.total.rawValue, .text)
-        }
+        //Temporary disable cache
+//        try db.create(table: tableName) { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(Booking.Columns.id.rawValue, .integer).unique(onConflict: .replace)
+//            body.column(Booking.Columns.bookingNumber.rawValue, .text)
+//            body.column(Booking.Columns.eventName.rawValue, .text)
+//            body.column(Booking.Columns.clientName.rawValue, .text)
+//            body.column(Booking.Columns.status.rawValue, .text)
+//            body.column(Booking.Columns.eventDate.rawValue, .text)
+//            body.column(Booking.Columns.platformFee.rawValue, .text)
+//            body.column(Booking.Columns.discount.rawValue, .double)
+//            body.column(Booking.Columns.paymentURL.rawValue, .text)
+//            body.column(Booking.Columns.totalDiscount.rawValue, .double)
+//            body.column(Booking.Columns.grandTotal.rawValue, .text)
+//            body.column(Paging.Columns.currentPage.rawValue, .integer)
+//            body.column(Paging.Columns.limitPerPage.rawValue, .integer)
+//            body.column(Paging.Columns.totalPage.rawValue, .integer)
+//            body.column(CommonColumns.timestamp.rawValue, .integer)
+//        }
+//
+//        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.bookingStatus)") { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
+//            body.column(Booking.BookingStatus.Columns.id.rawValue, .integer)
+//            body.column(Booking.BookingStatus.Columns.title.rawValue, .text)
+//            body.column(Booking.BookingStatus.Columns.description.rawValue, .text)
+//        }
+//
+//        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.artisan)") { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
+//            body.column(Booking.Artisan.Columns.id.rawValue, .integer).notNull()
+//            body.column(Booking.Artisan.Columns.name.rawValue, .text).notNull()
+//            body.column(Booking.Artisan.Columns.avatar.rawValue, .text).notNull()
+//            body.column(Booking.Artisan.Columns.ratings.rawValue, .double).notNull()
+//
+//        }
+//
+//
+//        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.address)") { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
+//            body.column(Address.Columns.name.rawValue, .text)
+//            body.column(Address.Columns.notes.rawValue, .text)
+//            body.column(Address.Columns.address.rawValue, .text)
+//            body.column(Address.Columns.latitude.rawValue, .double)
+//            body.column(Address.Columns.longitude.rawValue, .double)
+//
+//        }
+//
+//        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.Invoice.invoice)") { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Booking.Columns.id.rawValue, onDelete: .cascade)
+//            body.column(Booking.Invoice.Columns.id.rawValue, .text).unique(onConflict: .replace)
+//            body.column(Booking.Invoice.Columns.number.rawValue, .text)
+//            body.column(Booking.Invoice.Columns.subtotal.rawValue, .text)
+//        }
+//
+//        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.Invoice.items)") { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(CommonColumns.fkId.rawValue, .text).references("\(tableName)\(TableNames.Booking.Relation.Invoice.invoice)", column: Booking.Invoice.Columns.id.rawValue, onDelete: .cascade)
+//            body.column(Booking.Item.Columns.id.rawValue, .integer).unique()
+//            body.column(Booking.Item.Columns.notes.rawValue, .text)
+//        }
+//
+//        try db.create(table: "\(tableName)\(TableNames.Booking.Relation.Invoice.service)") { body in
+//            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
+//            body.column(CommonColumns.fkId.rawValue, .integer).references("\(tableName)\(TableNames.Booking.Relation.Invoice.items)", column: Booking.Item.Columns.id.rawValue, onDelete: .cascade).notNull()
+//            body.column(Booking.Service.Columns.name.rawValue, .text)
+//            body.column(Booking.Service.Columns.qty.rawValue, .integer)
+//            body.column(Booking.Service.Columns.price.rawValue, .text)
+//            body.column(Booking.Service.Columns.discount.rawValue, .double)
+//            body.column(Booking.Service.Columns.total.rawValue, .text)
+//        }
     }
     
     public static func dropOldTable(db: Database, tableName: String) throws{
@@ -124,7 +125,8 @@ open class BookingSQLCache: Cache {
     public func getList(request: BookingListRequest? = nil) -> [Booking] {
         do {
             let list = try _dbQueue.read({ db -> [Booking] in
-                try Booking.fetchAll(db, request: request, tableName: _tableName)
+//                try Booking.fetchAll(db, request: request, tableName: _tableName)
+                []
             })
             
             return list
@@ -148,7 +150,7 @@ open class BookingSQLCache: Cache {
                 for service in models {
 //                    service.timestamp = timestamp
                     
-                    try service.insert(db, tableName: _tableName)
+//                    try service.insert(db, tableName: _tableName)
                 }
                 
                 return .commit
@@ -164,7 +166,7 @@ open class BookingSQLCache: Cache {
             try _dbQueue.inTransaction { db in
 //                model.timestamp = Date().timeIntervalSince1970
                 
-                try model.update(db, tableName: _tableName)
+//                try model.update(db, tableName: _tableName)
                 
                 return .commit
             }
@@ -178,7 +180,7 @@ open class BookingSQLCache: Cache {
     public func remove(model: Booking) {
         do {
             let _ = try _dbQueue.write { db in
-                try Booking.delete(db, model: model, tableName: _tableName)
+//                try Booking.delete(db, model: model, tableName: _tableName)
             }
         } catch {
             assertionFailure()
@@ -188,7 +190,7 @@ open class BookingSQLCache: Cache {
     public func remove(request: BookingListRequest) {
         do {
             let _ = try _dbQueue.write { db in
-                try Booking.delete(db, request: request, tableName: _tableName)
+//                try Booking.delete(db, request: request, tableName: _tableName)
             }
         } catch {
             assertionFailure()
@@ -198,7 +200,7 @@ open class BookingSQLCache: Cache {
     public func removeAll() {
         do {
             let _ = try _dbQueue.write { db in
-                try Booking.deleteAll(db, tableName: _tableName)
+//                try Booking.deleteAll(db, tableName: _tableName)
             }
         } catch {
             assertionFailure()
@@ -208,7 +210,8 @@ open class BookingSQLCache: Cache {
     public func isCached(request: BookingListRequest?) -> Bool {
         do {
             let total = try _dbQueue.read { db in
-                try Booking.fetchCount(db, request: request, tableName: _tableName)
+//                try Booking.fetchCount(db, request: request, tableName: _tableName)
+                0
             }
             
             return total > 0
@@ -220,7 +223,8 @@ open class BookingSQLCache: Cache {
     public func isExpired(request: BookingListRequest?) -> Bool {
         do {
             let total = try _dbQueue.read { db in
-                try Booking.isExpired(db, request: request, tableName: _tableName, expiredAfter: _expiredAfter)
+//                try Booking.isExpired(db, request: request, tableName: _tableName, expiredAfter: _expiredAfter)
+                0
             }
             
             return total < 1

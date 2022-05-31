@@ -30,7 +30,11 @@ public class UploadCloudService: UploadAPI, ServiceType {
             .asObservable()
         
         return response.flatMap { result -> Observable<Result<T, Error>> in
-            return self.upload(request: request, signed: result)
+            if let result = result{
+                return self.upload(request: request, signed: result)
+            } else {
+                return .just(Result<T,E>.fail(status: Status.Detail(code: 600, message: "Upload Failed"), errors: nil))
+            }
         }
     }
     
@@ -39,9 +43,7 @@ public class UploadCloudService: UploadAPI, ServiceType {
             .retry(3)
             .asObservable()
         else {
-            let subject = PublishSubject<Result<T, Error>>()
-            subject.onNext(Result.fail(status: Status.Detail(code: 501, message: "Failed to Upload File"), errors: nil))
-            return subject.asObservable()
+            return .just(Result.fail(status: Status.Detail(code: 501, message: "Failed to Upload File"), errors: nil))
         }
         
 
@@ -73,8 +75,10 @@ public class UploadCloudService: UploadAPI, ServiceType {
                     let detail = Detail(data: model)
                     
                     return Result<T,E>.success(detail)
+                } else if let statusCode = response?.statusCode, let _ = data{
+                    return Result<T,E>.fail(status: Status.Detail(code: statusCode, message: "Upload Failed"), errors: nil)
                 } else {
-                    return Result<T,E>.fail(status: Status.Detail(code: response?.statusCode ?? 500, message: "Upload Failed"), errors: nil)
+                    return Result<T,E>.fail(status: Status.Detail(code: 500, message: "Connection Lost!"), errors: nil)
                 }
             }
         }

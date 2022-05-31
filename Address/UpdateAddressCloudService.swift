@@ -10,7 +10,7 @@ import ServiceWrapper
 import RxSwift
 import Platform
 
-public class UpdateAddressCloudService<CloudResponse: ResponseType>: AddressAPI, ServiceType {
+public class UpdateAddressCloudService<CloudResponse: NewResponseType>: AddressAPI, ServiceType {
     public typealias R = AddressRequest
     
     public typealias T = CloudResponse

@@ -26,7 +26,7 @@ public struct UploadMediaViewModel {
     public let failed: Driver<(DataRequest, Status.Detail)>
     public let exception: Driver<(DataRequest, Error)>
     public let unauthorized: Driver<Unauthorized>
-    public let confirmUploadSuccess: Driver<DataResponse>
+    public let confirmUploadSuccess: Driver<(DataRequest, DataResponse)>
     public let confirmUploadFailed: Driver<(UploadMediaRequest, Status.Detail)>
     
     // MARK: Private
@@ -42,7 +42,7 @@ public struct UploadMediaViewModel {
         let unauthorizedProperty = PublishSubject<Unauthorized>()
         let successProperty = PublishSubject<(DataRequest, DataResponse)>()
         let confirmUploadFailedProperty = PublishSubject<(UploadMediaRequest, Status.Detail)>()
-        let confirmUploadSuccessProperty = PublishSubject<DataResponse>()
+        let confirmUploadSuccessProperty = PublishSubject<(DataRequest, DataResponse)>()
 
         
         loading = loadingProperty.asDriver(onErrorDriveWith: .empty())
@@ -79,7 +79,7 @@ public struct UploadMediaViewModel {
             }).flatMapLatest({ result in
                 switch result.1 {
                 case let .success(data):
-                    confirmUploadSuccessProperty.onNext(data)
+                    confirmUploadSuccessProperty.onNext((result.0, data))
                 case let .fail(status, _):
                     confirmUploadFailedProperty.onNext((result.0, status))
                 case let .error(error):

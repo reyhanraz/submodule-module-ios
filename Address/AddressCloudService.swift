@@ -11,7 +11,7 @@ import RxSwift
 import L10n_swift
 import Platform
 
-public class AddressCloudService<CloudResponse: ResponseType>: AddressAPI, ServiceType {
+public class AddressCloudService<CloudResponse: NewResponseType>: AddressAPI, ServiceType {
     
     public typealias R = ListRequest
     
