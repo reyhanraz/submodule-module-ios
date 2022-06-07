@@ -146,7 +146,7 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
     }
     
     // MARK: - PickMediaOptionsViewControllerDelegate
-    public func pickerFinished(url: URL) {
+    public func pickerFinished(url: URL, image: UIImage?) {
         listView.toggleEmptyView(show: false)
         
         dismiss(animated: true, completion: nil)
