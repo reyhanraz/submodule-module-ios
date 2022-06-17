@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68383ADA28511923000A0F2A /* PostServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68383AD928511923000A0F2A /* PostServiceRequest.swift */; };
 		6862042A27FB5B6700C2FBF6 /* AddressRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862042927FB5B6700C2FBF6 /* AddressRequest.swift */; };
 		6862042C27FB5E4000C2FBF6 /* AddressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862042B27FB5E4000C2FBF6 /* AddressAPI.swift */; };
 		6862043727FB63EB00C2FBF6 /* ArtisanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862043627FB63EB00C2FBF6 /* ArtisanFilter.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
+		68383AD928511923000A0F2A /* PostServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRequest.swift; sourceTree = "<group>"; };
 		6862042927FB5B6700C2FBF6 /* AddressRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRequest.swift; sourceTree = "<group>"; };
 		6862042B27FB5E4000C2FBF6 /* AddressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAPI.swift; sourceTree = "<group>"; };
 		6862043627FB63EB00C2FBF6 /* ArtisanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanFilter.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				68BA611927FC883E00DA70F8 /* ArtisanServiceRequest.swift */,
+				68383AD928511923000A0F2A /* PostServiceRequest.swift */,
 				68BA611B27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift */,
 			);
 			path = ArtisanService;
@@ -494,6 +497,7 @@
 				68A5F80227B3AB8500F6728E /* ServiceWrapper.docc in Sources */,
 				68BA614827FD699700DA70F8 /* PaymentAPI.swift in Sources */,
 				68A9B57D2841501800AF8858 /* BasicAPIResponse.swift in Sources */,
+				68383ADA28511923000A0F2A /* PostServiceRequest.swift in Sources */,
 				68A5F86527C4E55100F6728E /* RegisterRequest.swift in Sources */,
 				68A5F80E27B3B13E00F6728E /* ServiceHelper.swift in Sources */,
 				68A5F81E27B4D13200F6728E /* ProfileAPI.swift in Sources */,

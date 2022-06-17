@@ -12,7 +12,7 @@ public struct UploadMediaRequest {
     public enum UploadType: String, Codable {
         case gallery = "Image"
         case avatar
-        case service = "ServiceCover"
+        case service = "service-image"
         case identity = "identity-card"
         case selfieWithID = "identity-selfie"
         case `default`

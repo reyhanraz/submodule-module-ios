@@ -146,17 +146,17 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
     }
     
     // MARK: - PickMediaOptionsViewControllerDelegate
-    public func pickerFinished(url: URL, image: UIImage?) {
+    public func pickerFinished(data: Data) {
         listView.toggleEmptyView(show: false)
         
         dismiss(animated: true, completion: nil)
         
-        let gallery = Gallery(media: Media(url: url, servingURL: nil), mediaCoverURL: nil, uploadStatus: .waiting)
-        
-        _uploadQueue.append(gallery)
-        
-        adapter.list?.insert(gallery, at: 0)
-        listView.collectionView.insertItems(at: [IndexPath(row: 0, section: 0)])
+//        let gallery = Gallery(media: Media(url: url, servingURL: nil), mediaCoverURL: nil, uploadStatus: .waiting)
+//        
+//        _uploadQueue.append(gallery)
+//        
+//        adapter.list?.insert(gallery, at: 0)
+//        listView.collectionView.insertItems(at: [IndexPath(row: 0, section: 0)])
         
         //TODO: Upload Gallery
         
