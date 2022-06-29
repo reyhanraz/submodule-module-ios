@@ -55,8 +55,7 @@ struct Endpoint{
     static let confirmUpload = "api/v1/media/confirm"
     
     //Service List
-    static let artisanServicesList = "artisanServiceList"
-    static let artisanServicesDetail = "artisanService"
+    static let artisanServices = "api/v1/services"
     
     static let changePassword = "\("config.path".l10n())ChangePassword"
     

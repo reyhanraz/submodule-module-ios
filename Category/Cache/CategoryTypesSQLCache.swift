@@ -34,8 +34,8 @@ public class CategoryTypeSQLCache: SQLCache<ListRequest, CategoryType> {
             })
             
             return list
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
         
         return []
@@ -58,8 +58,8 @@ public class CategoryTypeSQLCache: SQLCache<ListRequest, CategoryType> {
                 
                 return .commit
             }
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
     }
     

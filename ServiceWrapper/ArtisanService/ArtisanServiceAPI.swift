@@ -14,29 +14,17 @@ open class ArtisanServiceAPI: ServiceHelper{
         super.init()
     }
     
-    public func getArtisanServiceList(id: Int?, page: Int, limit: Int, timestamp: TimeInterval?) -> Observable<(Data?, HTTPURLResponse?)>{
-        var params: [String : Any] = [:]
-        
-        if let id = id {
-            params["ownerId"] = id
-        }
-        
-        params["page"] = page
-        params["limit"] = limit
-        
-        if let timestamp = timestamp {
-            params["timestamp"] = timestamp * 1000
-        }
-        
-        return super.request(Endpoint.artisanServicesList,
-                             parameter: params)
+    public func getArtisanServiceList(request: ServiceListRequest?) -> Observable<(Data?, HTTPURLResponse?)>{
+
+        return super.request(Endpoint.artisanServices,
+                             parameter: request)
         .retry(3).map { result in
             return (result.data, result.response)
         }
     }
     
-    public func insertArtisanService(request: ArtisanServiceRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.artisanServicesDetail,
+    public func insertArtisanService(request: PostServiceRequest) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request(Endpoint.artisanServices,
                              method: HTTPMethod.post,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -45,9 +33,9 @@ open class ArtisanServiceAPI: ServiceHelper{
         }
     }
     
-    public func updateArtisanService(id: Int, request: ArtisanServiceRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.artisanServicesDetail,
-                             method: HTTPMethod.put,
+    public func updateArtisanService(id: String, request: PostServiceRequest) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request("\(Endpoint.artisanServices)/\(id)",
+                             method: HTTPMethod.patch,
                              parameter: request,
                              encoding: JSONEncoding.default)
         .retry(3).map { result in
@@ -55,11 +43,10 @@ open class ArtisanServiceAPI: ServiceHelper{
         }
     }
     
-    public func deleteArtisanService(id: Int) -> Observable<(Data?, HTTPURLResponse?)>{
-        let parameters: [String : Any] = ["id": id, "status": "inactive"]
-        return super.request(Endpoint.artisanServicesDetail,
-                             method: HTTPMethod.put,
-                             parameter: parameters,
+    public func deleteArtisanService(id: String) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request("\(Endpoint.artisanServices)/\(id)",
+                             method: HTTPMethod.delete,
+                             parameter: nil,
                              encoding: JSONEncoding.default)
         .retry(3).map { result in
             return (result.data, result.response)

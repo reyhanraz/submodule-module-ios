@@ -9,53 +9,51 @@
 import Platform
 import GRDB
 
-public final class Category: Codable, Hashable, FetchableRecord, PersistableRecord, CustomStringConvertible, Nameable {
+public class Category: Codable, Hashable, FetchableRecord, PersistableRecord, CustomStringConvertible, Nameable {
     
     public let id: Int
     public let name: String
-    public let icon: URL?
+    public let icon_url: URL?
     public let status: ItemStatus
     public let childrens: [Category]?
-    public let parent: Category?
     
     enum CodingKeys: String, CodingKey{
         case id
         case name
-        case icon = "icon_url"
+        case icon_url
         case status
         case childrens
-        case parent
     }
     
-    enum Columns: String, ColumnExpression {
+    public enum Columns: String, ColumnExpression {
         case id
         case name
-        case icon
+        case icon_url
         case status
         case childrens
-        case parent
     }
     
-    public init(id: Int, name: String, icon: URL?, status: ItemStatus, childrens: [Category]?, parent: Category?) {
+    public init(id: Int, name: String, icon_url: URL?, status: ItemStatus, childrens: [Category]?) {
         self.id = id
         self.name = name
-        self.icon = icon
+        self.icon_url = icon_url
         self.status = status
         self.childrens = childrens
-        self.parent = parent
     }
     
-    public init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        let decodedStatus = try container.decode(String.self, forKey: .status)
+        do {
+            status = ItemStatus(string: try container.decode(String.self, forKey: .status))
+        } catch  {
+            status = ItemStatus(int: try container.decode(Int.self, forKey: .status))
+        }
         
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        status = ItemStatus(string: decodedStatus)
         childrens = try container.decodeIfPresent([Category].self, forKey: .childrens)
-        parent = try container.decodeIfPresent(Category.self, forKey: .parent)
-        icon = try container.decodeIfPresent(URL.self, forKey: .icon)
+        icon_url = try container.decodeIfPresent(URL.self, forKey: .icon_url)
     }
     
     public func hash(into hasher: inout Hasher) {
@@ -69,4 +67,11 @@ public final class Category: Codable, Hashable, FetchableRecord, PersistableReco
 
 extension Category: TableRecord {
     static let categoryTypes = hasMany(CategoryType.self)
+}
+
+extension Category{
+    var childrenData: Data?{
+        let encoder = JSONEncoder()
+        return try? encoder.encode(childrens)
+    }
 }

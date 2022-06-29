@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		682F1BAF286AFEF600C7A344 /* ServiceListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682F1BAE286AFEF600C7A344 /* ServiceListRequest.swift */; };
 		68383ADA28511923000A0F2A /* PostServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68383AD928511923000A0F2A /* PostServiceRequest.swift */; };
 		6862042A27FB5B6700C2FBF6 /* AddressRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862042927FB5B6700C2FBF6 /* AddressRequest.swift */; };
 		6862042C27FB5E4000C2FBF6 /* AddressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862042B27FB5E4000C2FBF6 /* AddressAPI.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
+		682F1BAE286AFEF600C7A344 /* ServiceListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListRequest.swift; sourceTree = "<group>"; };
 		68383AD928511923000A0F2A /* PostServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRequest.swift; sourceTree = "<group>"; };
 		6862042927FB5B6700C2FBF6 /* AddressRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRequest.swift; sourceTree = "<group>"; };
 		6862042B27FB5E4000C2FBF6 /* AddressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAPI.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		68BA611827FC882900DA70F8 /* ArtisanService */ = {
 			isa = PBXGroup;
 			children = (
+				682F1BAE286AFEF600C7A344 /* ServiceListRequest.swift */,
 				68BA611927FC883E00DA70F8 /* ArtisanServiceRequest.swift */,
 				68383AD928511923000A0F2A /* PostServiceRequest.swift */,
 				68BA611B27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift */,
@@ -491,6 +494,7 @@
 				687A50A127D60EB100A7A124 /* ResetPasswordAPI.swift in Sources */,
 				6862044C27FC120A00C2FBF6 /* FavoriteAPI.swift in Sources */,
 				68A5F85527BF536300F6728E /* ChallengerRequest.swift in Sources */,
+				682F1BAF286AFEF600C7A344 /* ServiceListRequest.swift in Sources */,
 				68BA613A27FCB69A00DA70F8 /* NewsAPI.swift in Sources */,
 				68BA611327FC439E00DA70F8 /* MediaSigned.swift in Sources */,
 				68BA611C27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift in Sources */,

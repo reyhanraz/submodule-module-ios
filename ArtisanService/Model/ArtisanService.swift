@@ -11,156 +11,109 @@ import GRDB
 import CommonUI
 
 public class ArtisanService: Codable, Pageable, FetchableRecord, PersistableRecord {
-    public let id: Int
-    public let artisanId: Int
+    public let id: String
     public let title: String
     public let description: String
-    public let price: Decimal
     public let status: ItemStatus
-    public let cover: Media
-
-    public let serviceTypes: [ServiceType]
-    public let tags: [String]?
-    
-    public var timestamp: TimeInterval?
+    public let duration: Int
+    public let price: Decimal
+    public let originalPrice: Decimal
+    public let category: Category
+    public let images: [Media]?
+    public let artisan: String
+    public let timeStamp: TimeInterval
     public var paging: Paging?
-
-    private let coverServingURL: URL?
-
-    public init(id: Int, artisanId: Int, title: String, description: String, price: Decimal, status: ItemStatus, cover: Media, coverServingURL: URL?, serviceTypes: [ServiceType], tags: [String]?, paging: Paging? = nil, timestamp: TimeInterval? = nil) {
+    
+    public init(id: String, title: String, description: String, status: ItemStatus, duration: Int, price: Decimal, originalPrice: Decimal, category: ArtisanService.Category, images: [Media], artisan: String, timeStamp: TimeInterval, paging: Paging?) {
         self.id = id
-        self.artisanId = artisanId
         self.title = title
         self.description = description
-        self.price = price
         self.status = status
-        self.cover = cover
-        self.coverServingURL = coverServingURL
-        self.serviceTypes = serviceTypes
-        self.tags = tags
-        self.timestamp = timestamp
+        self.duration = duration
+        self.price = price
+        self.originalPrice = originalPrice
+        self.category = category
+        self.images = images
+        self.artisan = artisan
+        self.timeStamp = timeStamp
         self.paging = paging
+    }
+    
+    public class Category: Codable{
+        public let id: Int
+        public let name: String
+        public let status: String
+        public let parent: Category?
     }
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let decodedURL = try container.decode(URL.self, forKey: .cover)
-        let decodedStatus = try container.decode(String.self, forKey: .status)
-        let decodedPrice = try container.decode(String.self, forKey: .price)
-        
-        id = try container.decode(Int.self, forKey: .id)
-        artisanId = try container.decode(Int.self, forKey: .artisanId)
-        
-        title = try container.decode(String.self, forKey: .title)
-        
-        description = try container.decode(String.self, forKey: .description)
-        
-        serviceTypes = try container.decode([ServiceType].self, forKey: .serviceTypes)
-        coverServingURL = try container.decodeIfPresent(URL.self, forKey: .coverServingURL)
 
-        cover = Media(url: decodedURL, servingURL: coverServingURL)
-        status = ItemStatus(string: decodedStatus)
-        price = Decimal(string: decodedPrice) ?? .zero
+        self.id = try container.decode(String.self, forKey: .id)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decode(String.self, forKey: .description)
         
-        tags = try container.decodeIfPresent([String].self, forKey: .tags)
-        timestamp = try container.decodeIfPresent(TimeInterval.self, forKey: .timestamp)
-    }
-    
-    public struct ServiceTag: Codable, FetchableRecord, PersistableRecord {
-        public let serviceCategoryId: Int
-        public let tag: String
+        let _status = try container.decode(String.self, forKey: .status)
+        self.status = ItemStatus.init(string: _status)
         
-        enum Columns: String, ColumnExpression {
-            case tag
-        }
-    }
-    
-    public struct ServiceType: Codable, FetchableRecord, PersistableRecord {
-        public let id: Int
-        public let serviceCategoryId: Int
-        public let name: String
+        self.duration = try container.decode(Int.self, forKey: .duration)
+        self.price = try container.decode(Decimal.self, forKey: .price)
+        self.originalPrice = try container.decode(Decimal.self, forKey: .originalPrice)
+        self.category = try container.decode(Category.self, forKey: .category)
+        
+        let _images = try container.decodeIfPresent([URL].self, forKey: .images)
+        self.images = _images?.map({Media(url: $0, servingURL: nil) })
+        
+        self.artisan = try container.decode(String.self, forKey: .artisan)
+        self.timeStamp = Date().timeIntervalSince1970
+        self.paging = try container.decodeIfPresent(Paging.self, forKey: .paging)
 
-        enum Columns: String, ColumnExpression {
-            case id
-            case serviceCategoryId
-            case name
-        }
-        
-        public init(id: Int, serviceCategoryId: Int, name: String) {
-            self.id = id
-            self.serviceCategoryId = serviceCategoryId
-            self.name = name
-        }
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-
-            id = try container.decode(Int.self, forKey: .id)
-            serviceCategoryId = try container.decode(Int.self, forKey: .serviceCategoryId)
-            name = try container.decode(String.self, forKey: .name)
-        }
     }
     
     enum CodingKeys: String, CodingKey {
         case id
-        case artisanId
         case title
         case description
-        case price
         case status
-        case cover = "coverUrl"
-        case coverServingURL = "coverServingUrl"
-        case serviceTypes = "categoryTypes"
-        case tags
-        case timestamp
+        case duration
+        case price
+        case originalPrice
+        case category
+        case images
+        case artisan
+        case paging
+        case timeStamp
     }
+    
     
     enum Columns: String, ColumnExpression {
         case id
-        case artisanId
         case title
         case description
-        case price
         case status
-        case cover = "coverUrl"
-        case coverServingURL = "coverServingUrl"
+        case duration
+        case price
+        case originalPrice
+        case category
+        case images
+        case artisan
+        case paging
+        case topParentId
     }
-}
-
-extension ArtisanService: TableRecord {
-    static let serviceType = hasMany(ServiceType.self)
-    static let tags = hasMany(ServiceTag.self)
-}
-
-extension ArtisanService.ServiceType: TableRecord {
-    static let artisanService = belongsTo(ArtisanService.self)
-}
-
-extension ArtisanService.ServiceTag: TableRecord {
-    static let artisanService = belongsTo(ArtisanService.self)
 }
 
 extension ArtisanService {
-    public var types: String {
-        return serviceTypes.map { $0.name }.joined(separator: ", ")
-    }
-
-    public var categoryId: Int? {
-        return serviceTypes.map { $0.serviceCategoryId }.first
+    public var categoryData: Data?{
+        let encoder = JSONEncoder()
+        return try? encoder.encode(category)
     }
     
-    public var serviceTypeId: Int? {
-        return serviceTypes.map { $0.id }.first
+    public var imagesData: Data?{
+        let encoder = JSONEncoder()
+        return try? encoder.encode(images)
     }
     
-    public var typesAndPriceAndDescription: String {
-        let formatter = CurrencyFormatter()
-        
-        if let price = formatter.format(price: price) {
-            return "\(types), \(price)\n\(description)"
-        } else {
-            return "\(types)\n\(description)"
-        }
+    public var topParent: Category?{
+        return category.parent?.parent
     }
 }

@@ -10,17 +10,17 @@ import RxSwift
 import Platform
 import ServiceWrapper
 
-public class PostArtisanServiceCloudService<CloudResponse: ResponseType>: ArtisanServiceAPI, ServiceType {
-    public typealias R = ArtisanServiceRequest
+public class PostArtisanServiceCloudService: ArtisanServiceAPI, ServiceType {
+    public typealias R = PostServiceRequest
     
-    public typealias T = CloudResponse
+    public typealias T = Detail<ArtisanService>
     public typealias E = Error
         
     public override init() {
         super.init()
     }
     
-    public func get(request: ArtisanServiceRequest?) -> Observable<Result<T, Error>> {
+    public func get(request: PostServiceRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
         let response: Observable<(Data?, HTTPURLResponse?)>
