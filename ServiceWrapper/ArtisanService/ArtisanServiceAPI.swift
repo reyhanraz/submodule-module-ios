@@ -53,5 +53,13 @@ open class ArtisanServiceAPI: ServiceHelper{
         }
     }
     
-    
+    public func gatArtisanService(id: String) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request("\(Endpoint.artisanServices)/\(id)",
+                             method: HTTPMethod.get,
+                             parameter: nil,
+                             encoding: JSONEncoding.default)
+        .retry(3).map { result in
+            return (result.data, result.response)
+        }
+    }
 }

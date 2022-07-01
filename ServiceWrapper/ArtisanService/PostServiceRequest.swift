@@ -15,11 +15,11 @@ public struct PostServiceRequest: Codable{
     public var status: String
     public let category: Int
     public let duration: Int
-    public let original_price: Double
-    public let promo_price: Double?
+    public let original_price: Decimal
+    public let promo_price: Decimal
 
     
-    public init(id: String? = nil, title: String, description: String, status: ItemStatus = .active, category: Int, duration: Int, original_price: Double, promo_price: Double?){
+    public init(id: String? = nil, title: String, description: String, status: ItemStatus = .active, category: Int, duration: Int, original_price: Decimal, promo_price: Decimal? = nil){
         self.id = id
         self.title = title
         self.description = description
@@ -27,7 +27,7 @@ public struct PostServiceRequest: Codable{
         self.status = status.stringValue
         self.duration = duration
         self.original_price = original_price
-        self.promo_price = promo_price
+        self.promo_price = promo_price ?? original_price
     }
     
     enum CodingKey: String{
