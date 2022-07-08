@@ -53,6 +53,8 @@ struct Endpoint{
     static let getSignedURL = "uploadSignedUrl"
     static let createMedia = "api/v1/media/image"
     static let confirmUpload = "api/v1/media/confirm"
+    static let confirmArrayUpload = "api/v1/media/confirms"
+
     
     //Service List
     static let artisanServices = "api/v1/services"

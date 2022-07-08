@@ -26,7 +26,7 @@ open class UploadAPI: ServiceHelper{
         }
         
         let body = ["mime_type": mime]
-        return super.request("\(Endpoint.createMedia)/\(request.uploadType)",
+        return super.request("\(Endpoint.createMedia)/\(request.uploadType.rawValue)",
                              method: HTTPMethod.post,
                              parameter: body,
                              encoding: JSONEncoding.default)
@@ -56,6 +56,16 @@ open class UploadAPI: ServiceHelper{
     
     public func confirmed(request: UploadConfirmedRequest) -> Observable<(Data?, HTTPURLResponse?)>{
         return super.request(Endpoint.confirmUpload,
+                             method: HTTPMethod.patch,
+                             parameter: request,
+                             encoding: JSONEncoding.default)
+        .retry(3).map { result in
+            return (result.data, result.response)
+        }
+    }
+    
+    public func confirmed(request: [UploadConfirmedRequest]) -> Observable<(Data?, HTTPURLResponse?)>{
+        return super.request(Endpoint.confirmArrayUpload,
                              method: HTTPMethod.patch,
                              parameter: request,
                              encoding: JSONEncoding.default)

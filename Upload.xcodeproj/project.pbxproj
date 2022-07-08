@@ -11,6 +11,7 @@
 		6862045A27FC35D500C2FBF6 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6862045827FC35D400C2FBF6 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68A9B55F283CC78A00AF8858 /* UploadConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B55E283CC78A00AF8858 /* UploadConfirmation.swift */; };
 		68A9B561283E383A00AF8858 /* UploadUseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B560283E383A00AF8858 /* UploadUseCaseProvider.swift */; };
+		68B8E2AF2876AF7B001B260C /* ConfirmUploadCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8E2AE2876AF7B001B260C /* ConfirmUploadCloudService.swift */; };
 		90DE32D2AC66EE09AF1BA1D2 /* Pods_Upload.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE7AD6BDC78BCA52955201F /* Pods_Upload.framework */; };
 		A772F28522CCE082009E6C2B /* Upload.h in Headers */ = {isa = PBXBuildFile; fileRef = A772F28322CCE082009E6C2B /* Upload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A7C0A9A622CE0DFE0096F45A /* UploadMediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C0A9A522CE0DFE0096F45A /* UploadMediaViewModel.swift */; };
@@ -40,6 +41,7 @@
 		6862045827FC35D400C2FBF6 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68A9B55E283CC78A00AF8858 /* UploadConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadConfirmation.swift; sourceTree = "<group>"; };
 		68A9B560283E383A00AF8858 /* UploadUseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadUseCaseProvider.swift; sourceTree = "<group>"; };
+		68B8E2AE2876AF7B001B260C /* ConfirmUploadCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmUploadCloudService.swift; sourceTree = "<group>"; };
 		A772F28022CCE082009E6C2B /* Upload.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Upload.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A772F28322CCE082009E6C2B /* Upload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Upload.h; sourceTree = "<group>"; };
 		A772F28422CCE082009E6C2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				68A9B55D283CC77600AF8858 /* Model */,
 				A704C83822CCE42C000EA2C9 /* ViewModel */,
 				A7C0A9A722CF60030096F45A /* UploadCloudService.swift */,
+				68B8E2AE2876AF7B001B260C /* ConfirmUploadCloudService.swift */,
 				68A9B560283E383A00AF8858 /* UploadUseCaseProvider.swift */,
 				A772F28322CCE082009E6C2B /* Upload.h */,
 				A772F28422CCE082009E6C2B /* Info.plist */,
@@ -243,6 +246,7 @@
 			files = (
 				68A9B561283E383A00AF8858 /* UploadUseCaseProvider.swift in Sources */,
 				68A9B55F283CC78A00AF8858 /* UploadConfirmation.swift in Sources */,
+				68B8E2AF2876AF7B001B260C /* ConfirmUploadCloudService.swift in Sources */,
 				A7C0A9A622CE0DFE0096F45A /* UploadMediaViewModel.swift in Sources */,
 				A7C0A9A822CF60030096F45A /* UploadCloudService.swift in Sources */,
 			);

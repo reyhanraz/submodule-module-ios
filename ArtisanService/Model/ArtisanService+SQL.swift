@@ -9,6 +9,7 @@
 import GRDB
 import Platform
 import ServiceWrapper
+import Category
 
 extension ArtisanService: MultiTableRecord {
     public typealias R = ServiceListRequest

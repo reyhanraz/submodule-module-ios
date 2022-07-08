@@ -16,6 +16,7 @@ public class Category: Codable, Hashable, FetchableRecord, PersistableRecord, Cu
     public let icon_url: URL?
     public let status: ItemStatus
     public let childrens: [Category]?
+    public let parent: Category?
     
     enum CodingKeys: String, CodingKey{
         case id
@@ -23,6 +24,7 @@ public class Category: Codable, Hashable, FetchableRecord, PersistableRecord, Cu
         case icon_url
         case status
         case childrens
+        case parent
     }
     
     public enum Columns: String, ColumnExpression {
@@ -33,12 +35,13 @@ public class Category: Codable, Hashable, FetchableRecord, PersistableRecord, Cu
         case childrens
     }
     
-    public init(id: Int, name: String, icon_url: URL?, status: ItemStatus, childrens: [Category]?) {
+    public init(id: Int, name: String, icon_url: URL?, status: ItemStatus, childrens: [Category]?, parent: Category? = nil) {
         self.id = id
         self.name = name
         self.icon_url = icon_url
         self.status = status
         self.childrens = childrens
+        self.parent = parent
     }
     
     required public init(from decoder: Decoder) throws {
@@ -53,7 +56,8 @@ public class Category: Codable, Hashable, FetchableRecord, PersistableRecord, Cu
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         childrens = try container.decodeIfPresent([Category].self, forKey: .childrens)
-        icon_url = try container.decodeIfPresent(URL.self, forKey: .icon_url)
+        icon_url = URL(string: "https://lh3.googleusercontent.com/ZSZYCKvLDoyyqm8aRNpG9zDROkcd44c9sUHF7YEKrqqg6FGJdCRCfd1kdK-KiFpkaOu5DGM6NSDe59isKCjFqIAkYzeeE1LP0caWstL8rg")
+        parent = try container.decodeIfPresent(Category.self, forKey: .parent)
     }
     
     public func hash(into hasher: inout Hasher) {

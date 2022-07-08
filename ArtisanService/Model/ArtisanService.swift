@@ -9,6 +9,8 @@
 import Platform
 import GRDB
 import CommonUI
+import Category
+import class Category.Category
 
 public class ArtisanService: Codable, Pageable, FetchableRecord, PersistableRecord {
     public let id: String
@@ -24,7 +26,7 @@ public class ArtisanService: Codable, Pageable, FetchableRecord, PersistableReco
     public let timeStamp: TimeInterval
     public var paging: Paging?
     
-    public init(id: String, title: String, description: String, status: ItemStatus, duration: Int, price: Decimal, originalPrice: Decimal, category: ArtisanService.Category, images: [Media], artisan: String, timeStamp: TimeInterval, paging: Paging?) {
+    public init(id: String, title: String, description: String, status: ItemStatus, duration: Int, price: Decimal, originalPrice: Decimal, category: Category, images: [Media], artisan: String, timeStamp: TimeInterval, paging: Paging?) {
         self.id = id
         self.title = title
         self.description = description
@@ -37,13 +39,6 @@ public class ArtisanService: Codable, Pageable, FetchableRecord, PersistableReco
         self.artisan = artisan
         self.timeStamp = timeStamp
         self.paging = paging
-    }
-    
-    public class Category: Codable{
-        public let id: Int
-        public let name: String
-        public let status: String
-        public let parent: Category?
     }
     
     public required init(from decoder: Decoder) throws {
