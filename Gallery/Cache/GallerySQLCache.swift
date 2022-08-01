@@ -10,7 +10,8 @@ import GRDB
 import Platform
 
 public class GallerySQLCache: Cache {
-    public typealias R = ListRequest
+
+    public typealias R = NewListRequest
     public typealias T = Gallery
     
     private let _dbQueue: DatabaseQueue
@@ -43,7 +44,7 @@ public class GallerySQLCache: Cache {
         }
     }
 
-    public func get(request: ListRequest?) -> Gallery? {
+    public func get(request: R?) -> Gallery? {
         let list = getList(request: request)
         
         if let item = list.first {
@@ -53,7 +54,7 @@ public class GallerySQLCache: Cache {
         return nil
     }
     
-    public func getList(request: ListRequest?) -> [Gallery] {
+    public func getList(request: R?) -> [Gallery] {
         do {
             let list = try _dbQueue.read({ db in
                 try Gallery.fetchAll(db, request: request, tableName: _tableName)
@@ -93,7 +94,7 @@ public class GallerySQLCache: Cache {
         return false
     }
     
-    public func isCached(request: ListRequest?) -> Bool {
+    public func isCached(request: R?) -> Bool {
         do {
             let total = try _dbQueue.read { db in
                 try Gallery.fetchCount(db, request: request, tableName: _tableName)
@@ -105,7 +106,7 @@ public class GallerySQLCache: Cache {
         }
     }
     
-    public func isExpired(request: ListRequest?) -> Bool {
+    public func isExpired(request: R?) -> Bool {
         do {
             let total = try _dbQueue.read { db in
                 try Gallery.isExpired(db, request: request, tableName: _tableName, expiredAfter: _expiredAfter)
@@ -128,7 +129,7 @@ public class GallerySQLCache: Cache {
         }
     }
     
-    public func remove(request: ListRequest) {
+    public func remove(request: R) {
         do {
             let _ = try _dbQueue.write { db in
                 try Gallery.delete(db, request: request, tableName: _tableName)

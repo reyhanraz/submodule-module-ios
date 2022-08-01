@@ -1,15 +1,14 @@
 //
-//  ServiceListRequest.swift
-//  ServiceWrapper
+//  CategoryListRequest.swift
+//  Category
 //
-//  Created by Reyhan Rifqi Azzami on 28/06/22.
-//  Copyright © 2022 PT. Perintis Teknologi Indonesia. All rights reserved.
+//  Created by Reyhan Rifqi Azzami on 14/07/22.
+//  Copyright © 2022 PT. Perintis Teknologi Nusantara. All rights reserved.
 //
 
-import Foundation
 import Platform
 
-public class ServiceListRequest: NewListRequestType, Codable{
+public class CategoryListRequest: NewListRequestType, Codable{
     
     public var id: String?
     public var timestamp: TimeInterval? = nil
@@ -21,17 +20,15 @@ public class ServiceListRequest: NewListRequestType, Codable{
     public var keyword: String? = nil
     public var orderBy: OrderBy? = nil
     public var orderDirection: OrderDirection? = nil
-    public let artisan: String?
-    public let category: Int?
+    public let categoryID: Int?
     
-    public init(statuses: [ItemStatus] = [.active], id: String? = nil, page: Int = 0, limit: Int = PlatformConfig.defaultLimit, forceReload: Bool = false, ignorePaging: Bool = false, artisan: String?, category: Int?) {
+    public init(statuses: [ItemStatus] = [.active], id: String? = nil, page: Int = 0, limit: Int = PlatformConfig.defaultLimit, forceReload: Bool = false, ignorePaging: Bool = false, categoryID: Int? = nil) {
         self.page = page
         self.statuses = statuses
         self.limit = limit
         self.forceReload = forceReload
         self.id = id
-        self.artisan = artisan
-        self.category = category
+        self.categoryID = categoryID
     }
     
     public enum OrderBy: String, Codable {

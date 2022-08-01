@@ -10,6 +10,7 @@ import UIKit
 import CommonUI
 import Platform
 import Domain
+import ServiceWrapper
 
 protocol PostComplaintViewControllerDelegate: class {
     func complaintDidSend(id: Int, reason: String)

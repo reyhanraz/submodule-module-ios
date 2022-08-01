@@ -9,14 +9,12 @@
 import RxSwift
 import Alamofire
 
-open class ArtisanServiceAPI: ServiceHelper{
-    public override init() {
-        super.init()
-    }
+open class ArtisanServiceAPI{
+    public init() {}
     
     public func getArtisanServiceList(request: ServiceListRequest?) -> Observable<(Data?, HTTPURLResponse?)>{
 
-        return super.request(Endpoint.artisanServices,
+        return ServiceHelper.shared.request(Endpoint.artisanServices,
                              parameter: request)
         .retry(3).map { result in
             return (result.data, result.response)
@@ -24,7 +22,7 @@ open class ArtisanServiceAPI: ServiceHelper{
     }
     
     public func insertArtisanService(request: PostServiceRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.artisanServices,
+        return ServiceHelper.shared.request(Endpoint.artisanServices,
                              method: HTTPMethod.post,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -34,7 +32,7 @@ open class ArtisanServiceAPI: ServiceHelper{
     }
     
     public func updateArtisanService(id: String, request: PostServiceRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("\(Endpoint.artisanServices)/\(id)",
+        return ServiceHelper.shared.request("\(Endpoint.artisanServices)/\(id)",
                              method: HTTPMethod.patch,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -44,7 +42,7 @@ open class ArtisanServiceAPI: ServiceHelper{
     }
     
     public func deleteArtisanService(id: String) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("\(Endpoint.artisanServices)/\(id)",
+        return ServiceHelper.shared.request("\(Endpoint.artisanServices)/\(id)",
                              method: HTTPMethod.delete,
                              parameter: nil,
                              encoding: JSONEncoding.default)
@@ -54,7 +52,7 @@ open class ArtisanServiceAPI: ServiceHelper{
     }
     
     public func gatArtisanService(id: String) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request("\(Endpoint.artisanServices)/\(id)",
+        return ServiceHelper.shared.request("\(Endpoint.artisanServices)/\(id)",
                              method: HTTPMethod.get,
                              parameter: nil,
                              encoding: JSONEncoding.default)

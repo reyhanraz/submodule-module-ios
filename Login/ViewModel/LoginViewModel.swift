@@ -42,12 +42,12 @@ public struct LoginViewModel: LoginViewModelType, LoginViewModelOutput {
     var signInConfig: GIDConfiguration?
     
     private let _requestProperty = PublishSubject<ServiceWrapper.LoginRequest>()
-    private let _userKind: User.Kind
+    private let _userKind: NewProfile.Kind
     
     public init<U: UseCase>(
         email: Driver<String?>,
         password: Driver<String?>,
-        useCase: U, userKind: User.Kind = .customer
+        useCase: U, userKind: NewProfile.Kind = .customer
         ) where U.R == ServiceWrapper.LoginRequest, U.T == T, U.E == Error {
             
         _userKind = userKind

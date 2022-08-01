@@ -33,9 +33,9 @@ public struct UpdateBookingStatusCloudService<CloudResponse: ResponseType>: Serv
         let response: Single<Response>
         
         if request.bookingType == .booking {
-            response = _service.rx.request(.updateBookingStatus(id: id, status: bookingStatuses[0]))
+            response = _service.rx.request(.updateBookingStatus(id: -1, status: bookingStatuses[0]))
         } else {
-            response = _service.rx.request(.updateCustomizeRequestStatus(id: id, artisanId: request.artisanId, price: request.bidPrice, status: bookingStatuses[0]))
+            response = _service.rx.request(.updateCustomizeRequestStatus(id: -1, artisanId: request.artisanId, price: request.bidPrice, status: bookingStatuses[0]))
         }
         
         return response

@@ -7,13 +7,13 @@
 //
 
 public struct CheckAvailabilityRequest: Encodable {
-    public let artisanId: Int
+    public let artisanId: String
     public let timeStart: String
     public let serviceRequests: [ServiceRequest]?
     public let customRequestServiceRequests: [CustomRequestServiceRequest]?
     
     public struct ServiceRequest: Encodable {
-        public let serviceId: Int
+        public let serviceId: String
         public let quantity: Int
     }
     

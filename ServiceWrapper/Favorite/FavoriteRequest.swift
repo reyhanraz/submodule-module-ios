@@ -12,10 +12,10 @@ public struct FavoriteRequest {
         case remove
     }
     
-    public let id: Int
+    public let id: String
     public let action: Action
     
-    public init(id: Int, action: Action?) {
+    public init(id: String, action: Action?) {
         self.id = id
         self.action = action ?? .add
     }

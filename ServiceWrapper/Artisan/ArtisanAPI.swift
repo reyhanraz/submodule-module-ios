@@ -10,20 +10,14 @@ import RxSwift
 import Alamofire
 import L10n_swift
 
-open class ArtisanAPI: ServiceHelper{
-    public override init(){
-        super.init()
-    }
+open class ArtisanAPI {
+    public init(){ }
     
     public func getArtisanList(filter: ArtisanFilter) -> Observable<(Data?, HTTPURLResponse?)>{
         var params: [String: Any] = [:]
         
         params["page"] = filter.page
         params["limit"] = filter.limit
-        
-        if let locations = filter.locations {
-            params["districtIds"] = locations.map { $0.id }
-        }
         
         if let ids = filter.categories {
             params["categoryIds"] = ids.map { $0.id }
@@ -34,15 +28,15 @@ open class ArtisanAPI: ServiceHelper{
         }
         
         if let ratings = filter.ratings {
-            params["ratings"] = ratings
+            params["rating"] = ratings
         }
         
         if let min = filter.priceMin {
-            params["priceMin"] = min
+            params["startPrice"] = min
         }
         
         if let max = filter.priceMax {
-            params["priceMax"] = max
+            params["toPrice"] = max
         }
         
         if let search = filter.keyword {
@@ -57,19 +51,45 @@ open class ArtisanAPI: ServiceHelper{
             params["lat"] = latitude
             params["lon"] = longitude
         }
-
-        if let isEditorChoice = filter.isEditorChoice {
-            params["isEditorChoice"] = isEditorChoice
+        
+        if filter.listType == .trending {
+            params["trending"] = true
         }
         
-        return super.request(Endpoint.getListArtisan, parameter: params).retry(3).map { result in
-            return (result.data, result.response)
+        if let order = filter.order{
+            params["order"] = order
         }
+        
+        if let orderBy = filter.orderBy{
+            params["orderBy"] = orderBy
+        }
+        
+        //categories[0]:2
+        //categories[1]:
+        //price:true
+        
+        if filter.listType == .editorChoice{
+    
+            return ServiceHelper.shared.request(Endpoint.editorChoice).retry(3).map { result in
+                return (result.data, result.response)
+            }
+            
+        } else {
+            
+            let endpoint = "\(Endpoint.listUser)/artisan"
+            
+            return ServiceHelper.shared.request(endpoint, parameter: params, encoding: URLEncoding.queryString).retry(3).map { result in
+                return (result.data, result.response)
+            }
+            
+        }
+        
+        
     }
     
-    public func getDetailArtisan(id: Int) -> Observable<(Data?, HTTPURLResponse?)>{
-        let param = ["id": id]
-        return super.request(Endpoint.getDetailArtisan, parameter: param).retry(3).map { result in
+    public func getDetailArtisan(id: String) -> Observable<(Data?, HTTPURLResponse?)>{
+        let endpoint  = "\(Endpoint.listUser)/\(id)"
+        return ServiceHelper.shared.request(endpoint).retry(3).map { result in
             return (result.data, result.response)
         }
     }
@@ -80,7 +100,7 @@ open class ArtisanAPI: ServiceHelper{
         params["page"] = request.page
         params["limit"] = request.limit
         
-        return super.request(Endpoint.getFavoriteListArtisan, parameter: params).retry(3).map { result in
+        return ServiceHelper.shared.request(Endpoint.getFavoriteListArtisan, parameter: params).retry(3).map { result in
             return (result.data, result.response)
         }
     }
@@ -96,7 +116,7 @@ open class ArtisanAPI: ServiceHelper{
             params["lat"] = latitude
             params["lng"] = longitude
         }
-        return super.request(Endpoint.getNearbyArtisan, parameter: params).retry(3).map { result in
+        return ServiceHelper.shared.request(Endpoint.getNearbyArtisan, parameter: params).retry(3).map { result in
             return (result.data, result.response)
         }
     }

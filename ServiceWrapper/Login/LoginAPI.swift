@@ -10,13 +10,12 @@ import Foundation
 import RxSwift
 import Alamofire
 
-open class LoginAPI: ServiceHelper{
-    public override init(){
-        super.init()
+open class LoginAPI{
+    public init(){
     }
     
     public func requstLogin(request: LoginRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.login, method: .post ,parameter: request, isBasicAuth: true).retry(3).map { result in
+        return ServiceHelper.shared.request(Endpoint.login, method: .post ,parameter: request, isBasicAuth: true).retry(3).map { result in
             return (result.data, result.response)
         }
     }

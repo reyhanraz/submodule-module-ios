@@ -16,7 +16,9 @@ protocol BookingUserViewDelegate: class {
 }
 
 class BookingUserView: UIView {
-    private var _kind: User.Kind
+    private var _kind: NewProfile.Kind
+    
+    public var id: String?
     
     weak var delegate: BookingUserViewDelegate?
     
@@ -77,7 +79,7 @@ class BookingUserView: UIView {
         }
     }
     
-    var customer: User? {
+    var customer: NewProfile? {
         didSet {
             profileView.customer = customer
         }
@@ -124,7 +126,7 @@ class BookingUserView: UIView {
         fatalError()
     }
     
-    public init(kind: User.Kind) {
+    public init(kind: NewProfile.Kind) {
         _kind = kind
         
         super.init(frame: .zero)
@@ -175,10 +177,9 @@ class BookingUserView: UIView {
     
     @objc func showContactOptions() {
         if let artisan = artisan {
-            guard let phone = artisan.phone else { return }
-            delegate?.showContactOptions(name: artisan.name, phone: phone)
+            delegate?.showContactOptions(name: artisan.name, phone: artisan.phoneNumber)
         } else if let customer = customer {
-            delegate?.showContactOptions(name: customer.name, phone: customer.phone)
+            delegate?.showContactOptions(name: customer.name, phone: customer.phoneNumber)
         }
     }
 }

@@ -10,13 +10,11 @@ import RxSwift
 import Alamofire
 import L10n_swift
 
-open class RegisterAPI: ServiceHelper{
-    public override init(){
-        super.init()
-    }
+open class RegisterAPI {
+    public init(){ }
     
     public func postRegister(request: RegisterRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.register,
+        return ServiceHelper.shared.request(Endpoint.register,
                              method: .post,
                              parameter: request,
                              encoding: JSONEncoding.default,
@@ -34,7 +32,7 @@ open class RegisterAPI: ServiceHelper{
                 return Disposables.create()
             }
         }
-        return super.request(Endpoint.findUser,
+        return ServiceHelper.shared.request(Endpoint.findUser,
                              method: .post,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -44,7 +42,7 @@ open class RegisterAPI: ServiceHelper{
     }
     
     public func requestOTP(request: ChallengerRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.challenges,
+        return ServiceHelper.shared.request(Endpoint.challenges,
                              method: .post,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -54,7 +52,7 @@ open class RegisterAPI: ServiceHelper{
     }
     
     public func validateOTP(request: ChallengerRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.validateChallenge,
+        return ServiceHelper.shared.request(Endpoint.validateChallenge,
                              method: .post,
                              parameter: request,
                              encoding: JSONEncoding.default)

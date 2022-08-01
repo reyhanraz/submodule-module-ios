@@ -9,11 +9,9 @@
 import RxSwift
 import Alamofire
 
-open class CalendarAPI: ServiceHelper{
+open class CalendarAPI{
     
-    public override init() {
-        super.init()
-    }
+    public init() {}
     
     public func getEventList(start: Date?, end: Date?, artisanId: Int) -> Observable<(Data?, HTTPURLResponse?)>{
         
@@ -28,7 +26,7 @@ open class CalendarAPI: ServiceHelper{
             params["timeMax"] = end.toSystemDate
         }
         
-        return super.request(Endpoint.artisanCalendar,
+        return ServiceHelper.shared.request(Endpoint.artisanCalendar,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)

@@ -21,6 +21,7 @@ public struct AddressViewModel{
     public var loading: Driver<Loading>
     public var result: Driver<(ListRequest, [Address], Bool)>
     public var failed: Driver<Status.Detail>
+    public var arrayResult: Driver<[Address]>
     
     private let _getListProperty = PublishSubject<Request>()
     private let _loadMoreProperty = PublishSubject<Request>()
@@ -31,9 +32,12 @@ public struct AddressViewModel{
     public init(activityIndicator: ActivityIndicator){
         let loadingProperty = PublishSubject<Loading>()
         let failedProperty = PublishSubject<Status.Detail>()
+        let arrayResultProperty = PublishSubject<[Address]>()
+
 
         loading = loadingProperty.asDriver(onErrorJustReturn: Loading(start: false))
         failed = failedProperty.asDriver(onErrorDriveWith: .empty())
+        arrayResult = arrayResultProperty.asDriver(onErrorDriveWith: .empty())
         
         let cache = AddressSQLCache<ListRequest>(dbQueue: delegate.dbQueue)
         
@@ -91,6 +95,7 @@ public struct AddressViewModel{
             }
             
             items += dataResponse.data
+            arrayResultProperty.onNext(items)
             
             return (request, items, isFromInitialCache)
         }

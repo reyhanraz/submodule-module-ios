@@ -17,6 +17,8 @@ struct Endpoint{
     static let findUser = "api/v1/users/find"
     static let metadata = "api/v1/profile/metadata"
     static let resendEmailVerification = "api/v1/profile/resend-verification"
+    static let listUser = "api/v1/users/list-users"
+    static let editorChoice = "api/v1/editor-choice"
 
     static let challenges = "api/challenges"
     static let validateChallenge = "api/challenges/validate"
@@ -31,9 +33,12 @@ struct Endpoint{
     static let searchLocation = "locationAreaList"
     static let getProvinceList = "locationProvinceList"
     
+    //Bookiing
+    static let getBooking = "api/v1/bookings"
+    
     //Artisan
-    static let getDetailArtisan = "artisanProfile"
-    static let getListArtisan = "findArtisanList"
+    static let getDetailArtisan = "api/v1/users"
+    static let getListArtisan = "api/v1/artisans"
     static let getFavoriteListArtisan = "artisanFavoriteList"
     static let getNearbyArtisan = "findArtisanNearby"
     

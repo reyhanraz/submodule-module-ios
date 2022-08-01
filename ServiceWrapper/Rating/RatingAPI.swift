@@ -11,12 +11,10 @@ import Alamofire
 import L10n_swift
 
 
-open class RatingAPI: ServiceHelper{
-    public override init(){
-        super.init()
-    }
+open class RatingAPI {
+    public init(){ }
     
-    public func getRatingList(artisanId: Int, page: Int, limit: Int, timestamp: TimeInterval?) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func getRatingList(artisanId: String, page: Int, limit: Int, timestamp: TimeInterval?) -> Observable<(Data?, HTTPURLResponse?)>{
         var params: [String : Any] = [:]
         
         params["artisanId"] = artisanId
@@ -27,7 +25,7 @@ open class RatingAPI: ServiceHelper{
             params["timestamp"] = timestamp * 1000
         }
         
-        return super.request(Endpoint.getRatingList,
+        return ServiceHelper.shared.request(Endpoint.getRatingList,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)
@@ -35,7 +33,7 @@ open class RatingAPI: ServiceHelper{
     }
     
     public func giveRating(request: RatingRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.giveRating,
+        return ServiceHelper.shared.request(Endpoint.giveRating,
                              method: HTTPMethod.post,
                              parameter: request,
                              encoding: JSONEncoding.default)

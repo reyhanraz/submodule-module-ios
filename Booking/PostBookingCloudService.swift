@@ -10,6 +10,7 @@ import Moya
 import RxSwift
 import L10n_swift
 import Platform
+import ServiceWrapper
 
 public struct PostBookingCloudService<CloudResponse: ResponseType>: ServiceType {
     public typealias R = PostBookingRequest

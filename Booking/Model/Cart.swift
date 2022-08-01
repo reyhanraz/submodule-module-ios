@@ -11,7 +11,7 @@ import Platform
 import GRDB
 
 public class Cart: Codable, FetchableRecord, PersistableRecord {
-    public let artisanId: Int
+    public let artisanId: String
     public let name: String
     public let avatar: Media?
     
@@ -20,7 +20,7 @@ public class Cart: Codable, FetchableRecord, PersistableRecord {
 
     private let avatarServingURL: URL?
 
-    public init(artisanId: Int, name: String, avatar: Media?, avatarServingURL: URL?, items: [Item], timestamp: TimeInterval? = nil) {
+    public init(artisanId: String, name: String, avatar: Media?, avatarServingURL: URL?, items: [Item], timestamp: TimeInterval? = nil) {
         self.artisanId = artisanId
         self.name = name
         self.avatar = avatar
@@ -41,7 +41,7 @@ public class Cart: Codable, FetchableRecord, PersistableRecord {
         
         let decodedAvatar = try container.decodeIfPresent(URL.self, forKey: .avatar)
         
-        artisanId = try container.decode(Int.self, forKey: .artisanId)
+        artisanId = try container.decode(String.self, forKey: .artisanId)
         name = try container.decode(String.self, forKey: .name)
         items = try container.decode([Item].self, forKey: .items)
         avatarServingURL = try container.decodeIfPresent(URL.self, forKey: .avatarServingURL)
@@ -58,10 +58,10 @@ public class Cart: Codable, FetchableRecord, PersistableRecord {
     public class Item: Codable, FetchableRecord, PersistableRecord {
         public static let databaseTableName = "cartItem"
         
-        public let id: Int
+        public let id: String
         public let title: String
         public let description: String
-        public let artisanId: Int
+        public let artisanId: String
         public let serviceTypes: [ServiceType]
         public let serviceFee: Decimal
         
@@ -78,7 +78,7 @@ public class Cart: Codable, FetchableRecord, PersistableRecord {
             case notes
         }
         
-        public init(id: Int, title: String, description: String, artisanId: Int, serviceTypes: [ServiceType], serviceFee: Decimal, quantity: Int, notes: String?) {
+        public init(id: String, title: String, description: String, artisanId: String, serviceTypes: [ServiceType], serviceFee: Decimal, quantity: Int, notes: String?) {
             self.id = id
             self.title = title
             self.description = description
@@ -92,10 +92,10 @@ public class Cart: Codable, FetchableRecord, PersistableRecord {
         public struct ServiceType: Codable, FetchableRecord, PersistableRecord {
             public static let databaseTableName = "cartServiceType"
             
-            public let id: Int
+            public let id: String
             public let name: String
             
-            public init(id: Int, name: String) {
+            public init(id: String, name: String) {
                 self.id = id
                 self.name = name
             }
@@ -129,7 +129,7 @@ extension Cart {
         return items.map { $0.id }.map { String($0) }.joined(separator: ",")
     }
     
-    public var services: [(serviceId: Int, quantity: Int)] {
+    public var services: [(serviceId: String, quantity: Int)] {
         return items.flatMap { item in item.serviceTypes.compactMap { (serviceId: $0.id, quantity: item.quantity) } }
     }
     

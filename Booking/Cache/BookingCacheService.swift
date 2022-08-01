@@ -12,7 +12,7 @@ import Platform
 public struct BookingCacheService<R, Provider: Cache>: ServiceType where Provider.R == R, Provider.T == Booking {
     
     public typealias R = Provider.R
-    public typealias T = BookingDetail
+    public typealias T = Detail<Booking>
     public typealias E = Error
     
     private let _cache: Provider
@@ -21,16 +21,11 @@ public struct BookingCacheService<R, Provider: Cache>: ServiceType where Provide
         _cache = cache
     }
     
-    public func get(request: R?) -> Observable<Result<BookingDetail, Error>> {
+    public func get(request: R?) -> Observable<Result<T, Error>> {
         guard let item = _cache.get(request: request) else { return .empty() }
         
-        let data = BookingDetail.Data(booking: item, paymentSummary: nil)
-        let status = Status.Detail(code: 200, message: "")
-        
-        let model = BookingDetail(status: status, data: data, errors: nil)
-        
         return Observable
-            .just(model)
+            .just(Detail(data: item))
             .map(Result.success)
             .catchError { error in return .just(.error(error)) }
     }

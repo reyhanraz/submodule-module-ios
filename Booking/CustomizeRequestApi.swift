@@ -15,7 +15,7 @@ public enum CustomizeRequestApi {
     case updateCustomizedRequest(request: PostCustomRequest)
     case getBidder(id: Int)
     case getList(page: Int, limit: Int, timestamp: TimeInterval?)
-    case getDetail(id: Int)
+    case getDetail(id: String)
 }
 
 extension CustomizeRequestApi: TargetType {

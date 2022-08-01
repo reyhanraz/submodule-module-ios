@@ -10,7 +10,7 @@ import ServiceWrapper
 import RxSwift
 import Platform
 
-public class ArtisanCloudService<CloudResponse: ResponseType>: ArtisanAPI, ServiceType {
+public class ArtisanCloudService<CloudResponse: NewResponseType>: ArtisanAPI, ServiceType {
     public typealias R = ArtisanFilter
     
     public typealias T = CloudResponse

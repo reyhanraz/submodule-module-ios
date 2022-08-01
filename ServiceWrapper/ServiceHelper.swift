@@ -17,12 +17,14 @@ class Connectivity {
     }
 }
 
-open class ServiceHelper{
-    private let _user = UserPreference()
-        
-    public init(){
-        
-    }
+class ServiceHelper{
+    private let _user = ProfilePreference()
+    
+    static let shared = ServiceHelper()
+    
+    private init(){}
+    
+    var isRefreshing = false
         
     private static func dataRequest(_ urlString: String, method: HTTPMethod = .get, parameters: Parameters?, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders, onCompleted:@escaping (DataResponse<Any>) -> Void) -> DataRequest {
         AF.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers).responseJSON { response in
@@ -147,9 +149,11 @@ open class ServiceHelper{
             }
         }else{
             return Observable<DataResponse<Any>>.create {[weak self] observer in
-                guard let strongSelf = self else {
+                guard let strongSelf = self, !strongSelf.isRefreshing else {
                     return Disposables.create{ }
                 }
+                
+                strongSelf.isRefreshing = true
                     
                 let refreshToken: LoginRequest
                 
@@ -172,15 +176,18 @@ open class ServiceHelper{
                             return
                         }
                         
-                        self?._user.saveToken(accessToken: token.access_token, refreshToken: token.refresh_token, expiredTime: token.expires_in, tokenType: token.token_type)
+                        strongSelf._user.saveToken(accessToken: token.access_token, refreshToken: token.refresh_token, expiredTime: token.expires_in, tokenType: token.token_type)
                         
                         DispatchQueue.main.async {
                             header.add(name: "Authorization", value: "\(strongSelf._user.tokenType ?? "") \(strongSelf._user.authorizationCode ?? "")")
-                            let requestb = ServiceHelper.dataRequest(baseURL, method: method, parameters: param, headers: header) { (response) in
+                            _ = ServiceHelper.dataRequest(baseURL, method: method, parameters: param, headers: header) { (response) in
                                 observer.onNext(response)
                                 observer.onCompleted()
                            }
                         }
+                        
+                        strongSelf.isRefreshing = false
+                        print("------REFRESH TOKEN ----------")
                         
                     case .failure(_):
                         break

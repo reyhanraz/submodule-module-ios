@@ -6,20 +6,23 @@
 //  Copyright © 2022 PT. Perintis Teknologi Indonesia. All rights reserved.
 //
 
+import Platform
+
 public struct CheckUserRequest: Encodable {
     public enum FindType: String{
         case email
         case phoneNumber
         case username
+        case id
     }
 
     let identifier: String
     let type: String
     let find_type: String
     
-    public init(identifier: String, type: String, findType: CheckUserRequest.FindType){
+    public init(identifier: String, type: NewProfile.Kind, findType: CheckUserRequest.FindType){
         self.identifier = identifier
-        self.type = type
+        self.type = type.rawValue 
         self.find_type = findType.rawValue
     }
 }

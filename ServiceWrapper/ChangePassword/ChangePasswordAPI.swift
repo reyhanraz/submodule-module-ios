@@ -9,14 +9,12 @@
 import RxSwift
 import Alamofire
 
-open class ChangePasswordAPI: ServiceHelper{
+open class ChangePasswordAPI {
     
-    public override init() {
-        super.init()
-    }
+    public init() { }
     
     public func postChangePassword(request: ChangePasswordRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.changePassword,
+        return ServiceHelper.shared.request(Endpoint.changePassword,
                              method: HTTPMethod.put,
                              parameter: request,
                              encoding: JSONEncoding.default)

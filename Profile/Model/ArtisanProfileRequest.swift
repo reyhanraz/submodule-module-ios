@@ -15,9 +15,9 @@ public struct ArtisanProfileRequest: Encodable {
     let dob: String?
     let instagram: String?
     let about: String
-    let gender: User.Gender
+    let gender: NewProfile.Gender
     
-    public init(id: Int, name: String, phone: String, dob: String?, instagram: String?, about: String, gender: User.Gender) {
+    public init(id: Int, name: String, phone: String, dob: String?, instagram: String?, about: String, gender: NewProfile.Gender) {
         self.id = id
         self.name = name
         self.phone = phone

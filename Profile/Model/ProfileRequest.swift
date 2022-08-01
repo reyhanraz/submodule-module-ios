@@ -9,13 +9,13 @@
 import Platform
 
 public struct ProfileRequest: Encodable {
-    let id: Int
+    let id: String
     let name: String
     let phone: String
     let dob: String?
-    let gender: User.Gender
+    let gender: NewProfile.Gender
     
-    public init(id: Int, name: String, phone: String, dob: String?, gender: User.Gender) {
+    public init(id: String, name: String, phone: String, dob: String?, gender: NewProfile.Gender) {
         self.id = id
         self.name = name
         self.phone = phone

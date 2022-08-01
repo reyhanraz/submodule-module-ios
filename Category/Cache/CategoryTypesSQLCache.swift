@@ -68,9 +68,7 @@ public class CategoryTypeSQLCache: SQLCache<ListRequest, CategoryType> {
         
         var filter: String?
         
-        if id > 0 {
-            filter = "\(CategoryType.Columns.serviceCategoryId) = \(id)"
-        }
+            filter = "\(CategoryType.Columns.serviceCategoryId) = '\(id)'"
         
         return filter
     }

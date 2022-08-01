@@ -33,6 +33,7 @@ public class Category: Codable, Hashable, FetchableRecord, PersistableRecord, Cu
         case icon_url
         case status
         case childrens
+        case parentId
     }
     
     public init(id: Int, name: String, icon_url: URL?, status: ItemStatus, childrens: [Category]?, parent: Category? = nil) {
@@ -77,5 +78,9 @@ extension Category{
     var childrenData: Data?{
         let encoder = JSONEncoder()
         return try? encoder.encode(childrens)
+    }
+    
+    public var parentId: Int?{
+        return parent?.id
     }
 }

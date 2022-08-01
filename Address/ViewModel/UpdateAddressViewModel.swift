@@ -14,7 +14,7 @@ import Domain
 import Platform
 import ServiceWrapper
 
-public struct UpdateAddressViewModel{
+public class UpdateAddressViewModel{
     public typealias Response = Detail<Address>
 
     public let loading: Driver<Loading>

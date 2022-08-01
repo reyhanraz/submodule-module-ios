@@ -9,7 +9,7 @@
 import GRDB
 import Platform
 
-public class CartSQLCache: SQLCache<Int, Cart> {
+public class CartSQLCache: SQLCache<String, Cart> {
     
     public static func createTable(db: Database) throws {
         
@@ -41,7 +41,7 @@ public class CartSQLCache: SQLCache<Int, Cart> {
         }
     }
     
-    public override func get(request: Int?) -> Cart? {
+    public override func get(request: String?) -> Cart? {
         let carts = getList(request: request)
         
         if !carts.isEmpty {
@@ -106,7 +106,7 @@ public class CartSQLCache: SQLCache<Int, Cart> {
         remove(request: model.artisanId)
     }
     
-    public override func remove(request: Int) {
+    public override func remove(request: String) {
         do {
             let _ = try dbQueue.write { db in
                 try Cart.deleteOne(db, key: [Cart.Columns.artisanId.rawValue: request])

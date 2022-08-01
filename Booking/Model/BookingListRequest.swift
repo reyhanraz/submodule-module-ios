@@ -9,8 +9,9 @@
 import CommonUI
 import Platform
 
-public class BookingListRequest: ListRequestType, Editable {
-    public var id: Int?
+public class BookingListRequest: NewListRequestType {
+    
+    public var id: String?
     public var timestamp: TimeInterval? = nil
     public var statuses: [ItemStatus] = [.active]
     public var page: Int = 0
@@ -28,7 +29,7 @@ public class BookingListRequest: ListRequestType, Editable {
         case customizeRequest
     }
     
-    public init(statuses: [Booking.Status]? = nil, bookingType: BookingType? = nil, id: Int? = nil, artisanId: Int? = nil, page: Int = 0, limit: Int = PlatformConfig.defaultLimit, forceReload: Bool = false, ignorePaging: Bool = false, bidPrice: Double? = nil) {
+    public init(statuses: [Booking.Status]? = nil, bookingType: BookingType? = nil, id: String? = nil, artisanId: Int? = nil, page: Int = 0, limit: Int = PlatformConfig.defaultLimit, forceReload: Bool = false, ignorePaging: Bool = false, bidPrice: Double? = nil) {
         self.page = page
         self.bookingStatuses = statuses
         self.limit = limit

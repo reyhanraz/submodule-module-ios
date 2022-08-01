@@ -9,11 +9,9 @@
 import RxSwift
 import Alamofire
 
-open class NewsAPI: ServiceHelper{
+open class NewsAPI {
     
-    public override init() {
-        super.init()
-    }
+    public init(){}
     
     public func getNewsList(page: Int, limit: Int, timestamp: TimeInterval?) -> Observable<(Data?, HTTPURLResponse?)>{
         
@@ -26,7 +24,7 @@ open class NewsAPI: ServiceHelper{
             params["timestamp"] = timestamp * 1000
         }
         
-        return super.request(Endpoint.newsList,
+        return ServiceHelper.shared.request(Endpoint.newsList,
                              parameter: params)
             .retry(3).map { result in
                 return (result.data, result.response)
@@ -38,7 +36,7 @@ open class NewsAPI: ServiceHelper{
         var params: [String : Any] = [:]
         params["id"] = id
         
-        return super.request(Endpoint.newsList,
+        return ServiceHelper.shared.request(Endpoint.newsList,
                              parameter: params)
             .retry(3).map { result in
                 return (result.data, result.response)

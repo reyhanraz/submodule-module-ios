@@ -32,7 +32,7 @@ public struct UpdateProfileViewModel<T: ResponseType>: UpdateProfileViewModelTyp
     public let dismissResponder: Driver<Bool>
     
     public init<U: UseCase>(
-        id: Int,
+        id: String,
         phone: (Driver<String?>, String),
         name: (Driver<String?>, Int, Int),
         dob: Driver<String?>,

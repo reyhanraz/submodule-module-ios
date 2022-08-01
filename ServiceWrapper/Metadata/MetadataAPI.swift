@@ -11,13 +11,11 @@ import Alamofire
 import L10n_swift
 import Platform
 
-open class MetadataAPI: ServiceHelper{
-    public override init() {
-        super.init()
-    }
+open class MetadataAPI{
+    public init() { }
         
     public func addMetadata(request: MetadataRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.metadata,
+        return ServiceHelper.shared.request(Endpoint.metadata,
                              method: .post,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -27,7 +25,7 @@ open class MetadataAPI: ServiceHelper{
     }
     
     public func editMetadata(request: MetadataRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.metadata,
+        return ServiceHelper.shared.request(Endpoint.metadata,
                              method: .patch,
                              parameter: request,
                              encoding: JSONEncoding.default)

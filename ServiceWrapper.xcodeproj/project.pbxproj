@@ -41,6 +41,9 @@
 		68A9B5742841305F00AF8858 /* MetadataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B5732841305E00AF8858 /* MetadataRequest.swift */; };
 		68A9B5772841329500AF8858 /* MetadataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B5762841329400AF8858 /* MetadataAPI.swift */; };
 		68A9B57D2841501800AF8858 /* BasicAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9B57C2841501800AF8858 /* BasicAPIResponse.swift */; };
+		68B8E2CB28814503001B260C /* BookingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8E2CA28814503001B260C /* BookingAPI.swift */; };
+		68B8E2CD28814976001B260C /* PostComplaintRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8E2CC28814976001B260C /* PostComplaintRequest.swift */; };
+		68B8E2CF288149C7001B260C /* PostBookingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B8E2CE288149C7001B260C /* PostBookingRequest.swift */; };
 		68BA611327FC439E00DA70F8 /* MediaSigned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BA611227FC439E00DA70F8 /* MediaSigned.swift */; };
 		68BA611A27FC883E00DA70F8 /* ArtisanServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BA611927FC883E00DA70F8 /* ArtisanServiceRequest.swift */; };
 		68BA611C27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BA611B27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift */; };
@@ -70,7 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
+		5C1D5BCEE5A45ED9E1C3D651 /* Pods-ServiceWrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.release.xcconfig"; path = "Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.release.xcconfig"; sourceTree = "<group>"; };
 		682F1BAE286AFEF600C7A344 /* ServiceListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListRequest.swift; sourceTree = "<group>"; };
 		68383AD928511923000A0F2A /* PostServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRequest.swift; sourceTree = "<group>"; };
 		6862042927FB5B6700C2FBF6 /* AddressRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRequest.swift; sourceTree = "<group>"; };
@@ -105,6 +108,9 @@
 		68A9B5732841305E00AF8858 /* MetadataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataRequest.swift; sourceTree = "<group>"; };
 		68A9B5762841329400AF8858 /* MetadataAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataAPI.swift; sourceTree = "<group>"; };
 		68A9B57C2841501800AF8858 /* BasicAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicAPIResponse.swift; sourceTree = "<group>"; };
+		68B8E2CA28814503001B260C /* BookingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingAPI.swift; sourceTree = "<group>"; };
+		68B8E2CC28814976001B260C /* PostComplaintRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostComplaintRequest.swift; sourceTree = "<group>"; };
+		68B8E2CE288149C7001B260C /* PostBookingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBookingRequest.swift; sourceTree = "<group>"; };
 		68BA611227FC439E00DA70F8 /* MediaSigned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSigned.swift; sourceTree = "<group>"; };
 		68BA611927FC883E00DA70F8 /* ArtisanServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceRequest.swift; sourceTree = "<group>"; };
 		68BA611B27FC8A0F00DA70F8 /* ArtisanServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceAPI.swift; sourceTree = "<group>"; };
@@ -117,7 +123,7 @@
 		68BA613C27FD46D800DA70F8 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		68BA614727FD699700DA70F8 /* PaymentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAPI.swift; sourceTree = "<group>"; };
 		AD58E04E01F009D2188EEE85 /* Pods_ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5D1A4D35E1DEA98AACAAF47 /* Pods-ServiceWrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.debug.xcconfig"; path = "../../Partner/Pods/Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.debug.xcconfig"; sourceTree = "<group>"; };
+		C5D1A4D35E1DEA98AACAAF47 /* Pods-ServiceWrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ServiceWrapper.debug.xcconfig"; path = "Target Support Files/Pods-ServiceWrapper/Pods-ServiceWrapper.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +252,7 @@
 		68A5F7FF27B3AB8500F6728E /* ServiceWrapper */ = {
 			isa = PBXGroup;
 			children = (
+				68B8E2C9288144EF001B260C /* Booking */,
 				68BA614927FD924D00DA70F8 /* Calendar */,
 				6862042827FB5B3D00C2FBF6 /* Address */,
 				6862043527FB63DA00C2FBF6 /* Artisan */,
@@ -310,6 +317,16 @@
 				68A9B5762841329400AF8858 /* MetadataAPI.swift */,
 			);
 			path = Metadata;
+			sourceTree = "<group>";
+		};
+		68B8E2C9288144EF001B260C /* Booking */ = {
+			isa = PBXGroup;
+			children = (
+				68B8E2CA28814503001B260C /* BookingAPI.swift */,
+				68B8E2CC28814976001B260C /* PostComplaintRequest.swift */,
+				68B8E2CE288149C7001B260C /* PostBookingRequest.swift */,
+			);
+			path = Booking;
 			sourceTree = "<group>";
 		};
 		68BA611827FC882900DA70F8 /* ArtisanService */ = {
@@ -490,6 +507,7 @@
 				6862042A27FB5B6700C2FBF6 /* AddressRequest.swift in Sources */,
 				6862043727FB63EB00C2FBF6 /* ArtisanFilter.swift in Sources */,
 				687A509F27D60E2D00A7A124 /* ResetPasswordRequest.swift in Sources */,
+				68B8E2CB28814503001B260C /* BookingAPI.swift in Sources */,
 				68BA613327FCB21D00DA70F8 /* GalleryAPI.swift in Sources */,
 				687A50A127D60EB100A7A124 /* ResetPasswordAPI.swift in Sources */,
 				6862044C27FC120A00C2FBF6 /* FavoriteAPI.swift in Sources */,
@@ -505,6 +523,7 @@
 				68A5F86527C4E55100F6728E /* RegisterRequest.swift in Sources */,
 				68A5F80E27B3B13E00F6728E /* ServiceHelper.swift in Sources */,
 				68A5F81E27B4D13200F6728E /* ProfileAPI.swift in Sources */,
+				68B8E2CF288149C7001B260C /* PostBookingRequest.swift in Sources */,
 				6872A42D27FD92AA002EC72A /* CalendarAPI.swift in Sources */,
 				6862045727FC172800C2FBF6 /* UploadAPI.swift in Sources */,
 				68A3BC3E27D1EB9000CEBF1F /* Endpoint.swift in Sources */,
@@ -517,6 +536,7 @@
 				68A9B5772841329500AF8858 /* MetadataAPI.swift in Sources */,
 				68BA613D27FD46D800DA70F8 /* NotificationAPI.swift in Sources */,
 				6862043C27FBB3B800C2FBF6 /* RatingRequest.swift in Sources */,
+				68B8E2CD28814976001B260C /* PostComplaintRequest.swift in Sources */,
 				68BA612127FCA13500DA70F8 /* ChangePasswordAPI.swift in Sources */,
 				6862043927FB641A00C2FBF6 /* ArtisanAPI.swift in Sources */,
 				68A5F84D27BD712D00F6728E /* CheckUserRequest.swift in Sources */,

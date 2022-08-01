@@ -185,7 +185,7 @@ public class BookingView: UIView {
         return v
     }()
     
-    public func setBooking(booking: Booking, kind: User.Kind) {
+    public func setBooking(booking: Booking, kind: NewProfile.Kind) {
         
 //        lineView.backgroundColor = booking.status.color
 //        statusSeparatorView.backgroundColor = lineView.backgroundColor

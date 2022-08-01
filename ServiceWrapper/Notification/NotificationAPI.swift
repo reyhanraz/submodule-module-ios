@@ -9,14 +9,12 @@
 import RxSwift
 import Alamofire
 
-open class NotificationAPI: ServiceHelper{
+open class NotificationAPI {
     
-    public override init() {
-        super.init()
-    }
+    public init() { }
     
     public func registerNotification(token: String) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.registerNotification,
+        return ServiceHelper.shared.request(Endpoint.registerNotification,
                              method: HTTPMethod.post,
                              parameter: ["token": token, "source": "ios"],
                              encoding: JSONEncoding.default)
@@ -26,7 +24,7 @@ open class NotificationAPI: ServiceHelper{
     }
     
     public func setNotificationRead(ids: [Int]) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.notificationMessages,
+        return ServiceHelper.shared.request(Endpoint.notificationMessages,
                              method: HTTPMethod.put,
                              parameter: ["ids": ids, "status": "read"],
                              encoding: JSONEncoding.default)
@@ -36,7 +34,7 @@ open class NotificationAPI: ServiceHelper{
     }
     
     public func deleteNotification(id: Int) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.notificationMessages,
+        return ServiceHelper.shared.request(Endpoint.notificationMessages,
                              method: HTTPMethod.delete,
                              parameter: ["ids[]": id],
                              encoding: URLEncoding.queryString)
@@ -54,7 +52,7 @@ open class NotificationAPI: ServiceHelper{
         if let timestamp = timestamp {
             params["timestamp"] = timestamp * 1000
         }
-        return super.request(Endpoint.notificationMessages,
+        return ServiceHelper.shared.request(Endpoint.notificationMessages,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)
@@ -62,7 +60,7 @@ open class NotificationAPI: ServiceHelper{
     }
     
     public func getUnread() -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.notificationUnreadCount,
+        return ServiceHelper.shared.request(Endpoint.notificationUnreadCount,
                              parameter: nil)
         .retry(3).map { result in
             return (result.data, result.response)

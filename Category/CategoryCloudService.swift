@@ -30,7 +30,7 @@ public class CategoryCloudService<CloudResponse: ResponseType>: CategoryAPI, Ser
 }
 
 public class NewCategoryCloudService<CloudResponse: NewResponseType>: CategoryAPI, ServiceType {
-    public typealias R = ListRequest
+    public typealias R = CategoryListRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
@@ -39,7 +39,7 @@ public class NewCategoryCloudService<CloudResponse: NewResponseType>: CategoryAP
         super.init()
     }
     
-    public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
+    public func get(request: CategoryListRequest?) -> Observable<Result<T, Error>> {
         return super.getCategories()
             .retry(3)
             .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }

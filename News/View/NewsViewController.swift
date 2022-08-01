@@ -10,6 +10,7 @@ import CommonUI
 import Domain
 import Platform
 import RxGRDB
+import GRDB
 
 public class NewsViewController: RxRestrictedViewController, NewsAdapterDelegate {
     
@@ -88,7 +89,7 @@ public class NewsViewController: RxRestrictedViewController, NewsAdapterDelegate
     private func rxBinding() {
         let delegate = UIApplication.shared.delegate as! AppDelegateType
         
-        News.all().rx.changes(in: delegate.dbQueue).subscribe(onNext: { [weak self] _ in
+        DatabaseRegionObservation(tracking: News.all()).rx.changes(in: delegate.dbQueue).subscribe(onNext: { [weak self] _ in
             let request = ListRequest()
             
             request.ignorePaging = true

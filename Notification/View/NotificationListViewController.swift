@@ -19,7 +19,7 @@ public protocol NotificationListViewControllerDelegate: class {
 }
 
 public class NotificationListViewController: RxRestrictedViewController, NotificationAdapterDelegate, ListViewDelegate, EmptyListViewDelegate {
-    private let _preference = UserPreference()
+    private let _preference = ProfilePreference()
 
     public weak var delegate: NotificationListViewControllerDelegate?
 

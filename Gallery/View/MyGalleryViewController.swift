@@ -18,7 +18,7 @@ import ServiceWrapper
 public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptionsViewControllerDelegate, GalleryAdapterDelegate {
     private let _preference = ArtisanPreference()
     
-    private let _request = ListRequest(page: 1, forceReload: false)
+    private let _request = NewListRequest(page: 1, forceReload: false)
     
     private var _uploadQueue = [Gallery]()
     private var _isMultiselect = false
@@ -74,15 +74,15 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
         return v
     }()
     
-    lazy var listView: ListView<ListRequest, ListViewModel<ListRequest, List<Gallery>>, GalleryAdapter, List<Gallery>> = {
+    lazy var listView: NewListView<NewListRequest, NewListViewModel<NewListRequest, NewList<Gallery>>, GalleryAdapter, NewList<Gallery>> =  {
         let columns = 3
         
-        let useCase = ListUseCaseProvider(service: GalleryCloudService<List<Gallery>>(),
-                                               cacheService: ListCacheService<ListRequest, List<Gallery>, GallerySQLCache>(cache: _cache),
+        let useCase = NewListUseCaseProvider(service: GalleryCloudService<NewList<Gallery>>(),
+                                               cacheService: NewListCacheService<NewListRequest, NewList<Gallery>, GallerySQLCache>(cache: _cache),
                                                cache: _cache,
                                                activityIndicator: activityIndicator)
         
-        let viewModel = ListViewModel(useCase: useCase)
+        let viewModel = NewListViewModel(useCase: useCase)
         
         let layout = UICollectionViewFlowLayout()
         
@@ -96,7 +96,7 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
         
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
-        let v = ListView<ListRequest, ListViewModel<ListRequest, List<Gallery>>, GalleryAdapter, List<Gallery>>(
+        let v = NewListView<NewListRequest, NewListViewModel<NewListRequest, NewList<Gallery>>, GalleryAdapter, NewList<Gallery>>(
             with: GalleryCell.self,
             viewModel: viewModel,
             dataSource: adapter,

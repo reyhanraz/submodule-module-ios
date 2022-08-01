@@ -10,13 +10,11 @@ import RxSwift
 import Alamofire
 import L10n_swift
 
-open class ResetPasswordAPI: ServiceHelper{
-    public override init(){
-        super.init()
-    }
+open class ResetPasswordAPI {
+    public init(){}
     
     public func resetPassword(request: ResetPasswordRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.resetPassword,
+        return ServiceHelper.shared.request(Endpoint.resetPassword,
                              method: .post,
                              parameter: request,
                              encoding: JSONEncoding.default)

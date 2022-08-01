@@ -20,7 +20,7 @@ public class BookingSearchCell: BaseTableViewCell {
         return v
     }()
     
-    public func setBooking(booking: Booking, kind: User.Kind) {
+    public func setBooking(booking: Booking, kind: NewProfile.Kind) {
         bookingView.setBooking(booking: booking, kind: kind)
     }
     

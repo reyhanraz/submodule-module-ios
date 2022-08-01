@@ -10,13 +10,11 @@ import RxSwift
 import Alamofire
 import L10n_swift
 
-open class ForgotPasswordAPI: ServiceHelper{
-    public override init(){
-        super.init()
-    }
+open class ForgotPasswordAPI {
+    public init(){}
     
     public func forgotPassword(request: ForgotPasswordRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.forgotPassword,
+        return ServiceHelper.shared.request(Endpoint.forgotPassword,
                              method: HTTPMethod.post,
                              parameter: request,
                              encoding: JSONEncoding.default)

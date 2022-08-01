@@ -28,56 +28,24 @@ public class ArtisanSQLCache: Cache {
     public static func createTable(db: Database, tableName: String) throws {
         try db.create(table: tableName) { body in
             body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(Artisan.Columns.id.rawValue, .integer).notNull().unique(onConflict: .replace)
-            body.column(Artisan.Columns.name.rawValue, .text)
-            body.column(Artisan.Columns.username.rawValue, .text)
+            body.column(Artisan.Columns.id.rawValue, .text).notNull().unique(onConflict: .replace)
             body.column(Artisan.Columns.email.rawValue, .text)
-            body.column(Artisan.Columns.phone.rawValue, .text)
-            body.column(Artisan.Columns.dob.rawValue, .integer)
-            body.column(Artisan.Columns.about.rawValue, .text)
+            body.column(Artisan.Columns.name.rawValue, .text)
+            body.column(Artisan.Columns.phoneNumber.rawValue, .text)
+            body.column(Artisan.Columns.username.rawValue, .text)
+            body.column(Artisan.Columns.facebookID.rawValue, .text)
+            body.column(Artisan.Columns.googleID.rawValue, .text)
+            body.column(Artisan.Columns.appleID.rawValue, .text)
+            body.column(Artisan.Columns.metadata.rawValue, .blob)
+            body.column(Artisan.Columns.favorite.rawValue, .integer)
+            body.column(Artisan.Columns.jobDone.rawValue, .integer)
+            body.column(Artisan.Columns.rating.rawValue, .double)
+            body.column(Artisan.Columns.category.rawValue, .blob)
+            body.column(Artisan.Columns.avatar.rawValue, .blob)
             body.column(Artisan.Columns.status.rawValue, .text)
-            body.column(Artisan.Columns.createdAt.rawValue, .integer)
-            body.column(Artisan.Columns.updatedAt.rawValue, .integer)
-            body.column(Artisan.Columns.gender.rawValue, .text)
-            body.column(Artisan.Columns.avatar.rawValue, .text)
-            body.column(Artisan.Columns.avatarServingURL.rawValue, .text)
-            body.column(Artisan.Columns.reviewRating.rawValue, .integer)
-            body.column(Artisan.Favorite.Columns.count.rawValue, .integer)
-            body.column(Artisan.Favorite.Columns.isFavorite.rawValue, .boolean)
-            body.column(Artisan.Booking.Columns.count.rawValue, .integer)
-            body.column(Artisan.Columns.emailConfirmed.rawValue, .boolean)
-            body.column(Artisan.Columns.instagram.rawValue, .text)
-            body.column(Artisan.Columns.level.rawValue, .text)
-            body.column(Artisan.Columns.hasReview.rawValue, .boolean)
-            body.column(Artisan.Columns.distance.rawValue, .integer)
-            body.column(Paging.Columns.currentPage.rawValue, .integer)
-            body.column(Paging.Columns.limitPerPage.rawValue, .integer)
-            body.column(Paging.Columns.totalPage.rawValue, .integer)
+            body.column(Artisan.Columns.created_at.rawValue, .date)
             body.column(CommonColumns.timestamp.rawValue, .integer)
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Artisan.Relation.service)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Artisan.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Artisan.Service.Columns.id.rawValue, .integer).notNull()
-            body.column(Artisan.Service.Columns.title.rawValue, .text).notNull()
-            body.column(Artisan.Service.Columns.cover.rawValue, .text).notNull()
-            body.column(Artisan.Service.Columns.coverServingURL.rawValue, .text)
-        }
-
-        try db.create(table: "\(tableName)\(TableNames.Artisan.Relation.category)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Artisan.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Artisan.Category.Columns.id.rawValue, .integer).notNull()
-            body.column(Artisan.Category.Columns.title.rawValue, .text).notNull()
-        }
-        
-        try db.create(table: "\(tableName)\(TableNames.Artisan.Relation.categoryType)") { body in
-            body.column(CommonColumns._id.rawValue, .integer).primaryKey()
-            body.column(CommonColumns.fkId.rawValue, .integer).references(tableName, column: Artisan.Columns.id.rawValue, onDelete: .cascade)
-            body.column(Artisan.CategoryType.Columns.id.rawValue, .integer).notNull()
-            body.column(Artisan.CategoryType.Columns.serviceCategoryId.rawValue, .integer).notNull()
-            body.column(Artisan.CategoryType.Columns.title.rawValue, .text).notNull()
+            
         }
     }
     
@@ -98,8 +66,8 @@ public class ArtisanSQLCache: Cache {
             })
             
             return list
-        } catch {
-            assertionFailure()
+        } catch let error{
+            assertionFailure(error.localizedDescription)
         }
         
         return []
@@ -112,10 +80,8 @@ public class ArtisanSQLCache: Cache {
     public func putList(models: [Artisan]) {
         do {
             try _dbQueue.inTransaction { db in
-                let timestamp = Date().timeIntervalSince1970
                 
                 for item in models {
-                    item.timestamp = timestamp
                     
                     try item.insert(db, tableName: _tableName)
                 }

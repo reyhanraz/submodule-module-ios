@@ -11,10 +11,8 @@ import Alamofire
 import L10n_swift
 import Platform
 
-open class UploadAPI: ServiceHelper{
-    public override init() {
-        super.init()
-    }
+open class UploadAPI {
+    public init() { }
         
     public func createMedia(request: UploadMediaRequest) -> Observable<MediaSigned?> {
         var mime = ""
@@ -26,7 +24,7 @@ open class UploadAPI: ServiceHelper{
         }
         
         let body = ["mime_type": mime]
-        return super.request("\(Endpoint.createMedia)/\(request.uploadType.rawValue)",
+        return ServiceHelper.shared.request("\(Endpoint.createMedia)/\(request.uploadType.rawValue)",
                              method: HTTPMethod.post,
                              parameter: body,
                              encoding: JSONEncoding.default)
@@ -42,11 +40,11 @@ open class UploadAPI: ServiceHelper{
     public func uploadFile(url: URL, request: UploadMediaRequest) -> Observable<(Data?, HTTPURLResponse?)>?{
         
         if let path = request.url{
-            return super.upload(host: url, path: path).retry(3).map { result in
+            return ServiceHelper.shared.upload(host: url, path: path).retry(3).map { result in
                 return (result.data, result.response)
             }
         } else if let data = request.data{
-            return super.upload(host: url, data: data).retry(3).map { result in
+            return ServiceHelper.shared.upload(host: url, data: data).retry(3).map { result in
                 return (result.data, result.response)
             }
         }
@@ -55,7 +53,7 @@ open class UploadAPI: ServiceHelper{
     }
     
     public func confirmed(request: UploadConfirmedRequest) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.confirmUpload,
+        return ServiceHelper.shared.request(Endpoint.confirmUpload,
                              method: HTTPMethod.patch,
                              parameter: request,
                              encoding: JSONEncoding.default)
@@ -65,7 +63,7 @@ open class UploadAPI: ServiceHelper{
     }
     
     public func confirmed(request: [UploadConfirmedRequest]) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.confirmArrayUpload,
+        return ServiceHelper.shared.request(Endpoint.confirmArrayUpload,
                              method: HTTPMethod.patch,
                              parameter: request,
                              encoding: JSONEncoding.default)
