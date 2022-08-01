@@ -14,7 +14,7 @@ open class EventTrackingAPI{
     
     public init() {}
     
-    public func trackEvent(userId: Int, type: NewProfile.Kind, eventName: String, token: String?, extraParams: [String : Any]?) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func trackEvent(userId: String, type: NewProfile.Kind, eventName: String, token: String?, extraParams: [String : Any]?) -> Observable<(Data?, HTTPURLResponse?)>{
         
         var params: [String : Any] = [:]
         
