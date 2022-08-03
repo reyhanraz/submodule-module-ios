@@ -12,13 +12,13 @@ import Domain
 import SkeletonView
 import ScrollCoordinator
 
-public protocol GalleryViewControllerDelegate: class {
+public protocol GalleryViewControllerDelegate: AnyObject {
     func galleryTapped(galleries: [Gallery], index: Int)
 }
 
 public class GalleryViewController: RxViewController, GalleryAdapterDelegate {
-    private let _userId: Int
-    private let _kind: User.Kind
+    private let _userId: String
+    private let _kind: NewProfile.Kind
     private let _frame: CGRect
     
     private weak var _manager: ScrollCoordinatorManager?
@@ -33,7 +33,7 @@ public class GalleryViewController: RxViewController, GalleryAdapterDelegate {
         return adapter
     }()
     
-    lazy var listView: ListView<ListRequest, ListViewModel<ListRequest, List<Gallery>>, GalleryAdapter, List<Gallery>> = {
+    lazy var listView: NewListView<NewListRequest, NewListViewModel<NewListRequest, NewList<Gallery>>, GalleryAdapter, NewList<Gallery>> = {
         let columns = 3
         
         let delegate = UIApplication.shared.delegate as! AppDelegateType
@@ -42,12 +42,12 @@ public class GalleryViewController: RxViewController, GalleryAdapterDelegate {
         
         let cache = GallerySQLCache(dbQueue: delegate.dbQueue, tableName: tableName)
         
-        let useCase = ListUseCaseProvider(service: GalleryCloudService<List<Gallery>>(),
-                                               cacheService: ListCacheService<ListRequest, List<Gallery>, GallerySQLCache>(cache: cache),
+        let useCase = NewListUseCaseProvider(service: GalleryCloudService<NewList<Gallery>>(),
+                                               cacheService: NewListCacheService<NewListRequest, NewList<Gallery>, GallerySQLCache>(cache: cache),
                                                cache: cache,
                                                activityIndicator: activityIndicator)
         
-        let viewModel = ListViewModel(useCase: useCase)
+        let viewModel = NewListViewModel(useCase: useCase)
         
         let layout = UICollectionViewFlowLayout()
         
@@ -61,7 +61,7 @@ public class GalleryViewController: RxViewController, GalleryAdapterDelegate {
         
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
-        let v = ListView<ListRequest, ListViewModel<ListRequest, List<Gallery>>, GalleryAdapter, List<Gallery>>(
+        let v = NewListView<NewListRequest, NewListViewModel<NewListRequest, NewList<Gallery>>, GalleryAdapter, NewList<Gallery>>(
             with: GalleryCell.self,
             viewModel: viewModel,
             dataSource: adapter,
@@ -80,7 +80,7 @@ public class GalleryViewController: RxViewController, GalleryAdapterDelegate {
         fatalError("init(coder:)")
     }
     
-    public init(frame: CGRect = .zero, userId: Int, kind: User.Kind, manager: ScrollCoordinatorManager? = nil) {
+    public init(frame: CGRect = .zero, userId: String, kind: NewProfile.Kind, manager: ScrollCoordinatorManager? = nil) {
         _userId = userId
         _kind = kind
         _frame = frame
@@ -108,7 +108,7 @@ public class GalleryViewController: RxViewController, GalleryAdapterDelegate {
         listView.collectionView.prepareSkeleton { [unowned self] done in
             view.showAnimatedSkeleton()
             
-            listView.loadData(request: ListRequest(id: _userId, page: 1, kind: .artisan))
+            listView.loadData(request: NewListRequest(id: _userId, page: 1, kind: .artisan))
         }
         
         _manager?.registerScrollViewToCoordinator(scrollView: listView.collectionView)

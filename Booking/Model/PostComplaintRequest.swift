@@ -6,7 +6,3 @@
 //  Copyright © 2021 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-public struct PostComplaintRequest: Encodable {
-    public let bookingId: Int
-    public let complaint: String
-}

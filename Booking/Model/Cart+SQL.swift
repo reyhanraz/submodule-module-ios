@@ -10,7 +10,7 @@ import GRDB
 import Platform
 
 extension Cart: MultiTableRecord {
-    public typealias R = Int
+    public typealias R = String
     
     public func encode(to container: inout PersistenceContainer) {
         container[Columns.artisanId] = artisanId
@@ -36,7 +36,7 @@ extension Cart: MultiTableRecord {
         try updateRelations(db)
     }
     
-    public static func fetchAll(_ db: Database, request: Int?) throws -> [Cart] {
+    public static func fetchAll(_ db: Database, request: String?) throws -> [Cart] {
         let query = getQueryStatement(request: request, tableName: Cart.databaseTableName)
         
         let rows = try Row.fetchAll(db, sql: "SELECT * FROM \(Cart.databaseTableName) \(query)")
@@ -87,11 +87,11 @@ extension Cart: MultiTableRecord {
         }
     }
     
-    public static func getQueryStatement(request: Int?, tableName: String) -> String {
+    public static func getQueryStatement(request: String?, tableName: String) -> String {
         var query = "WHERE \(tableName).\(CommonColumns._id.rawValue) != -1"
         
-        if let id = request, id > 0 {
-            query += " AND \(tableName).\(Cart.Columns.artisanId.rawValue) = \(id)"
+        if let id = request {
+            query += " AND \(tableName).\(Cart.Columns.artisanId.rawValue) = '\(id)'"
         }
         
         return query

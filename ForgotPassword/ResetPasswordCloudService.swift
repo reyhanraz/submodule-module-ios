@@ -17,7 +17,7 @@ public class ResetPasswordCloudService: ResetPasswordAPI, ServiceType {
     
     public typealias R = ServiceWrapper.ResetPasswordRequest
     
-    public typealias T = Detail<ForgotPasswordResponse>
+    public typealias T = Detail<BasicAPIResponse>
     public typealias E = Error
     
     

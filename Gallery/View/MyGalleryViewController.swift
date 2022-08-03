@@ -18,7 +18,7 @@ import ServiceWrapper
 public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptionsViewControllerDelegate, GalleryAdapterDelegate {
     private let _preference = ArtisanPreference()
     
-    private let _request = ListRequest(page: 1, forceReload: false)
+    private let _request = NewListRequest(page: 1, forceReload: false)
     
     private var _uploadQueue = [Gallery]()
     private var _isMultiselect = false
@@ -37,15 +37,16 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
         return GallerySQLCache(dbQueue: delegate.dbQueue, tableName: TableNames.Gallery.own)
     }()
     
-    private lazy var _uploadViewModel: UploadMediaViewModel<UploadMediaRequest, GalleryUploadConfirmed> = {
-        
-        let useCase = UseCaseProvider(
-            service: UploadCloudService<GalleryUploadConfirmed>(),
-            activityIndicator: activityIndicator)
-        
-        return UploadMediaViewModel<UploadMediaRequest, GalleryUploadConfirmed>(useCase: useCase)
-        
-    }()
+    //TODO: Adjust With New UploadViewModel
+//    private lazy var _uploadViewModel: UploadMediaViewModel<UploadMediaRequest, GalleryUploadConfirmed> = {
+//
+//        let useCase = UseCaseProvider(
+//            service: UploadCloudService<GalleryUploadConfirmed>(),
+//            activityIndicator: activityIndicator)
+//
+//        return UploadMediaViewModel<UploadMediaRequest, GalleryUploadConfirmed>(useCase: useCase)
+//
+//    }()
     
     private lazy var _deleteViewModel: ViewModel<[Int], Status> = {
         let useCase = UseCaseProvider(
@@ -73,15 +74,15 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
         return v
     }()
     
-    lazy var listView: ListView<ListRequest, ListViewModel<ListRequest, List<Gallery>>, GalleryAdapter, List<Gallery>> = {
+    lazy var listView: NewListView<NewListRequest, NewListViewModel<NewListRequest, NewList<Gallery>>, GalleryAdapter, NewList<Gallery>> =  {
         let columns = 3
         
-        let useCase = ListUseCaseProvider(service: GalleryCloudService<List<Gallery>>(),
-                                               cacheService: ListCacheService<ListRequest, List<Gallery>, GallerySQLCache>(cache: _cache),
+        let useCase = NewListUseCaseProvider(service: GalleryCloudService<NewList<Gallery>>(),
+                                               cacheService: NewListCacheService<NewListRequest, NewList<Gallery>, GallerySQLCache>(cache: _cache),
                                                cache: _cache,
                                                activityIndicator: activityIndicator)
         
-        let viewModel = ListViewModel(useCase: useCase)
+        let viewModel = NewListViewModel(useCase: useCase)
         
         let layout = UICollectionViewFlowLayout()
         
@@ -95,7 +96,7 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
         
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
-        let v = ListView<ListRequest, ListViewModel<ListRequest, List<Gallery>>, GalleryAdapter, List<Gallery>>(
+        let v = NewListView<NewListRequest, NewListViewModel<NewListRequest, NewList<Gallery>>, GalleryAdapter, NewList<Gallery>>(
             with: GalleryCell.self,
             viewModel: viewModel,
             dataSource: adapter,
@@ -145,19 +146,20 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
     }
     
     // MARK: - PickMediaOptionsViewControllerDelegate
-    public func pickerFinished(url: URL) {
+    public func pickerFinished(data: Data) {
         listView.toggleEmptyView(show: false)
         
         dismiss(animated: true, completion: nil)
         
-        let gallery = Gallery(media: Media(url: url, servingURL: nil), mediaCoverURL: nil, uploadStatus: .waiting)
+//        let gallery = Gallery(media: Media(url: url, servingURL: nil), mediaCoverURL: nil, uploadStatus: .waiting)
+//        
+//        _uploadQueue.append(gallery)
+//        
+//        adapter.list?.insert(gallery, at: 0)
+//        listView.collectionView.insertItems(at: [IndexPath(row: 0, section: 0)])
         
-        _uploadQueue.append(gallery)
+        //TODO: Upload Gallery
         
-        adapter.list?.insert(gallery, at: 0)
-        listView.collectionView.insertItems(at: [IndexPath(row: 0, section: 0)])
-        
-        _uploadViewModel.upload(request: UploadMediaRequest(url: url, uploadType: .gallery))
     }
 
     public func cameraDidTap() {
@@ -173,7 +175,7 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
                 
                 listView.collectionView.reloadItems(at: [indexPath])
                 
-                _uploadViewModel.upload(request: UploadMediaRequest(url: gallery.media.url, uploadType: .gallery))
+                //TODO: Upload Gallery
                 
             } else {
                 guard let lightboxImages = adapter.list?.map({ LightboxImage(imageURL: $0.media.original) }) else { return }
@@ -273,64 +275,65 @@ public class MyGalleryViewController: RxRestrictedViewController, PickMediaOptio
     private func rxBinding() {
         _deleteViewModel.result.drive().disposed(by: disposeBag)
         
-        _uploadViewModel.upload.drive().disposed(by: disposeBag)
-        
-        _uploadViewModel.loading.drive(onNext: { [weak self] (request, loading) in
-            guard
-                let strongSelf = self,
-                let gallery = strongSelf.adapter.list?.first(where: { $0.media.url == request.url }),
-                let index = strongSelf.adapter.list?.firstIndex(where: { $0.media.url == request.url })
-                else { return }
-            
-            gallery.uploadStatus = .uploading
-            
-            strongSelf.listView.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-            
-        }).disposed(by: disposeBag)
-        
-        _uploadViewModel.exception.drive(onNext: { [weak self] (request, error) in
-            guard
-                let strongSelf = self,
-                let gallery = strongSelf.adapter.list?.first(where: { $0.media.url == request.url }),
-                let index = strongSelf.adapter.list?.firstIndex(where: { $0.media.url == request.url })
-                else { return }
-            
-            gallery.uploadStatus = .failed
-            
-            strongSelf.listView.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-            
-        }).disposed(by: disposeBag)
-        
-        _uploadViewModel.success.drive(onNext: { [weak self] (request, confirmed) in
-            guard
-                let strongSelf = self,
-                let index = strongSelf.adapter.list?.firstIndex(where: { $0.media.url == request.url }),
-                let uploaded = confirmed.data?.galleryItem
-                else { return }
-            
-            let gallery = Gallery(
-                userId: uploaded.userId,
-                folder: uploaded.folder,
-                key: uploaded.key,
-                media: uploaded.media,
-                mediaCoverURL: nil,
-                format: uploaded.format,
-                type: uploaded.type,
-                id: uploaded.id,
-                uploadStatus: .success,
-                createdAt: Date(),
-                updatedAt: Date(),
-                paging: Paging(currentPage: 1, limitPerPage: PlatformConfig.defaultLimit, totalPage: 1))
-            
-            strongSelf._uploadQueue.removeAll(where: { $0.media.url == request.url })
-            
-            strongSelf.adapter.list?[index] = gallery
-            
-            strongSelf.listView.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-            
-            strongSelf._cache.put(model: gallery)
-            
-        }).disposed(by: disposeBag)
+        //TODO: Adjust With New UploadViewModel
+//        _uploadViewModel.upload.drive().disposed(by: disposeBag)
+//
+//        _uploadViewModel.loading.drive(onNext: { [weak self] (request, loading) in
+//            guard
+//                let strongSelf = self,
+//                let gallery = strongSelf.adapter.list?.first(where: { $0.media.url == request.url }),
+//                let index = strongSelf.adapter.list?.firstIndex(where: { $0.media.url == request.url })
+//                else { return }
+//
+//            gallery.uploadStatus = .uploading
+//
+//            strongSelf.listView.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+//
+//        }).disposed(by: disposeBag)
+//
+//        _uploadViewModel.exception.drive(onNext: { [weak self] (request, error) in
+//            guard
+//                let strongSelf = self,
+//                let gallery = strongSelf.adapter.list?.first(where: { $0.media.url == request.url }),
+//                let index = strongSelf.adapter.list?.firstIndex(where: { $0.media.url == request.url })
+//                else { return }
+//
+//            gallery.uploadStatus = .failed
+//
+//            strongSelf.listView.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+//
+//        }).disposed(by: disposeBag)
+//
+//        _uploadViewModel.success.drive(onNext: { [weak self] (request, confirmed) in
+//            guard
+//                let strongSelf = self,
+//                let index = strongSelf.adapter.list?.firstIndex(where: { $0.media.url == request.url })
+//                else { return }
+//            let uploaded = confirmed.data
+//
+//            let gallery = Gallery(
+//                userId: uploaded.userId,
+//                folder: uploaded.folder,
+//                key: uploaded.key,
+//                media: uploaded.media,
+//                mediaCoverURL: nil,
+//                format: uploaded.format,
+//                type: uploaded.type,
+//                id: uploaded.id,
+//                uploadStatus: .success,
+//                createdAt: Date(),
+//                updatedAt: Date(),
+//                paging: Paging(currentPage: 1, limitPerPage: PlatformConfig.defaultLimit, totalPage: 1))
+//
+//            strongSelf._uploadQueue.removeAll(where: { $0.media.url == request.url })
+//
+//            strongSelf.adapter.list?[index] = gallery
+//
+//            strongSelf.listView.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+//
+//            strongSelf._cache.put(model: gallery)
+//
+//        }).disposed(by: disposeBag)
     }
 }
 

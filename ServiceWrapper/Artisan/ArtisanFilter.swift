@@ -8,12 +8,22 @@
 
 import Platform
 
-public class ArtisanFilter: ListRequestType, CustomStringConvertible {
+public class ArtisanFilter: NewListRequestType, CustomStringConvertible {
     public enum ListType {
         case favorite
         case nearby
         case search
-        case `default`
+        case trending
+        case editorChoice
+    }
+    
+    public enum Order: String{
+        case ASC
+        case DESC
+    }
+    
+    public enum OrderBy: String{
+        case rating
     }
 
     public var timestamp: TimeInterval?
@@ -30,12 +40,13 @@ public class ArtisanFilter: ListRequestType, CustomStringConvertible {
     public var categoryTypes: [FilterInfo]?
     public var priceMin: Double?
     public var priceMax: Double?
-    public var id: Int?
+    public var id: String?
     public var latitude: Double?
     public var longitude: Double?
-    public var isEditorChoice: Bool?
+    public var orderBy: String?
+    public var order: String?
 
-    public init(statuses: [ItemStatus] = [.active], listType: ListType = .default, id: Int? = nil, page: Int = 0, limit: Int = PlatformConfig.defaultLimit, forceReload: Bool = false, ignorePaging: Bool = false, ratings: [Int]? = nil, locations: [FilterInfo]? = nil, categories: [FilterInfo]? = nil, categoryTypes: [FilterInfo]? = nil, priceMin: Double? = nil, priceMax: Double? = nil, latitude: Double? = nil, longitude: Double? = nil, isEditorChoice: Bool? = nil) {
+    public init(statuses: [ItemStatus] = [.active], listType: ListType = .trending, id: String? = nil, page: Int = 0, limit: Int = PlatformConfig.defaultLimit, forceReload: Bool = false, ignorePaging: Bool = false, ratings: [Int]? = nil, locations: [FilterInfo]? = nil, categories: [FilterInfo]? = nil, categoryTypes: [FilterInfo]? = nil, priceMin: Double? = nil, priceMax: Double? = nil, latitude: Double? = nil, longitude: Double? = nil, orderBy: OrderBy = .rating, order: Order = .ASC) {
         self.id = id
         self.page = page
         self.statuses = statuses
@@ -51,7 +62,8 @@ public class ArtisanFilter: ListRequestType, CustomStringConvertible {
         self.latitude = latitude
         self.longitude = longitude
         self.listType = listType
-        self.isEditorChoice = isEditorChoice
+        self.orderBy = orderBy.rawValue
+        self.order = order.rawValue
     }
 }
 

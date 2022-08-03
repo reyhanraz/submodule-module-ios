@@ -11,9 +11,25 @@ import L10n_swift
 import Platform
 import ServiceWrapper
 
-public class ProfileCloudService<Request: Encodable, CloudResponse: ResponseType>: ProfileAPI<Request>, ServiceType {
+//public class ProfileCloudService<Request: Encodable, CloudResponse: ResponseType>: ProfileAPI<Request>, ServiceType {
+//
+//    public typealias R = Int
+//
+//    public typealias T = CloudResponse
+//    public typealias E = Error
+//
+//    public override init() {
+//        super.init()
+//    }
+//
+//    public func get(request: Int?) -> Observable<Result<T, E>> {
+//        return getDetailProfile(request: request).map { self.parse(data: $0.0, statusCode: $0.1?.statusCode)}
+//    }
+//}
+
+public class ProfileCloudService<Request: Encodable, CloudResponse: NewResponseType>: ProfileAPI<Request>, ServiceType {
     
-    public typealias R = Int
+    public typealias R = String
     
     public typealias T = CloudResponse
     public typealias E = Error
@@ -22,7 +38,7 @@ public class ProfileCloudService<Request: Encodable, CloudResponse: ResponseType
         super.init()
     }
     
-    public func get(request: Int?) -> Observable<Result<T, E>> {
-        return getDetailProfile(request: request).map { self.parse(data: $0.0, statusCode: $0.1?.statusCode)}
+    public func get(request: R?) -> Observable<Result<T, E>> {
+        return getDetailProfile().map { self.parse(data: $0.0, statusCode: $0.1?.statusCode)}
     }
 }

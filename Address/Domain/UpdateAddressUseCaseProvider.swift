@@ -12,7 +12,7 @@ import Domain
 
 public struct UpdateAddressUseCaseProvider<CloudService: ServiceType, Provider: Cache, ServiceRequest: Editable>: UseCase
     where
-    CloudService.R == ServiceRequest, CloudService.T == AddressDetail, CloudService.E == Error,
+    CloudService.R == ServiceRequest, CloudService.T == Detail<Address>, CloudService.E == Error,
     Provider.R == ServiceRequest, Provider.T == Address {
     
     public typealias R = CloudService.R
@@ -40,13 +40,14 @@ public struct UpdateAddressUseCaseProvider<CloudService: ServiceType, Provider: 
             .do(onNext: { result in
                 switch result {
                 case let .success(result):
-                    if let detail = result.data?.address {
+                    let detail = result.data
+                        //Temporary disable input cache
                         if request?.id != nil {
-                            self._cache.update(model: detail)
+//                            self._cache.update(model: detail)
                         } else {
-                            self._cache.put(model: detail)
+//                            self._cache.put(model: detail)
                         }
-                    }
+                    
                 default:
                     break
                 }

@@ -15,7 +15,7 @@ public class ForgotPasswordCloudService: ForgotPasswordAPI, ServiceType {
     
     public typealias R = ServiceWrapper.ForgotPasswordRequest
     
-    public typealias T = Detail<ForgotPasswordResponse>
+    public typealias T = Detail<BasicAPIResponse>
     public typealias E = Error
     
     

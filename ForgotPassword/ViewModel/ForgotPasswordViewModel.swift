@@ -16,7 +16,7 @@ import ServiceWrapper
 
 public struct ForgotPasswordViewModel {
     public typealias Outputs = ForgotPasswordViewModel
-    public typealias T = Detail<ForgotPasswordResponse>
+    public typealias T = Detail<BasicAPIResponse>
     
     public var outputs: Outputs { return self }
     

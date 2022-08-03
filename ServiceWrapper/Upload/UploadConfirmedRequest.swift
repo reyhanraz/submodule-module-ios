@@ -7,11 +7,11 @@
 //
 
 public struct UploadConfirmedRequest: Encodable {
-    let id: Int?
-    let temporaryObjectName: String
+    let type_id: String
+    let filename: String
     
-    public init(id: Int?, temporaryObjectName: String){
-        self.id = id
-        self.temporaryObjectName = temporaryObjectName
+    public init(id: String, filename: String){
+        self.type_id = id
+        self.filename = filename
     }
 }

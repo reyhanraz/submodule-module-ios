@@ -10,15 +10,13 @@ import RxSwift
 import Alamofire
 import Platform
 
-open class GalleryAPI: ServiceHelper{
+open class GalleryAPI {
     
-    public override init() {
-        super.init()
-    }
+    public init() { }
     
     public func deleteGallery(ids: [Int]) -> Observable<(Data?, HTTPURLResponse?)>{
         let query = ["ids": ids]
-        return super.request(Endpoint.pathGalleries,
+        return ServiceHelper.shared.request(Endpoint.pathGalleries,
                              method: HTTPMethod.delete,
                              parameter: query,
                              encoding: URLEncoding.queryString)
@@ -27,7 +25,7 @@ open class GalleryAPI: ServiceHelper{
         }
     }
     
-    public func getGalleries(kind: User.Kind, id: Int, page: Int, limit: Int, timestamp: TimeInterval?) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func getGalleries(kind: NewProfile.Kind, id: String, page: Int, limit: Int, timestamp: TimeInterval?) -> Observable<(Data?, HTTPURLResponse?)>{
         
         var params: [String : Any] = [:]
         
@@ -47,7 +45,7 @@ open class GalleryAPI: ServiceHelper{
             endPoint = Endpoint.pathGalleries
         }
         
-        return super.request(endPoint,
+        return ServiceHelper.shared.request(endPoint,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)

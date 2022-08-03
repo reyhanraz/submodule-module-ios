@@ -6,30 +6,23 @@
 //  Copyright © 2021 Adrena Teknologi Indonesia. All rights reserved.
 //
 
-import Moya
+import ServiceWrapper
 import RxSwift
 import L10n_swift
 import Platform
 
-public struct PostComplaintCloudService<CloudResponse: ResponseType>: ServiceType {
+public class PostComplaintCloudService<CloudResponse: ResponseType>: BookingAPI, ServiceType {
     public typealias R = PostComplaintRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
     
-    private let _service: MoyaProvider<BookingApi>
-    
-    public init(service: MoyaProvider<BookingApi> = MoyaProvider<BookingApi>(plugins: [NetworkLoggerPlugin(verbose: true)])) {
-        _service = service
-    }
-    
     public func get(request: PostComplaintRequest?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
-        return _service.rx.request(.complaint(request: request))
+        return super.complaint(request: request)
             .retry(3)
-            .map(T.self)
-            .map { response in self.parse(result: response) }
+            .map { response in self.parse(data: response.0, statusCode: response.1?.statusCode) }
             .catchError { error in return .just(.error(error)) }
             .asObservable()
     }

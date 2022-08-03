@@ -13,8 +13,12 @@ struct Endpoint{
     static let register = "accounts/register"
     
     //Get My Profile
-    static let profile = "api/v1/profile"
+    static let profil = "api/v1/profile"
     static let findUser = "api/v1/users/find"
+    static let metadata = "api/v1/profile/metadata"
+    static let resendEmailVerification = "api/v1/profile/resend-verification"
+    static let listUser = "api/v1/users/list-users"
+    static let editorChoice = "api/v1/editor-choice"
 
     static let challenges = "api/challenges"
     static let validateChallenge = "api/challenges/validate"
@@ -29,9 +33,12 @@ struct Endpoint{
     static let searchLocation = "locationAreaList"
     static let getProvinceList = "locationProvinceList"
     
+    //Bookiing
+    static let getBooking = "api/v1/bookings"
+    
     //Artisan
-    static let getDetailArtisan = "artisanProfile"
-    static let getListArtisan = "findArtisanList"
+    static let getDetailArtisan = "api/v1/users"
+    static let getListArtisan = "api/v1/artisans"
     static let getFavoriteListArtisan = "artisanFavoriteList"
     static let getNearbyArtisan = "findArtisanNearby"
     
@@ -49,10 +56,13 @@ struct Endpoint{
     
     //Upload
     static let getSignedURL = "uploadSignedUrl"
+    static let createMedia = "api/v1/media/image"
+    static let confirmUpload = "api/v1/media/confirm"
+    static let confirmArrayUpload = "api/v1/media/confirms"
+
     
     //Service List
-    static let artisanServicesList = "artisanServiceList"
-    static let artisanServicesDetail = "artisanService"
+    static let artisanServices = "api/v1/services"
     
     static let changePassword = "\("config.path".l10n())ChangePassword"
     

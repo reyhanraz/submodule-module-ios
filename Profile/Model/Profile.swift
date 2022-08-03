@@ -14,7 +14,7 @@ public struct Profile: Codable, ResponseType {
     public let errors: [DataError]?
     
     public struct Data: Codable {
-        public let user: User
+        public let user: NewProfile
         
         enum CodingKeys: String, CodingKey {
             case user

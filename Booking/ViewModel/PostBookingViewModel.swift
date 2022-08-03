@@ -12,6 +12,7 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
 
 public struct PostBookingViewModel<T: ResponseType>: PostBookingViewModelType, PostBookingViewModelInput, PostBookingViewModelOutput {
     public typealias Inputs = PostBookingViewModelInput
@@ -97,7 +98,7 @@ public struct PostBookingViewModel<T: ResponseType>: PostBookingViewModelType, P
                 return .just(.ok(message: nil))
             }
         }
-        
+                
         validatedCoordinates = coordinates.flatMapLatest { value in
             if value == nil {
                 return .just(.empty)
@@ -183,7 +184,8 @@ public struct PostBookingViewModel<T: ResponseType>: PostBookingViewModelType, P
         postEnabled = PublishSubject<Bool>().asDriver(onErrorDriveWith: .empty())
         
         let forms = Driver.combineLatest(addressName, addressDetail, coordinates) {addressName, addressDetail, coordinates in
-            PostBookingRequest(cart: cart,
+            PostBookingRequest(artisanId: cart.artisanId,
+                               bookingServiceRequests: cart.items.filter({ $0.quantity > 0 }).map({ PostBookingRequest.ServiceRequest(serviceId: $0.id, quantity: $0.quantity, note: $0.notes) }),
                                eventName: eventName,
                                note: nil,
                                start: eventDate.toUTC,

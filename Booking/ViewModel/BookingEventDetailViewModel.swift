@@ -26,9 +26,9 @@ public struct BookingEventDetailViewModel: BookingEventDetailViewModelType, Book
     public let eventDetail: Driver<(String, Date)>
     
     public init<U: UseCase>(
-        id: Int?,
-        artisanId: Int,
-        services: [(serviceId: Int, quantity: Int)],
+        id: String?,
+        artisanId: String,
+        services: [(serviceId: String, quantity: Int)],
         name: (Driver<String?>, Int, Int),
         date: Driver<String?>,
         datePicker: Driver<Date>,

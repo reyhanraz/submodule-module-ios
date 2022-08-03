@@ -35,3 +35,27 @@ public struct CategoryCacheService<DataResponse: ResponseListType, Provider: Cac
             .catchError { error in return .just(.error(error)) }
     }
 }
+
+public struct NewCategoryCacheService<DataResponse: NewResponseListType, Provider: Cache>: ServiceType where Provider.R == CategoryListRequest, Provider.T == Category {
+    
+    public typealias R = CategoryListRequest
+    public typealias T = DataResponse
+    public typealias E = Error
+    
+    private let _cache: Provider
+    
+    public init(cache: Provider) {
+        _cache = cache
+    }
+    
+    public func get(request: R?) -> Observable<Result<DataResponse, Error>> {
+        let list = _cache.getList(request: request)
+        
+        guard let model = NewList(data: list) as? DataResponse else { fatalError() }
+        
+        return Observable
+            .just(model)
+            .map(Result.success)
+            .catchError { error in return .just(.error(error)) }
+    }
+}

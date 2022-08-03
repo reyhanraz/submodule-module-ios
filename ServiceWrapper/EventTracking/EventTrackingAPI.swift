@@ -10,13 +10,11 @@ import RxSwift
 import Alamofire
 import Platform
 
-open class EventTrackingAPI: ServiceHelper{
+open class EventTrackingAPI{
     
-    public override init() {
-        super.init()
-    }
+    public init() {}
     
-    public func trackEvent(userId: Int, type: User.Kind, eventName: String, token: String?, extraParams: [String : Any]?) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func trackEvent(userId: String, type: NewProfile.Kind, eventName: String, token: String?, extraParams: [String : Any]?) -> Observable<(Data?, HTTPURLResponse?)>{
         
         var params: [String : Any] = [:]
         
@@ -29,7 +27,7 @@ open class EventTrackingAPI: ServiceHelper{
             params["eventParams"] = extraParams
         }
         
-        return super.request(Endpoint.eventLog,
+        return ServiceHelper.shared.request(Endpoint.eventLog,
                              method: HTTPMethod.post,
                              parameter: params,
                              encoding: JSONEncoding.default)

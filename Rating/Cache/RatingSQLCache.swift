@@ -9,8 +9,8 @@
 import GRDB
 import Platform
 
-public class RatingSQLCache: SQLCache<ListRequest, Rating> {
-
+public class RatingSQLCache: SQLCache<NewListRequest, Rating> {
+    
     public static func createTable(db: Database) throws {
         try db.create(table: Rating.databaseTableName) { body in
             body.column(CommonColumns._id.rawValue, .integer).primaryKey()
@@ -30,7 +30,7 @@ public class RatingSQLCache: SQLCache<ListRequest, Rating> {
         }
     }
     
-    public override func getList(request: ListRequest? = nil) -> [Rating] {
+    public override func getList(request: NewListRequest? = nil) -> [Rating] {
         do {
             let list = try dbQueue.read({ db -> [Rating] in
                 if let request = getFilterQueries(request: request) {
@@ -68,13 +68,13 @@ public class RatingSQLCache: SQLCache<ListRequest, Rating> {
         }
     }
     
-    public override func getFilterQueries(request: ListRequest?) -> String? {
+    public override func getFilterQueries(request: NewListRequest?) -> String? {
         guard let request = request else { return nil }
         
         var filter = "\(CommonColumns._id) > 0"
         
-        if let id = request.id, id > 0 {
-            filter += " AND \(Rating.Columns.artisanId) = \(id)"
+        if let id = request.id {
+            filter += " AND \(Rating.Columns.artisanId) = '\(id)'"
         }
         
         if request.page > 0 && !request.ignorePaging {

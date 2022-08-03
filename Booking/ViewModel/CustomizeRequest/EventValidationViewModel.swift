@@ -210,10 +210,10 @@ public struct EventValidationViewModel<T>: EventValidationViewModelType, EventVa
                                      start: date.toUTC,
                                      bookingServiceRequests: [service],
                                      venueName: address.name,
-                                     latitude: address.lat,
-                                     longitude: address.lon,
-                                     address: address.detail,
-                                     venueNote: address.detail,
+                                     latitude: address.latitude,
+                                     longitude: address.longitude,
+                                     address: address.notes,
+                                     venueNote: address.notes,
                                      rawAddress: nil)
         }
         
@@ -410,10 +410,10 @@ public struct EventValidationViewModel<T>: EventValidationViewModelType, EventVa
                                      start: date.toUTC,
                                      bookingServiceRequests: [service],
                                      venueName: address.name,
-                                     latitude: address.lat,
-                                     longitude: address.lon,
+                                     latitude: address.latitude,
+                                     longitude: address.longitude,
                                      address: address.address,
-                                     venueNote: address.detail,
+                                     venueNote: address.notes,
                                      rawAddress: nil)
         }
         

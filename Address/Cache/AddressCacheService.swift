@@ -9,7 +9,7 @@
 import Platform
 import RxSwift
 
-public struct AddressCacheService<DataResponse: ResponseListType, Provider: Cache>: ServiceType where Provider.R == ListRequest, Provider.T == Address {
+public struct AddressCacheService<DataResponse: NewResponseListType, Provider: Cache>: ServiceType where Provider.R == ListRequest, Provider.T == Address {
     
     public typealias R = Provider.R
     public typealias T = DataResponse
@@ -24,10 +24,7 @@ public struct AddressCacheService<DataResponse: ResponseListType, Provider: Cach
     public func get(request: ListRequest?) -> Observable<Result<DataResponse, Error>> {
         let list = _cache.getList(request: request)
         
-        let data = Addresses.ListData(list: list)
-        let status = Status.Detail(code: 200, message: "")
-        
-        guard let model = Addresses(data: data, status: status) as? DataResponse else { fatalError() }
+        guard let model = NewList(data: list) as? DataResponse else { fatalError() }
         
         return Observable
             .just(model)

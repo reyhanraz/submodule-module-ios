@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4C39B7A65B873328DEC98B66 /* Pods_ArtisanService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */; };
+		6886C52828633A4000F4AC29 /* ArtisanServiceListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886C52728633A4000F4AC29 /* ArtisanServiceListViewModel.swift */; };
 		68BA611527FC880400DA70F8 /* ServiceWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA611427FC880400DA70F8 /* ServiceWrapper.framework */; };
 		68BA611627FC880400DA70F8 /* ServiceWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68BA611427FC880400DA70F8 /* ServiceWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		68C85DF4286ED19100CFA825 /* GetArtisanServiceCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C85DF3286ED19000CFA825 /* GetArtisanServiceCloudService.swift */; };
+		68C85DF62871B1C100CFA825 /* Category.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C85DF52871B1C100CFA825 /* Category.framework */; };
+		68C85DF72871B1C100CFA825 /* Category.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68C85DF52871B1C100CFA825 /* Category.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A738DC8323116B850051B127 /* PostArtisanServiceViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */; };
 		A738DC8523116B910051B127 /* PostArtisanServiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */; };
 		A738DC8B231172910051B127 /* PostArtisanServiceCloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */; };
@@ -34,6 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				68C85DF72871B1C100CFA825 /* Category.framework in Embed Frameworks */,
 				68BA611627FC880400DA70F8 /* ServiceWrapper.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -42,9 +47,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
+		0D2FB062325670C682695FEC /* Pods-ArtisanService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.release.xcconfig"; path = "Target Support Files/Pods-ArtisanService/Pods-ArtisanService.release.xcconfig"; sourceTree = "<group>"; };
 		5C184C1D2F778263713D74C0 /* Pods_ArtisanService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtisanService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6886C52728633A4000F4AC29 /* ArtisanServiceListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtisanServiceListViewModel.swift; sourceTree = "<group>"; };
 		68BA611427FC880400DA70F8 /* ServiceWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ServiceWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68C85DF3286ED19000CFA825 /* GetArtisanServiceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtisanServiceCloudService.swift; sourceTree = "<group>"; };
+		68C85DF52871B1C100CFA825 /* Category.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Category.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModelType.swift; sourceTree = "<group>"; };
 		A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceViewModel.swift; sourceTree = "<group>"; };
 		A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArtisanServiceCloudService.swift; sourceTree = "<group>"; };
@@ -62,7 +70,7 @@
 		A7DC216E2327408100D06C1F /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21702327408500D06C1F /* Platform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Platform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC21722327408800D06C1F /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "../../App/Pods/Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
+		AA392D8A0C06AC8D4468B57C /* Pods-ArtisanService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtisanService.debug.xcconfig"; path = "Target Support Files/Pods-ArtisanService/Pods-ArtisanService.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +82,7 @@
 				A7DC21732327408800D06C1F /* Domain.framework in Frameworks */,
 				A7DC21712327408500D06C1F /* Platform.framework in Frameworks */,
 				A7BACA8F237AA9230056B8D0 /* CommonUI.framework in Frameworks */,
+				68C85DF62871B1C100CFA825 /* Category.framework in Frameworks */,
 				A7DC216F2327408100D06C1F /* Common.framework in Frameworks */,
 				4C39B7A65B873328DEC98B66 /* Pods_ArtisanService.framework in Frameworks */,
 			);
@@ -85,6 +94,7 @@
 		20B0EB2F96AA0149C01BF4C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68C85DF52871B1C100CFA825 /* Category.framework */,
 				68BA611427FC880400DA70F8 /* ServiceWrapper.framework */,
 				A7BACA8E237AA9230056B8D0 /* CommonUI.framework */,
 				A7DC21722327408800D06C1F /* Domain.framework */,
@@ -148,6 +158,7 @@
 				A7D49027231128CB0030FE80 /* Model */,
 				A738DC8A231172910051B127 /* PostArtisanServiceCloudService.swift */,
 				A7C313522313A0FF005EC194 /* DeleteArtisanServiceCloudService.swift */,
+				68C85DF3286ED19000CFA825 /* GetArtisanServiceCloudService.swift */,
 				A738DC9D231267190051B127 /* ArtisanServiceCloudService.swift */,
 				A7D4901B2311278E0030FE80 /* ArtisanService.h */,
 				A7D4901C2311278E0030FE80 /* Info.plist */,
@@ -170,6 +181,7 @@
 			children = (
 				A738DC8223116B850051B127 /* PostArtisanServiceViewModelType.swift */,
 				A738DC8423116B910051B127 /* PostArtisanServiceViewModel.swift */,
+				6886C52728633A4000F4AC29 /* ArtisanServiceListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -280,7 +292,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68C85DF4286ED19100CFA825 /* GetArtisanServiceCloudService.swift in Sources */,
 				A738DC8323116B850051B127 /* PostArtisanServiceViewModelType.swift in Sources */,
+				6886C52828633A4000F4AC29 /* ArtisanServiceListViewModel.swift in Sources */,
 				A738DC8523116B910051B127 /* PostArtisanServiceViewModel.swift in Sources */,
 				A738DC9E231267190051B127 /* ArtisanServiceCloudService.swift in Sources */,
 				A7C313562313AD56005EC194 /* PostArtisanServiceUseCaseProvider.swift in Sources */,

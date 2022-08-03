@@ -8,42 +8,60 @@
 
 import Platform
 import GRDB
+import Category
+import class Category.Category
+import CoreLocation
 
 public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
     public enum Status: Int, Codable {
         case open = 1
-        case booking = 2
-        case confirmed = 3
-        case bid = 4
-        case accepted = 5
-        case process = 6
-        case completed = 7
-        case canceledByArtisan = 8
-        case canceledByCustomer = 9
-        case canceledBySystem = 10
-        case complaint = 11
-        case settledForArtisan = 12
-        case settledForCustomer = 13
-        case canceled = 99
+        case paid = 2
+        case waitingForPayment = 3
+        case paymentExpired = 4
+        case confirmed = 5
+        case waitingForRefund = 6
+        case refunded = 7
+        case declined = 8
+        case workInProgress = 9
+        case waitingForConfirmation = 10
+        case completed = 11
+        case bid = 12
+        case cancelBySystem = 13
+        case rejected = 14
+        case booked = 15
+        case finished = 16
+        case canceledByCustomer = 17
+        case canceledByArtisan = 18
+        case openIssue = 19
         
-        public var color: UIColor {
-            get {
-                switch self {
-                case .accepted, .confirmed, .completed, .process, .settledForArtisan:
-                    return UIColor(red: 128/255, green: 169/255, blue: 91/255, alpha: 1)
-                case .open, .booking:
-                    return UIColor.BeautyBell.accent
-                case .bid:
-                    return UIColor(red: 243/255, green: 206/255, blue: 97/255, alpha: 1)
-                case .canceledByCustomer, .canceledByArtisan, .canceledBySystem, .complaint, .settledForCustomer, .canceled:
-                    return UIColor.BeautyBell.gray500
-                }
+        public init(int: Int?) {
+            switch int {
+            case 1: self = .open
+            case 2: self = .paid
+            case 3: self = .waitingForPayment
+            case 4: self = .paymentExpired
+            case 5: self = .confirmed
+            case 6: self = .waitingForRefund
+            case 7: self = .refunded
+            case 8: self = .declined
+            case 9: self = .workInProgress
+            case 10: self = .waitingForConfirmation
+            case 11: self = .completed
+            case 12: self = .bid
+            case 13: self = .cancelBySystem
+            case 14: self = .rejected
+            case 15: self = .booked
+            case 16: self = .finished
+            case 17: self = .canceledByCustomer
+            case 18: self = .canceledByArtisan
+            case 19: self = .openIssue
+            default: self = .waitingForConfirmation
             }
         }
         
         public var isCanceled: Bool {
             switch self {
-            case .canceledByArtisan, .canceledByCustomer, .canceledBySystem, .canceled:
+            case .canceledByArtisan, .canceledByCustomer, .cancelBySystem:
                 return true
             default:
                 return false
@@ -52,7 +70,7 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
 
         public var isCompleted: Bool {
             switch self {
-            case .completed, .settledForArtisan:
+            case .completed:
                 return true
             default:
                 return false
@@ -61,7 +79,7 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
 
         public var isComplained: Bool {
             switch self {
-            case .complaint, .settledForCustomer:
+            case .openIssue:
                 return true
             default:
                 return false
@@ -82,196 +100,152 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
         public var id: Status
         public let title: String
         public let description: String
+        public let status: String
         
-        public init(id: Int, title: String, description: String){
-            self.id = Booking.Status(rawValue: id) ?? .booking
+        public init(id: Int, title: String, description: String, status: String){
+            self.id = Booking.Status(int: id)
             self.title = title
             self.description = description
+            self.status = status
         }
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            id = Booking.Status(rawValue: try container.decode(Int.self, forKey: .id)) ?? .booking
+            id = Booking.Status(int: try container.decode(Int.self, forKey: .id))
             title = try container.decode(String.self, forKey: .title)
             description = try container.decode(String.self, forKey: .description)
+            status = try container.decode(String.self, forKey: .status)
         }
         
         enum CodingKeys: String, CodingKey{
             case id
             case title
             case description
+            case status
         }
         
         enum Columns: String, ColumnExpression{
-            case id
+            case id = "statusID"
             case title
             case description
+            case status
         }
     }
     
-    // MARK: - Invoice
-    public struct Invoice: Codable {
-        public let id: String?
-        public let number: String?
-        public let items: [Item]
-        public let subtotal: Decimal
-        
-        public init(id: String?, number: String?, items: [Item], subtotal: Decimal){
-            self.id = id
-            self.number = number
-            self.items = items
-            self.subtotal = subtotal
-        }
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            id = try container.decode(String.self, forKey: .id)
-            number = try container.decode(String.self, forKey: .number)
-            items = try container.decode([Item].self, forKey: .items)
-            subtotal = Decimal(try container.decode(Int.self, forKey: .subtotal))
-        }
-        
-        enum CodingKeys: String, CodingKey{
-            case id
-            case number
-            case items
-            case subtotal
-        }
-        
-        enum Columns: String, ColumnExpression{
-            case id
-            case number
-            case items
-            case subtotal
-        }
-    }
-
-    // MARK: - Item
-    public struct Item: Codable {
-        public let id: Int?
-        public let service: Service?
+    public struct StatusHistory: Codable {
+        public let id: Int
+        public let status: BookingStatus
         public let notes: String?
+        public let createdAt: Date
+        public let updatedAt: Date
         
-        public init(id: Int?, service: Service?, notes: String?){
+        public init(id: Int, status: Booking.BookingStatus, notes: String?, createdAt: Date, updatedAt: Date){
             self.id = id
-            self.service = service
+            self.status = status
             self.notes = notes
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
         }
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             id = try container.decode(Int.self, forKey: .id)
-            service = try container.decode(Service.self, forKey: .service)
+            status = try container.decode(Booking.BookingStatus.self, forKey: .status)
             notes = try container.decodeIfPresent(String.self, forKey: .notes)
+            createdAt = try container.decode(String.self, forKey: .createdAt).toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") ?? Date()
+            updatedAt = try container.decode(String.self, forKey: .updatedAt).toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") ?? Date()
+
         }
         
-        enum CodingKeys: String, CodingKey, ColumnExpression{
+        enum CodingKeys: String, CodingKey{
             case id
-            case service
+            case status
             case notes
+            case createdAt
+            case updatedAt
         }
         
         enum Columns: String, ColumnExpression{
             case id
-            case service
+            case status
             case notes
+            case createdAt
+            case updatedAt
         }
     }
 
     // MARK: - Service
     public struct Service: Codable {
-        public let name: String?
-        public let qty: Int?
+        public let id: String
+        public let title: String
+        public let notes: String
+        public let quantity: Int
         public let price: Decimal
         public let discount: Double?
-        public let total: Decimal
+        public let category: Category?
         
-        public init(name: String?, qty: Int?, price: Decimal, discount: Double?, total: Decimal){
-            self.name = name
-            self.qty = qty
+        public var total: Decimal {
+            return price * Decimal(quantity)
+        }
+        
+        public init(id: String, title: String, notes: String, quantity: Int, price: Decimal, discount: Double?, category: Category?){
+            self.id = id
+            self.title = title
+            self.notes = notes
+            self.quantity = quantity
             self.price = price
             self.discount = discount
-            self.total = total
+            self.category = category
         }
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
-            let decodedPrice = try container.decode(Double.self, forKey: .price)
-            let decodedTotal = try container.decode(Double.self, forKey: .total)
-
-            name = try container.decode(String.self, forKey: .name)
-            qty = try container.decode(Int.self, forKey: .qty)
-            price = Decimal(decodedPrice)
-            discount = try container.decode(Double.self, forKey: .discount)
-            total = Decimal(decodedTotal)
-        }
-        
-        enum CodingKeys: String, CodingKey {
-            case name
-            case qty
-            case price
-            case discount
-            case total
-        }
-        
-        enum Columns: String, ColumnExpression {
-            case name
-            case qty
-            case price
-            case discount
-            case total
-        }
-    }
-    
-    public struct Artisan: Codable {
-        public let id: String
-        public let name: String
-        public let avatar: URL?
-        public let ratings: Double
-        
-        public init(id: String, name: String, avatar: URL?, ratings: Double){
-            self.id = id
-            self.name = name
-            self.avatar = avatar
-            self.ratings = ratings
-        }
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let decodedPrice = try container.decode(String.self, forKey: .price)
+            
             id = try container.decode(String.self, forKey: .id)
-            name = try container.decode(String.self, forKey: .name)
-            avatar = try container.decode(URL.self, forKey: .avatar)
-            ratings = try container.decode(Double.self, forKey: .ratings)
-            
+            title = try container.decode(String.self, forKey: .title)
+            notes = try container.decode(String.self, forKey: .notes)
+            quantity = try container.decode(Int.self, forKey: .quantity)
+            price = Decimal(string: decodedPrice) ?? 0
+            discount = try container.decodeIfPresent(Double.self, forKey: .discount)
+            category = try container.decode(Category.self, forKey: .category)
         }
-
+        
         enum CodingKeys: String, CodingKey {
             case id
-            case name
-            case ratings
-            case avatar
+            case title
+            case notes
+            case quantity
+            case price
+            case discount
+            case category
         }
         
         enum Columns: String, ColumnExpression {
             case id
-            case name
-            case ratings
-            case avatar
+            case title
+            case notes
+            case quantity
+            case price
+            case discount
+            case categoryId
         }
     }
+
 
     public let id: String
+    public let name: String
     public let eventName: String
-    public let clientName: String
-    public let status: String?
-    public let bookingNumber: String
+    public var status: BookingStatus
+    public let bookingNumber: String?
+    public let services: [Service]
 
-    public var bookingStatus: BookingStatus?
-    public var eventAddress: EventAddress?
+    public var venue: Venue
+    public var histories: [Booking.StatusHistory]
     public let eventDate: Date
     public let artisan: Artisan?
-    public let invoice: Invoice
+    public let customer: NewProfile?
     public let platformFee: Decimal?
     public let discount: Double?
     public let paymentURL: String?
@@ -280,33 +254,37 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
     public var paging: Paging?
     public let review: Review?
     public let complaint: Complaint?
+    public var timeStamp: TimeInterval
     
     public init(id: String,
+                name: String,
                 eventName: String,
-                clientName: String,
-                status: String,
-                bookingNumber: String,
-                bookingStatus: Booking.BookingStatus,
-                eventAddress: Booking.EventAddress,
+                status: Booking.BookingStatus,
+                bookingNumber: String?,
+                services: [Booking.Service],
+                venue: Booking.Venue,
+                histories: [Booking.StatusHistory],
                 eventDate: Date,
-                artisan: Booking.Artisan?,
-                invoice: Booking.Invoice,
+                artisan: Artisan?,
+                customer: NewProfile?,
                 platformFee: Decimal,
                 discount: Double?,
                 paymentURL: String?,
                 totalDiscount: Double?,
-                grantTotal: Decimal) {
+                grantTotal: Decimal,
+                timestamp: TimeInterval) {
 
         self.id = id
+        self.name = name
         self.eventName = eventName
-        self.clientName = clientName
         self.status = status
         self.bookingNumber = bookingNumber
-        self.bookingStatus = bookingStatus
-        self.eventAddress = eventAddress
+        self.services = services
+        self.venue = venue
+        self.histories = histories
         self.eventDate = eventDate
         self.artisan = artisan
-        self.invoice = invoice
+        self.customer = customer
         self.platformFee = platformFee
         self.discount = discount
         self.paymentURL = paymentURL
@@ -314,27 +292,30 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
         self.grandTotal = grantTotal
         self.review = nil // Review data only come from booking detail api, we didn't save it to cache
         self.complaint = nil
+        self.timeStamp = timestamp
     }
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let decodedStart = try container.decode(String.self, forKey: .eventDate)
-        let decodedTotalPrice = try container.decode(Double.self, forKey: .grandTotal)
+        let decodedTotalPrice = try container.decodeIfPresent(Double.self, forKey: .grandTotal)
         let decodedPlatformFee = try container.decodeIfPresent(Double.self, forKey: .platformFee)
         
-        eventDate = decodedStart.toDate(format: "yyyy-MM-dd HH:mm:ss") ?? Date()
+        eventDate = decodedStart.toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") ?? Date()
         
         id = try container.decode(String.self, forKey: .id)
-        status = try container.decode(String.self, forKey: .status)
-        bookingNumber = try container.decode(String.self, forKey: .bookingNumber)
-        bookingStatus = try container.decodeIfPresent(BookingStatus.self, forKey: .bookingStatus)
-        clientName = try container.decode(String.self, forKey: .clientName)
+        name = try container.decode(String.self, forKey: .name)
+        status = try container.decode(Booking.BookingStatus.self, forKey: .status)
+        bookingNumber = try container.decodeIfPresent(String.self, forKey: .bookingNumber)
+        services = try container.decode([Booking.Service].self, forKey: .services)
         eventName = try container.decode(String.self, forKey: .eventName)
-        grandTotal = Decimal(decodedTotalPrice)
-        eventAddress = try container.decodeIfPresent(EventAddress.self, forKey: .eventAddress)
-        invoice = try container.decode(Invoice.self, forKey: .invoice)
-        artisan = try container.decodeIfPresent(Artisan.self, forKey: .artisan)
+        grandTotal = Decimal(decodedTotalPrice ?? 0)
+        venue = try container.decode(Venue.self, forKey: .venue)
+        histories = try container.decode([Booking.StatusHistory].self, forKey: .histories)
+
+        artisan = try container.decode(Artisan.self, forKey: .artisan)
+        customer = try container.decode(NewProfile.self, forKey: .customer)
         review = try container.decodeIfPresent(Review.self, forKey: .review)
         complaint = try container.decodeIfPresent(Complaint.self, forKey: .complaint)
         
@@ -342,17 +323,20 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
         discount = try container.decodeIfPresent(Double.self, forKey: .discount)
         paymentURL = try container.decodeIfPresent(String.self, forKey: .paymentURL)
         totalDiscount = try container.decodeIfPresent(Double.self, forKey: .totalDiscount)
+        timeStamp = Date().timeIntervalSince1970
     }
     
     enum CodingKeys: String, CodingKey {
         case id
+        case name
         case eventName = "event_name"
-        case clientName = "client_name"
         case status
-        case bookingStatus = "booking_status"
-        case eventAddress = "event_address"
+        case services
+        case venue
+        case histories
         case eventDate = "event_date"
-        case artisan, invoice
+        case artisan
+        case customer
         case platformFee = "platform_fee"
         case discount
         case paymentURL = "payment_url"
@@ -366,14 +350,16 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
     
     enum Columns: String, ColumnExpression {
         case id
+        case name
         case eventName
-        case clientName
-        case status
-        case bookingStatus
-        case eventAddress
+        case statusID
+        case statusTitle
+        case statusDesc
+        case statusStatus
+        case services
+        case histories
         case eventDate
         case artisan
-        case invoice
         case platformFee
         case discount
         case paymentURL
@@ -400,77 +386,86 @@ public class Booking: Codable, Pageable, FetchableRecord, PersistableRecord {
         let complaint: String
     }
     
-    public struct EventAddress: Codable{
-        public let name: String?
-        public let latitude: Double?
-        public let longitude: Double?
-        public let addressNote: String?
-        public let addressDetail: String?
+    public struct Venue: Codable{
+
+        public let id: String?
+        public let venueName: String?
+        public let latitude: Double
+        public let longitude: Double
+        public let notes: String?
+        public let address: String?
         
-        public init(name: String?, latitude: Double?, longitude: Double?, addressNote: String?, addressDetail: String?){
-            self.name = name
+        public init(id: String?, venueName: String?, latitude: Double, longitude: Double, notes: String?, address: String?){
+            self.id = id
+            self.venueName = venueName
             self.latitude = latitude
             self.longitude = longitude
-            self.addressNote = addressNote
-            self.addressDetail = addressDetail
+            self.notes = notes
+            self.address = address
         }
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
-            name = try container.decodeIfPresent(String.self, forKey: .name)
-            latitude = try container.decode(Double.self, forKey: .latitude)
-            longitude = try container.decode(Double.self, forKey: .longitude)
-            addressNote = try container.decode(String.self, forKey: .addressNote)
-            addressDetail = try container.decode(String.self, forKey: .addressDetail)
+            id = try container.decodeIfPresent(String.self, forKey: .id)
+            venueName = try container.decodeIfPresent(String.self, forKey: .venueName)
+            latitude = Double(try container.decode(String.self, forKey: .latitude)) ?? 0.0
+            longitude = Double(try container.decode(String.self, forKey: .longitude)) ?? 0.0
+            notes = try container.decodeIfPresent(String.self, forKey: .notes)
+            address = try container.decode(String.self, forKey: .address)
 
         }
 
-            enum CodingKeys: String, CodingKey {
-                case name
-                case latitude
-                case longitude
-                case addressNote = "notes"
-                case addressDetail = "address_detail"
-            }
+        enum CodingKeys: String, CodingKey {
+            case id
+            case venueName
+            case latitude
+            case longitude
+            case notes
+            case address
+        }
     }
 }
 
 extension Booking {
     public var bookingCardServiceName: String{
         var name = ""
-        name += invoice.items.first?.service?.name ?? ""
-        if invoice.items.count > 1{
-            name += " + \(invoice.items.count - 1) more"
+        name += services.first?.title ?? ""
+        if services.count > 1{
+            name += " + \(services.count - 1) more"
         }
         return name
     }
     
+    public var venueCoordinates: CLLocationCoordinate2D{
+        return CLLocationCoordinate2D(latitude: venue.latitude, longitude: venue.longitude)
+    }
+    
     public var isContactable: Bool {
 //        (status == .booking || status == .process || status == .accepted || status == .confirmed) && paymentStatus == .paid
-        (bookingStatus?.id == .booking || bookingStatus?.id == .process || bookingStatus?.id == .accepted || bookingStatus?.id == .confirmed)
+//        (bookingStatus.id == .booking || bookingStatus.id == .process || bookingStatus.id == .accepted || bookingStatus.id == .confirmed)
+        true
     }
 
     public var isCancelableByArtisan: Bool {
-        bookingStatus?.id == .confirmed || bookingStatus?.id == .booking
+        status.id == .confirmed || status.id == .booked
     }
 
     public var isCancelable: Bool {
-        alreadyBid || bookingStatus?.id == .booking || bookingStatus?.id == .confirmed || bookingStatus?.id == .open || bookingStatus?.id == .accepted
+        alreadyBid || status.id == .booked || status.id == .confirmed || status.id == .open || status.id == .confirmed
     }
 
     public var isCanceled: Bool {
-        bookingStatus?.id == .canceledByArtisan || bookingStatus?.id == .canceledByCustomer || bookingStatus?.id == .canceledBySystem
+        status.id == .canceledByArtisan || status.id == .canceledByCustomer || status.id == .cancelBySystem
     }
 
     public var bookingServiceTypes: String? {
-//        bookingServices?.map { $0.title }.joined(separator: ", ")
-        return ""
+        return services.map{ $0.category?.name ?? "" }.joined(separator: ", ")
     }
     
-    public var serviceIdAndQuantities: [(serviceId: Int, quantity: Int)]? {
-        invoice.items.map{
-            (serviceId: $0.id ?? -1, quantity: $0.service?.qty ?? -1)
+    public var serviceIdAndQuantities: [(serviceId: String, quantity: Int)]? {
+        services.map{
+            (serviceId: $0.id, quantity: $0.quantity)
         }
     }
     
@@ -480,11 +475,11 @@ extension Booking {
     }
     
     public var alreadyBid: Bool {
-        bookingStatus?.id == .bid
+        status.id == .bid
     }
     
     public var isEditable: Bool {
-        bookingStatus?.id == .open
+        status.id == .open
     }
 
 //    public var showPayment: Bool {
@@ -509,18 +504,18 @@ extension Booking {
 //    }
     
     public var isRequestNotAccepted: Bool {
-        guard let status = bookingStatus?.id else {return false}
+        let status = status.id
         return (status == .open || status == .bid || status.isCanceled)
     }
     
     public var nextBookingStatus: Booking.Status {
-        if bookingStatus?.id == .confirmed {
-            return .process
-        } else if bookingStatus?.id == .process {
+        if status.id == .confirmed {
+            return .workInProgress
+        } else if status.id == .workInProgress {
             return .completed
-        } else if bookingStatus?.id == .open {
+        } else if status.id == .open {
             return .bid
-        } else if bookingStatus?.id == .bid {
+        } else if status.id == .bid {
             return .bid
         }
         
@@ -582,7 +577,7 @@ extension Booking {
     }
     
     public var showDirectionLink: Bool {
-        return bookingStatus?.id == .confirmed || bookingStatus?.id == .process
+        return status.id == .confirmed || status.id == .workInProgress
     }
 
 //    public var paymentStatusName: String {
@@ -632,17 +627,17 @@ extension Booking {
     }
     
     static func bookingStatusDescription(status: Booking.Status) -> String {
-        if status == .accepted {
+        if status == .confirmed {
             return "accepted".l10n()
         } else if status == .confirmed {
             return "confirmed".l10n()
-        } else if status == .process {
+        } else if status == .workInProgress {
             return "processed".l10n()
         } else if status.isCompleted {
             return "completed".l10n()
         } else if status.isCanceled {
             return "canceled".l10n()
-        } else if status == .booking {
+        } else if status == .booked {
             return "booking".l10n()
         } else if status == .bid {
             return "bid".l10n()

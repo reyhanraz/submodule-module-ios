@@ -11,8 +11,8 @@ import RxSwift
 import L10n_swift
 import Platform
 
-public class RatingCloudService<CloudResponse: ResponseType>: RatingAPI, ServiceType {
-    public typealias R = ListRequest
+public class RatingCloudService<CloudResponse: NewResponseType>: RatingAPI, ServiceType {
+    public typealias R = NewListRequest
     
     public typealias T = CloudResponse
     public typealias E = Error
@@ -21,7 +21,7 @@ public class RatingCloudService<CloudResponse: ResponseType>: RatingAPI, Service
         super.init()
     }
     
-    public func get(request: ListRequest?) -> Observable<Result<T, Error>> {
+    public func get(request: R?) -> Observable<Result<T, Error>> {
         guard let request = request, let id = request.id else { return .just(.error(ServiceError.invalidRequest)) }
         
         return super.getRatingList(artisanId: id, page: request.page, limit: request.limit, timestamp: request.timestamp)

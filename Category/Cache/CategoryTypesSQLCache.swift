@@ -34,8 +34,8 @@ public class CategoryTypeSQLCache: SQLCache<ListRequest, CategoryType> {
             })
             
             return list
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
         
         return []
@@ -58,8 +58,8 @@ public class CategoryTypeSQLCache: SQLCache<ListRequest, CategoryType> {
                 
                 return .commit
             }
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
     }
     
@@ -68,9 +68,7 @@ public class CategoryTypeSQLCache: SQLCache<ListRequest, CategoryType> {
         
         var filter: String?
         
-        if id > 0 {
-            filter = "\(CategoryType.Columns.serviceCategoryId) = \(id)"
-        }
+            filter = "\(CategoryType.Columns.serviceCategoryId) = '\(id)'"
         
         return filter
     }

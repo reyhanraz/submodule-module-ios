@@ -29,7 +29,7 @@ public protocol BookingDetailViewControllerDelegate: AnyObject {
 
 public class BookingDetailViewController: RxRestrictedViewController, MFMessageComposeViewControllerDelegate, BookingUserViewDelegate, BookingVenueViewDelegate, BidRequestDialogViewDelegate, CheckoutViewControllerDelegate, PostComplaintViewControllerDelegate {
     private let _id: Int
-    private let _userKind: User.Kind
+    private let _userKind: NewProfile.Kind
     private let _cache: BookingSQLCache?
     private let _avatarSize: CGFloat = 40
     
@@ -362,32 +362,32 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
         return ViewModel(useCase: useCase)
     }()
     
-    private lazy var _viewModel: ViewModel<BookingListRequest, BookingDetail> = {
-        
-        let service = BookingCloudService<BookingDetail>()
-        let cacheService: BookingCacheService<BookingListRequest, BookingSQLCache>?
-        
-        if let cache = _cache {
-            cacheService = BookingCacheService(cache: cache)
-        } else {
-            cacheService = nil
-        }
-        
-        let useCase = GetDetailUseCaseProvider(
-            service: service,
-            cacheService: cacheService,
-            cache: _cache,
-            forceReload: true,
-            activityIndicator: activityIndicator)
-        
-        return ViewModel(useCase: useCase)
-    }()
+//    private lazy var _viewModel: ViewModel<BookingListRequest, BookingDetail> = {
+//
+//        let service = BookingCloudService<BookingDetail>()
+//        let cacheService: BookingCacheService<BookingListRequest, BookingSQLCache>?
+//
+//        if let cache = _cache {
+//            cacheService = BookingCacheService(cache: cache)
+//        } else {
+//            cacheService = nil
+//        }
+//
+//        let useCase = GetDetailUseCaseProvider(
+//            service: service,
+//            cacheService: cacheService,
+//            cache: _cache,
+//            forceReload: true,
+//            activityIndicator: activityIndicator)
+//
+//        return ViewModel(useCase: useCase)
+//    }()
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
     }
     
-    public init(id: Int, userKind: User.Kind, cache: BookingSQLCache?) {
+    public init(id: Int, userKind: NewProfile.Kind, cache: BookingSQLCache?) {
         _id = id
         _userKind = userKind
         _cache = cache
@@ -492,12 +492,12 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
     }
     
     public override func loadData() {
-        _viewModel.execute(request: BookingListRequest(id: _id))
+//        _viewModel.execute(request: BookingListRequest(id: _id))
     }
     
     // MARK: - Selector
     @objc func reloadBooking() {
-        _viewModel.execute(request: BookingListRequest(id: _id, forceReload: true))
+//        _viewModel.execute(request: BookingListRequest(id: _id, forceReload: true))
     }
     
     @objc func artisanTapped() {
@@ -549,7 +549,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             
             var params : [String : Any] = [
                 EventParams.bookingId.rawValue: self._id,
-                EventParams.bookingStatus.rawValue: booking.bookingStatus?.id.rawValue
+                EventParams.bookingStatus.rawValue: booking.status.id.rawValue
             ]
             
             if let artisan = booking.artisan {
@@ -560,7 +560,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             
             let yes = UIAlertAction(title: "yes".l10n(), style: .destructive) { _ in
                 
-                booking.bookingStatus?.id = .canceledByCustomer
+                booking.status.id = .canceledByCustomer
                 
                 self.trackEvent(name: EventNames.cancelCustomRequestFinished.rawValue, extraParams: params)
                 
@@ -638,7 +638,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
         let message: String
         let style: UIAlertAction.Style
         
-        if booking.nextBookingStatus == .process && !booking.isAbleToProcess && button.tag != Booking.Status.canceledByCustomer.rawValue && button.tag != Booking.Status.canceledByArtisan.rawValue {
+        if booking.nextBookingStatus == .workInProgress && !booking.isAbleToProcess && button.tag != Booking.Status.canceledByCustomer.rawValue && button.tag != Booking.Status.canceledByArtisan.rawValue {
             
             let alert = UIAlertController(title: "information".l10n(),
                                           message: "unable_to_process_booking_message".l10n(),
@@ -910,20 +910,20 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
             }
         }).disposed(by: disposeBag)
         
-        _viewModel.loading.drive(view.rx.toggleSkeletonLoading).disposed(by: disposeBag)
-        _viewModel.result.drive(onNext: { [weak self] (_, detail) in
-            guard let strongSelf = self, let booking = detail.data?.booking else { return }
-            
-            strongSelf.showPaymentSummary(detail.data?.paymentSummary)
-            strongSelf.showDetail(booking)
-            
+//        _viewModel.loading.drive(view.rx.toggleSkeletonLoading).disposed(by: disposeBag)
+//        _viewModel.result.drive(onNext: { [weak self] (_, detail) in
+//            guard let strongSelf = self, let booking = detail.data?.booking else { return }
+//            
+//            strongSelf.showPaymentSummary(detail.data?.paymentSummary)
+//            strongSelf.showDetail(booking)
+//            
 //            if booking.showPayment {
 //                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: false))
 //            } else if detail.data?.paymentSummary?.isRefundable == true {
 //                strongSelf._getPaymentURLViewModel.execute(request: PaymentRequest(bookingId: booking.id, artisanId: nil, refund: true))
 //            }
-            
-        }).disposed(by: disposeBag)
+//            
+//        }).disposed(by: disposeBag)
         
         _updateViewModel.loading.drive(onNext: { [weak self] loading in
             guard let strongSelf = self else { return }
@@ -1095,7 +1095,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
                 v.artisan = $0.artisan
                 v.price = $0.price
                 v.delegate = self
-                v.tag = $0.artisan.id
+                v.id = $0.artisan.id
                 
                 strongSelf.bidderStackView.addArrangedSubview(v)
                 
@@ -1322,7 +1322,7 @@ public class BookingDetailViewController: RxRestrictedViewController, MFMessageC
         switch status {
         case .bid: eventName = !confirmation ? EventNames.bidCustomRequestConfirmation.rawValue : EventNames.bidCustomRequestFinished.rawValue
         case .confirmed: eventName = !confirmation ? EventNames.confirmBookingConfirmation.rawValue : EventNames.confirmBookingFinished.rawValue
-        case .process: eventName = !confirmation ? EventNames.processBookingConfirmation.rawValue : EventNames.processBookingFinished.rawValue
+        case .workInProgress: eventName = !confirmation ? EventNames.processBookingConfirmation.rawValue : EventNames.processBookingFinished.rawValue
         case .completed: eventName = !confirmation ? EventNames.completeBookingConfirmation.rawValue : EventNames.completeBookingFinished.rawValue
         case .canceledByArtisan: eventName = !confirmation ? EventNames.cancelBookingByArtisanConfirmation.rawValue : EventNames.cancelBookingByArtisanFinished.rawValue
         case .canceledByCustomer:

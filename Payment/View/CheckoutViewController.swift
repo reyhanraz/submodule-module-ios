@@ -104,7 +104,7 @@ public class CheckoutViewController: RxRestrictedViewController, WKNavigationDel
 
         webView.addObserver(self, forKeyPath: _estimatedProgressKeyPath, options: .new, context: nil)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "later".l10n(), style: .plain, target: self, action: #selector(dismissController))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "later".l10n(), style: .plain, target: self, action: #selector(dismissedController))
 
         NSLayoutConstraint.activate([
             progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -180,7 +180,7 @@ public class CheckoutViewController: RxRestrictedViewController, WKNavigationDel
     }
 
     // MARK: - Selector
-    @objc func dismissController() {
+    @objc func dismissedController() {
         delegate?.dismissCheckout()
     }
 

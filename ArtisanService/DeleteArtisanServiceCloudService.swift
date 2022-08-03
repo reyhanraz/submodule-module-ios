@@ -11,10 +11,10 @@ import RxSwift
 import L10n_swift
 import Platform
 
-public class DeleteArtisanServiceCloudService<CloudResponse: ResponseType>: ArtisanServiceAPI, ServiceType {
-    public typealias R = Int
+public class DeleteArtisanServiceCloudService: ArtisanServiceAPI, ServiceType {
+    public typealias R = String
     
-    public typealias T = CloudResponse
+    public typealias T = Detail<BasicAPIResponse>
     public typealias E = Error
     
     
@@ -22,7 +22,7 @@ public class DeleteArtisanServiceCloudService<CloudResponse: ResponseType>: Arti
         super.init()
     }
     
-    public func get(request: Int?) -> Observable<Result<T, Error>> {
+    public func get(request: R?) -> Observable<Result<T, Error>> {
         guard let request = request else { return .just(.error(ServiceError.invalidRequest)) }
         
         return super.deleteArtisanService(id: request)

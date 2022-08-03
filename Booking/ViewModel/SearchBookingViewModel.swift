@@ -13,9 +13,9 @@ import Domain
 import CommonUI
 import Common
 
-public struct SearchBookingViewModel<ServiceResponse: ResponseListType>: SearchViewModelType {
+public struct SearchBookingViewModel<ServiceResponse: NewResponseListType>: SearchViewModelType {
     
-    public typealias Response = ServiceResponse.Data.T
+    public typealias Response = ServiceResponse.T
     
     // MARK: Outputs
     public let result: Driver<[Response]>
@@ -43,7 +43,7 @@ public struct SearchBookingViewModel<ServiceResponse: ResponseListType>: SearchV
             }.flatMapLatest({ result -> Driver<[Response]> in
                 switch result {
                 case let .success(response):
-                    return .just(response.data?.list ?? [])
+                    return .just(response.data)
                 default:
                     return .empty()
                 }
@@ -66,7 +66,7 @@ public struct SearchBookingViewModel<ServiceResponse: ResponseListType>: SearchV
                 .flatMap({ result -> Driver<[Response]> in
                     switch result {
                     case let .success(response):
-                        return .just(response.data?.list ?? [])
+                        return .just(response.data)
                     default:
                         failedProperty.onNext(())
                         

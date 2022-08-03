@@ -37,7 +37,7 @@ public class BookingStatusLabel: PaddingLabel {
                 backgroundColor = UIColor.BeautyBell.gray300
                 layer.borderColor = UIColor.clear.cgColor
                 textColor = UIColor.BeautyBell.gray600
-            } else if status == .accepted {
+            } else if status == .confirmed {
                 backgroundColor = UIColor.BeautyBell.accent
                 layer.borderColor = UIColor.clear.cgColor
                 textColor = .white

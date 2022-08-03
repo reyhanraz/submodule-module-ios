@@ -68,7 +68,7 @@ public struct RegisterProfileViewModel: RegisterProfileViewModelType, RegisterPr
         
         validatedEmail = email.debounce(.milliseconds(500))
                 .flatMap { email in
-                    return useCase.execute(request: CheckUserRequest(identifier: email, type: "customer", findType: .email)).map { (email, $0) }.asDriver(onErrorDriveWith: .empty())
+                    return useCase.execute(request: CheckUserRequest(identifier: email, type: .customer, findType: .email)).map { (email, $0) }.asDriver(onErrorDriveWith: .empty())
                 }
                 .flatMap { result in
                     if result.0.isEmpty {
@@ -104,7 +104,7 @@ public struct RegisterProfileViewModel: RegisterProfileViewModelType, RegisterPr
                     } else {
                         formattedPhone = ""
                     }
-                    return useCase.execute(request: CheckUserRequest(identifier: formattedPhone, type: "customer", findType: .phoneNumber)).map { (formattedPhone, $0, mobilePhone) }.asDriver(onErrorDriveWith: .empty())
+                    return useCase.execute(request: CheckUserRequest(identifier: formattedPhone, type: .customer, findType: .phoneNumber)).map { (formattedPhone, $0, mobilePhone) }.asDriver(onErrorDriveWith: .empty())
                 }
                 .flatMap { result in
                     if result.2.isEmpty{
@@ -188,7 +188,7 @@ public struct RegisterProfileViewModel: RegisterProfileViewModelType, RegisterPr
         result = btnNext.withLatestFrom(forms).asDriver(onErrorDriveWith: .empty())
     }
     
-    public func validateGender(gender: User.Gender?){
+    public func validateGender(gender: NewProfile.Gender?){
         guard gender != nil else {
             validatedGender.onNext(.failed(message: "invalid_gender".l10n()))
             return

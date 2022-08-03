@@ -39,7 +39,7 @@ public struct PaymentHistoryDetail: Codable, ResponseType {
             public let createdAt: Date
             public let bookingName: String?
             public let bookingReferenceId: String?
-            public let customer: User?
+            public let customer: NewProfile?
             
             public init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -59,7 +59,7 @@ public struct PaymentHistoryDetail: Codable, ResponseType {
                 customerId = try container.decodeIfPresent(Int.self, forKey: .customerId)
                 bookingName = try container.decodeIfPresent(String.self, forKey: .bookingName)
                 bookingReferenceId = try container.decodeIfPresent(String.self, forKey: .bookingReferenceId)
-                customer = try container.decodeIfPresent(User.self, forKey: .customer)
+                customer = try container.decodeIfPresent(NewProfile.self, forKey: .customer)
 
                 createdAt = decodedCreatedAt.toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") ?? Date()
                 

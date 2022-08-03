@@ -9,15 +9,13 @@
 import RxSwift
 import Alamofire
 
-open class FavoriteAPI: ServiceHelper{
-    public override init() {
-        super.init()
-    }
+open class FavoriteAPI{
+    public init() { }
     
-    public func setFavorite(artisanID: Int) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func setFavorite(artisanID: String) -> Observable<(Data?, HTTPURLResponse?)>{
         let param = ["artisanId": artisanID]
         
-        return super.request(Endpoint.addFavorite,
+        return ServiceHelper.shared.request(Endpoint.addFavorite,
                              method: HTTPMethod.post,
                              parameter: param,
                              encoding: JSONEncoding.default)
@@ -26,10 +24,10 @@ open class FavoriteAPI: ServiceHelper{
         }
     }
     
-    public func removeFavorite(artisanID: Int) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func removeFavorite(artisanID: String) -> Observable<(Data?, HTTPURLResponse?)>{
         let param = ["artisanId": artisanID]
         
-        return super.request(Endpoint.removeFavorite,
+        return ServiceHelper.shared.request(Endpoint.removeFavorite,
                              method: HTTPMethod.post,
                              parameter: param,
                              encoding: JSONEncoding.default)

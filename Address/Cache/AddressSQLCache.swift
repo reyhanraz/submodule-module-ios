@@ -8,7 +8,7 @@
 
 import GRDB
 import Platform
-
+//Temporary disable cache
 public class AddressSQLCache<R>: SQLCache<R, Address> {
     
     public override init(dbQueue: DatabaseQueue, expiredAfter: TimeInterval = CacheExpiryDate.oneMonth.rawValue) {
@@ -19,14 +19,13 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
         try db.create(table: Address.databaseTableName) { body in
             body.column(CommonColumns._id.rawValue, .integer).primaryKey()
             body.column(Address.Columns.id.rawValue, .integer).unique(onConflict: .replace)
-            body.column(Address.Columns.userId.rawValue, .integer).notNull()
-            body.column(Address.Columns.name.rawValue, .text).notNull()
-            body.column(Address.Columns.detail.rawValue, .text).notNull()
-            body.column(Address.Columns.lat.rawValue, .double)
-            body.column(Address.Columns.lon.rawValue, .double)
-            body.column(CommonColumns.timestamp.rawValue, .integer).notNull()
+            body.column(Address.Columns.user.rawValue, .text)
             body.column(Address.Columns.address.rawValue, .text)
-            body.column(Address.Columns.rawAddress.rawValue, .blob)
+            body.column(Address.Columns.name.rawValue, .text)
+            body.column(Address.Columns.notes.rawValue, .text)
+            body.column(Address.Columns.latitude.rawValue, .double)
+            body.column(Address.Columns.longitude.rawValue, .double)
+            body.column(CommonColumns.timestamp.rawValue, .integer)
         }
     }
     
@@ -43,8 +42,8 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
             })
             
             return list
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
         
         return []
@@ -53,27 +52,12 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
     public override func update(model: Address) -> Bool {
         do {
             try dbQueue.write { db in
-                let timestamp = Date().timeIntervalSince1970
-                
-                try db.execute(sql: """
-                    UPDATE \(Address.databaseTableName) SET
-                    \(Address.Columns.name.rawValue) = ?,
-                    \(Address.Columns.detail.rawValue) = ?,
-                    \(Address.Columns.lat.rawValue) = ?,
-                    \(Address.Columns.lon.rawValue) = ?,
-                    \(CommonColumns.timestamp.rawValue) = ?
-                    WHERE
-                    \(Address.Columns.id.rawValue) = ?
-                    """, arguments: [model.name,
-                                     model.detail,
-                                     model.lat,
-                                     model.lon,
-                                     timestamp, model.id])
+                try model.update(db)
             }
             
             return true
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
         
         return false
@@ -84,28 +68,17 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
     }
     
     public override func putList(models: [Address]) {
-        let timestamp = Date().timeIntervalSince1970
-        
         do {
             try dbQueue.inTransaction { db in
                 
                 for record in models {
-                    
-                    try Address(id: record.id,
-                                userId: record.userId,
-                                name: record.name,
-                                detail: record.detail,
-                                lat: record.lat,
-                                lon: record.lon,
-                                timestamp: timestamp,
-                                address: record.address,
-                                rawAddress: record.rawAddress).insert(db)
+                    try record.insert(db)
                 }
                 
                 return .commit
             }
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
     }
     
@@ -114,8 +87,8 @@ public class AddressSQLCache<R>: SQLCache<R, Address> {
             let _ = try dbQueue.write { db in
                 try Address.deleteOne(db, key: [Address.Columns.id.rawValue: model.id])
             }
-        } catch {
-            assertionFailure()
+        } catch let error {
+            assertionFailure(error.localizedDescription)
         }
     }
     

@@ -11,15 +11,13 @@ import Alamofire
 import L10n_swift
 
 
-open class CategoryAPI: ServiceHelper{
-    public override init(){
-        super.init()
-    }
+open class CategoryAPI{
+    public init(){ }
     
     public func getCategories() -> Observable<(Data?, HTTPURLResponse?)>{
         let params: [String : Any] = [:]
         
-        return super.request(Endpoint.getCategories,
+        return ServiceHelper.shared.request(Endpoint.getCategories,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)
@@ -29,7 +27,7 @@ open class CategoryAPI: ServiceHelper{
     public func getCategoryTypes() -> Observable<(Data?, HTTPURLResponse?)>{
         let params: [String : Any] = [:]
 
-        return super.request(Endpoint.getCategoryTypes,
+        return ServiceHelper.shared.request(Endpoint.getCategoryTypes,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)

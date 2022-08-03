@@ -12,6 +12,7 @@ import Common
 import Domain
 import L10n_swift
 import Platform
+import ServiceWrapper
 
 public struct PostComplaintViewModel<T: ResponseType>: PostComplaintViewModelType, PostComplaintViewModelOutput {
     public typealias Outputs = PostComplaintViewModel<T>

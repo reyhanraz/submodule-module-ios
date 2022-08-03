@@ -8,6 +8,7 @@
 
 import GRDB
 import Platform
+import class Category.Category
 
 extension Booking: MultiTableRecord {
     public typealias R = BookingListRequest
@@ -17,15 +18,18 @@ extension Booking: MultiTableRecord {
         var params: [String : DatabaseValueConvertible?] = [
             Booking.Columns.id.rawValue: id,
             Booking.Columns.eventName.rawValue: eventName,
-            Booking.Columns.clientName.rawValue: clientName,
-            Booking.Columns.status.rawValue: status,
+            Booking.BookingStatus.Columns.id.rawValue: status.id.rawValue,
+            Booking.BookingStatus.Columns.title.rawValue: status.title,
+            Booking.BookingStatus.Columns.description.rawValue: status.description,
+            Booking.BookingStatus.Columns.status.rawValue: status.status,
             Booking.Columns.bookingNumber.rawValue: bookingNumber,
             Booking.Columns.eventDate.rawValue: eventDate.timeIntervalSince1970,
-            Booking.Columns.platformFee.rawValue: "\(platformFee)",
+            Booking.Columns.platformFee.rawValue: platformFee,
             Booking.Columns.discount.rawValue: discount,
             Booking.Columns.paymentURL.rawValue: paymentURL,
             Booking.Columns.totalDiscount.rawValue: totalDiscount,
-            Booking.Columns.grandTotal.rawValue: "\(grandTotal)"
+            Booking.Columns.grandTotal.rawValue: grandTotal,
+            CommonColumns.timestamp.rawValue: timeStamp
         ]
         
         if let paging = paging {
@@ -55,12 +59,10 @@ extension Booking: MultiTableRecord {
         try db.execute(sql: statement, arguments: StatementArguments(contentValues))
         
         try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.artisan) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-        try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.address) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-        try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.bookingStatus) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-        try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.Invoice.invoice) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-        try invoice.items.forEach({ item in
-            try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.Invoice.items) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [invoice.id])
-            try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.Invoice.service) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [item.id])
+        try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.customer) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
+        try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.venue) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
+        try services.forEach({ item in
+            try db.execute(sql: "DELETE FROM \(tableName)\(TableNames.Booking.Relation.bookingService) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [item.id])
         })
                 
         try updateRelations(db, tableName: tableName)
@@ -74,96 +76,114 @@ extension Booking: MultiTableRecord {
         return try rows.map { row in
             let id = row[Booking.Columns.id]
     
-            let artisan: Booking.Artisan?
+            let artisan: Artisan?
             
             if let artisanRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.artisan) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id]) {
-                let artisanAvatar: URL?
+                
+                let decoder = JSONDecoder()
+                
+                let metadata = try? decoder.decode([Artisan.Metadata].self, from: artisanRow[Artisan.Columns.metadata])
+                let category = try? decoder.decode([Artisan.Category].self, from: artisanRow[Artisan.Columns.category])
+                let avatar = try? decoder.decode(Media.self, from: artisanRow[Artisan.Columns.avatar])
 
-                if let avatar = artisanRow[Artisan.Columns.avatar] as? String {
-                    artisanAvatar = URL(string: avatar)
-                } else {
-                    artisanAvatar = nil
-                }
                 
                 artisan = Artisan(id: artisanRow[Artisan.Columns.id],
-                                  name: artisanRow[Artisan.Columns.name],
-                                  avatar: artisanAvatar,
-                                  ratings: artisanRow[Artisan.Columns.ratings])
+                                      email: artisanRow[Artisan.Columns.email],
+                                      name: artisanRow[Artisan.Columns.name],
+                                      phoneNumber: artisanRow[Artisan.Columns.phoneNumber],
+                                      username: artisanRow[Artisan.Columns.username],
+                                      facebookID: artisanRow[Artisan.Columns.facebookID],
+                                      googleID: artisanRow[Artisan.Columns.googleID],
+                                      appleID: artisanRow[Artisan.Columns.appleID],
+                                      type: .artisan,
+                                      metadata: metadata,
+                                      favorite: artisanRow[Artisan.Columns.favorite],
+                                      jobDone: artisanRow[Artisan.Columns.jobDone],
+                                      rating: artisanRow[Artisan.Columns.rating],
+                                      category: category,
+                                      avatar: avatar,
+                                      isVerified: artisanRow[Artisan.Columns.isVerified],
+                                      status: artisanRow[Artisan.Columns.status],
+                                      hasAddress: false,
+                                      categories: nil,
+                                      instagram: nil,
+                                      birthdate: nil,
+                                      idCard: nil,
+                                      bio: nil,
+                                      gender: nil,
+                                      timeStamp: Date().timeIntervalSince1970,
+                                      createdAt: artisanRow[Artisan.Columns.created_at])
+                
             } else {
                 artisan = nil
             }
             
-            
-            let bookingStatusRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.bookingStatus) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-            
-            let bookingStatus = BookingStatus(id: bookingStatusRow?[Booking.BookingStatus.Columns.id] ?? -1,
-                                              title: bookingStatusRow?[Booking.BookingStatus.Columns.title] ?? "",
-                                              description: bookingStatusRow?[Booking.BookingStatus.Columns.description] ?? "")
-            
-            let addressRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.address) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-            
-            let address = EventAddress(name: addressRow?[Address.Columns.name],
-                                       latitude: addressRow?[Address.Columns.lat],
-                                       longitude: addressRow?[Address.Columns.lon],
-                                       addressNote: addressRow?[Address.Columns.detail],
-                                       addressDetail: addressRow?[Address.Columns.address])
-            
-            let invoiceRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.Invoice.invoice) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
-            
-            let invoiceID = (invoiceRow?[Invoice.Columns.id] ?? "") as String
-            
-            let itemRow = try Row.fetchAll(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.Invoice.items) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [invoiceID])
-            
-            let items: [Item] = try itemRow.map { row -> Item in
-                let itemID = row[Booking.Item.Columns.id] as Int
-                
-                let invoiceRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.Invoice.service) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [itemID])
+            let customer: NewProfile?
 
-                let services = Service(name: invoiceRow?[Booking.Service.Columns.name],
-                               qty: invoiceRow?[Booking.Service.Columns.qty],
-                                       price: Decimal(string: invoiceRow?[Booking.Service.Columns.price] ?? "0") ?? 0,
-                               discount: invoiceRow?[Booking.Service.Columns.discount],
-                                       total: Decimal(string: invoiceRow?[Booking.Service.Columns.total] ?? "0") ?? 0)
+            
+            if let customerRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.customer) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id]) {
                 
-                return Item(id: itemID,
-                            service: services,
-                            notes: row[Booking.Item.Columns.notes])
+                let decoder = JSONDecoder()
+                
+                let metadata = try? decoder.decode([NewProfile.Metadata].self, from: customerRow[NewProfile.Columns.metadata])
+                let avatar = try? decoder.decode(Media.self, from: customerRow[NewProfile.Columns.avatar])
+
+                
+                customer = NewProfile(id: customerRow[NewProfile.Columns.id],
+                                      email: customerRow[NewProfile.Columns.email],
+                                      name: customerRow[NewProfile.Columns.name],
+                                      phoneNumber: customerRow[NewProfile.Columns.phoneNumber],
+                                      username: nil,
+                                      facebookID: customerRow[NewProfile.Columns.facebookID],
+                                      googleID: customerRow[NewProfile.Columns.googleID],
+                                      appleID: customerRow[NewProfile.Columns.appleID],
+                                      type: .customer,
+                                      metadata: metadata,
+                                      favorite: nil,
+                                      jobDone: nil,
+                                      rating: nil,
+                                      category: nil,
+                                      avatar: avatar,
+                                      isVerified: customerRow[NewProfile.Columns.isVerified],
+                                      status: customerRow[NewProfile.Columns.status],
+                                      hasAddress: false,
+                                      categories: nil,
+                                      instagram: nil,
+                                      birthdate: nil,
+                                      idCard: nil,
+                                      bio: nil,
+                                      created_at: customerRow[NewProfile.Columns.created_at])
+                
+            } else {
+                customer = nil
             }
+            
+            let addressRow = try Row.fetchOne(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.venue) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
+            
+            let address = Venue(id: addressRow?[Address.Columns.id],
+                                venueName: addressRow?[Address.Columns.name],
+                                latitude: addressRow?[Address.Columns.latitude] ?? 0.0,
+                                longitude: addressRow?[Address.Columns.longitude] ?? 0.0,
+                                notes: addressRow?[Address.Columns.notes],
+                                address: addressRow?[Address.Columns.address])
                         
-            let invoice = Invoice(id: invoiceID,
-                                  number: invoiceRow?[Booking.Invoice.Columns.number],
-                                  items: items,
-                                  subtotal: Decimal(string: invoiceRow?[Booking.Invoice.Columns.subtotal] ?? "") ?? 0)
+            let serviceRows = try Row.fetchAll(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.bookingService) WHERE \(CommonColumns.fkId.rawValue) = ?", arguments: [id])
+                        
+            let services: [Booking.Service] = try serviceRows.map({ row -> Service in
+                let categoryID: Int = row[Booking.Service.Columns.categoryId]
+                
+                let request = Category.filter(key: categoryID)
+                let category = try Category.fetchOne(db, request) // String?
+                
+                return Service(id: row[Booking.Service.Columns.id],
+                        title: row[Booking.Service.Columns.title],
+                        notes: row[Booking.Service.Columns.notes],
+                        quantity: row[Booking.Service.Columns.quantity],
+                        price: row[Booking.Service.Columns.price],
+                        discount: row[Booking.Service.Columns.discount],
+                        category: category)
+            })
             
-            
-            
-            
-//            let customer = User(
-//                id: customerRow[User.Columns.id],
-//                email: customerRow[User.Columns.email],
-//                name: customerRow[User.Columns.name],
-//                phone: customerRow[User.Columns.phone],
-//                avatar: customerAvatar,
-//                avatarServingURL: customerAvatarServingURL,
-//                gender: customerRow[User.Columns.gender],
-//                dob: customerRow[User.Columns.dob],
-//                status: customerRow[User.Columns.status],
-//                createdAt: customerRow[User.Columns.createdAt],
-//                updatedAt: customerRow[User.Columns.updatedAt],
-//                emailConfirmed: customerRow[User.Columns.emailConfirmed])
-//
-//            let serviceRows = try Row.fetchAll(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.bookingService) WHERE \(CommonColumns.fkId.rawValue) = ? ORDER BY _id ASC", arguments: [id])
-//
-//            let serviceItems = serviceRows.map { serviceRow -> BookingService in
-//                return BookingService(
-//                    bookingId: row[Booking.Columns.id],
-//                    serviceId: serviceRow[BookingService.Columns.serviceId],
-//                    title: serviceRow[BookingService.Columns.title],
-//                    price: Decimal(string: serviceRow[BookingService.Columns.price]) ?? 0,
-//                    quantity: serviceRow[BookingService.Columns.quantity],
-//                    notes: serviceRow[BookingService.Columns.notes],
-//                    updatedAt: Date(timeIntervalSince1970: serviceRow[BookingService.Columns.updatedAt]))
-//            }
 //
 //            let customizeRequestRows = try Row.fetchAll(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.customizeRequestService) WHERE \(CommonColumns.fkId.rawValue) = ? ORDER BY _id ASC", arguments: [id])
 //
@@ -178,47 +198,49 @@ extension Booking: MultiTableRecord {
 //
 //            }
             
-            let paging = Paging(currentPage: row[Paging.Columns.currentPage] ?? 1,
-                                limitPerPage: row[Paging.Columns.limitPerPage] ?? PlatformConfig.defaultLimit,
-                                totalPage: row[Paging.Columns.totalPage] ?? 1)
+//            let paging = Paging(currentPage: row[Paging.Columns.currentPage] ?? 1,
+//                                limitPerPage: row[Paging.Columns.limitPerPage] ?? PlatformConfig.defaultLimit,
+//                                totalPage: row[Paging.Columns.totalPage] ?? 1)
             
             let decodeDate: String = row[Booking.Columns.eventDate]
+            
+            let bookingStatus = BookingStatus(id: row[Booking.BookingStatus.Columns.id],
+                                              title: row[Booking.BookingStatus.Columns.title],
+                                              description: row[Booking.BookingStatus.Columns.description],
+                                              status: row[Booking.BookingStatus.Columns.status])
+            
+            let historyRows = try Row.fetchAll(db, sql: "SELECT * FROM \(tableName)\(TableNames.Booking.Relation.statusHistory) WHERE \(CommonColumns.fkId.rawValue) = ? ORDER BY createdAt", arguments: [id])
+            
+            let histories: [Booking.StatusHistory] = historyRows.map({ row -> StatusHistory in
+                let status = BookingStatus(id: row[Booking.BookingStatus.Columns.id],
+                                           title: row[Booking.BookingStatus.Columns.title],
+                                           description: row[Booking.BookingStatus.Columns.description],
+                                           status: row[Booking.BookingStatus.Columns.status])
+                return StatusHistory(id: row[Booking.StatusHistory.Columns.id],
+                                     status: status,
+                                     notes: row[Booking.StatusHistory.Columns.notes],
+                                     createdAt: row[Booking.StatusHistory.Columns.createdAt],
+                                     updatedAt: row[Booking.StatusHistory.Columns.updatedAt])
+            })
+            
             return Booking(id: row[Booking.Columns.id],
+                           name: row[Booking.Columns.name],
                            eventName: row[Booking.Columns.eventName],
-                           clientName: row[Booking.Columns.clientName],
-                           status: row[Booking.Columns.status],
+                           status: bookingStatus,
                            bookingNumber: row[Booking.Columns.bookingNumber],
-                           bookingStatus: bookingStatus,
-                           eventAddress: address,
+                           services: services,
+                           venue: address,
+                           histories: histories,
                            eventDate: Date(timeIntervalSince1970: Double(decodeDate) ?? 0.0),
                            artisan: artisan,
-                           invoice: invoice,
+                           customer: customer,
                            platformFee: Decimal(string: row[Booking.Columns.platformFee]) ?? 0,
                            discount: row[Booking.Columns.discount],
                            paymentURL: row[Booking.Columns.paymentURL],
                            totalDiscount: row[Booking.Columns.totalDiscount],
-                           grantTotal: Decimal(string: row[Booking.Columns.grandTotal]) ?? 0)
+                           grantTotal: Decimal(string: row[Booking.Columns.grandTotal]) ?? 0,
+                           timestamp: row[CommonColumns.timestamp])
             
-//            return Booking(
-//                id: row[Booking.Columns.id],
-//                invoice: row[Booking.Columns.invoice],
-//                status: Booking.Status(rawValue: row[Booking.Columns.status]) ?? .booking,
-//                eventName: row[Booking.Columns.eventName],
-//                start: Date(timeIntervalSince1970: row[Booking.Columns.start]),
-//                totalPrice: Decimal(string: row[Booking.Columns.totalPrice]) ?? 0,
-//                createdAt: Date(timeIntervalSince1970: row[Booking.Columns.createdAt]),
-//                updatedAt: Date(timeIntervalSince1970: row[Booking.Columns.updatedAt]),
-//                artisan: artisan,
-//                customer: customer,
-//                bookingAddress: nil,
-//                notes: row[Booking.Columns.notes],
-//                bookingServices: serviceItems,
-//                customizeRequestServices: customizeRequestItems,
-//                paging: paging,
-//                hasBid: row[Booking.Columns.hasBid],
-//                isCustom: row[Booking.Columns.isCustom],
-//                paymentStatus: Booking.PaymentStatus(rawValue: row[Booking.Columns.paymentStatus]) ?? .unpaid,
-//                timestamp: row[CommonColumns.timestamp])
         }
     }
     
@@ -260,22 +282,38 @@ extension Booking: MultiTableRecord {
         var addressValues: [String : DatabaseValueConvertible?] {
             return [
                 CommonColumns.fkId.rawValue: id,
-                Address.Columns.name.rawValue: eventAddress?.name,
-                Address.Columns.detail.rawValue: eventAddress?.addressNote,
-                Address.Columns.address.rawValue: eventAddress?.addressDetail,
-                Address.Columns.lat.rawValue: eventAddress?.latitude,
-                Address.Columns.lon.rawValue: eventAddress?.longitude
+                Address.Columns.id.rawValue: venue.id,
+                Address.Columns.name.rawValue: venue.venueName,
+                Address.Columns.notes.rawValue: venue.notes,
+                Address.Columns.address.rawValue: venue.address,
+                Address.Columns.latitude.rawValue: venue.latitude,
+                Address.Columns.longitude.rawValue: venue.longitude
             ]
         }
+        
+        let addressColumns = getColumnsAndKeys(values: addressValues)
+        let addressStatement = "INSERT INTO \(tableName)\(TableNames.Booking.Relation.venue) (\(addressColumns.names)) VALUES (\(addressColumns.keys))"
+        try db.execute(sql: addressStatement, arguments: StatementArguments(addressValues))
         
         if let artisan = artisan {
             var artisanValues: [String : DatabaseValueConvertible?] {
                 return [
                     CommonColumns.fkId.rawValue: id,
                     Artisan.Columns.id.rawValue: artisan.id,
+                    Artisan.Columns.email.rawValue: artisan.email,
                     Artisan.Columns.name.rawValue: artisan.name,
-                    Artisan.Columns.avatar.rawValue: artisan.avatar,
-                    Artisan.Columns.ratings.rawValue: artisan.ratings
+                    Artisan.Columns.phoneNumber.rawValue: artisan.phoneNumber,
+                    Artisan.Columns.username.rawValue: artisan.username,
+                    Artisan.Columns.facebookID.rawValue: artisan.facebookID,
+                    Artisan.Columns.googleID.rawValue: artisan.googleID,
+                    Artisan.Columns.appleID.rawValue: artisan.appleID,
+                    Artisan.Columns.metadata.rawValue: artisan.metadataData,
+                    Artisan.Columns.favorite.rawValue: artisan.favorite,
+                    Artisan.Columns.jobDone.rawValue: artisan.jobDone,
+                    Artisan.Columns.rating.rawValue: artisan.rating,
+                    Artisan.Columns.category.rawValue: artisan.categoryData,
+                    Artisan.Columns.avatar.rawValue: artisan.avatarData,
+                    Artisan.Columns.status.rawValue: artisan.status
                 ]
             }
             
@@ -285,60 +323,65 @@ extension Booking: MultiTableRecord {
             try db.execute(sql: artisanStatement, arguments: StatementArguments(artisanValues))
         }
         
-        let addressColumns = getColumnsAndKeys(values: addressValues)
-        let addressStatement = "INSERT INTO \(tableName)\(TableNames.Booking.Relation.address) (\(addressColumns.names)) VALUES (\(addressColumns.keys))"
-        try db.execute(sql: addressStatement, arguments: StatementArguments(addressValues))
-        
-        try db.execute(sql: """
-            INSERT INTO \(tableName)\(TableNames.Booking.Relation.bookingStatus)
-            (\(CommonColumns.fkId.rawValue),
-            \(Booking.BookingStatus.Columns.id.rawValue), \(Booking.BookingStatus.Columns.title.rawValue),
-            \(Booking.BookingStatus.Columns.description.rawValue))
-            VALUES (?, ?, ?, ?)
-            """, arguments: [id, bookingStatus?.id.rawValue, bookingStatus?.title, bookingStatus?.description])
-        
-        try db.execute(sql: """
-            INSERT INTO \(tableName)\(TableNames.Booking.Relation.Invoice.invoice)
-            (\(CommonColumns.fkId.rawValue),
-            \(Booking.Invoice.Columns.id.rawValue), \(Booking.Invoice.Columns.number.rawValue),
-            \(Booking.Invoice.Columns.subtotal.rawValue))
-            VALUES (?, ?, ?, ?)
-            """, arguments: [id, invoice.id, invoice.number, "\(invoice.subtotal ?? 0)"])
-        
-        try invoice.items.forEach({ item in
-            try db.execute(sql: """
-            INSERT INTO \(tableName)\(TableNames.Booking.Relation.Invoice.items)
-            (\(CommonColumns.fkId.rawValue),
-            \(Booking.Item.Columns.id.rawValue), \(Booking.Item.Columns.notes.rawValue))
-            VALUES (?, ?, ?)
-            """, arguments: [invoice.id, item.id, item.notes])
+        if let customer = customer {
+            var customerValues: [String : DatabaseValueConvertible?] {
+                return [
+                    CommonColumns.fkId.rawValue: id,
+                    NewProfile.Columns.id.rawValue: customer.id,
+                    NewProfile.Columns.email.rawValue: customer.email,
+                    NewProfile.Columns.name.rawValue: customer.name,
+                    NewProfile.Columns.phoneNumber.rawValue: customer.phoneNumber,
+                    NewProfile.Columns.facebookID.rawValue: customer.facebookID,
+                    NewProfile.Columns.googleID.rawValue: customer.googleID,
+                    NewProfile.Columns.appleID.rawValue: customer.appleID,
+                    NewProfile.Columns.metadata.rawValue: customer.metadataData,
+                    NewProfile.Columns.avatar.rawValue: customer.avatarData,
+                    NewProfile.Columns.status.rawValue: customer.status
+                ]
+            }
             
-            try db.execute(sql: """
-            INSERT INTO \(tableName)\(TableNames.Booking.Relation.Invoice.service)
-            (\(CommonColumns.fkId.rawValue),
-            \(Booking.Service.Columns.name.rawValue),
-            \(Booking.Service.Columns.qty.rawValue),
-            \(Booking.Service.Columns.price.rawValue),
-            \(Booking.Service.Columns.discount.rawValue),
-            \(Booking.Service.Columns.total.rawValue))
-            VALUES (?, ?, ?, ?, ?, ?)
-            """, arguments: [item.id, item.service?.name, item.service?.qty, "\(item.service?.price ?? 0)", item.service?.discount, "\(item.service?.total ?? 0)"])
-        })
+            let customerColumns = getColumnsAndKeys(values: customerValues)
+            
+            let customerStatement = "INSERT INTO \(tableName)\(TableNames.Booking.Relation.customer) (\(customerColumns.names)) VALUES (\(customerColumns.keys))"
+            try db.execute(sql: customerStatement, arguments: StatementArguments(customerValues))
+        }
         
-//
-//        try bookingServices?.forEach {
-//            try db.execute(sql: """
-//                INSERT INTO \(tableName)\(TableNames.Booking.Relation.bookingService)
-//                (\(CommonColumns.fkId.rawValue),
-//                \(Booking.BookingService.Columns.serviceId.rawValue), \(Booking.BookingService.Columns.title.rawValue),
-//                \(Booking.BookingService.Columns.price.rawValue), \(Booking.BookingService.Columns.quantity.rawValue),
-//                \(Booking.BookingService.Columns.notes.rawValue), \(Booking.BookingService.Columns.updatedAt.rawValue))
-//                VALUES (?, ?, ?, ?, ?, ?, ?)
-//                """, arguments: [id, $0.serviceId, $0.title,
-//                                 "\($0.price)", $0.quantity, $0.notes,
-//                                 $0.updatedAt.timeIntervalSince1970])
-//        }
-//
+        try services.forEach { service in
+            var serviceValues: [String : DatabaseValueConvertible?] {
+                return [
+                    CommonColumns.fkId.rawValue: id,
+                    Booking.Service.Columns.id.rawValue: service.id,
+                    Booking.Service.Columns.title.rawValue: service.title,
+                    Booking.Service.Columns.notes.rawValue: service.notes,
+                    Booking.Service.Columns.quantity.rawValue: service.quantity,
+                    Booking.Service.Columns.price.rawValue: service.price,
+                    Booking.Service.Columns.discount.rawValue: service.discount,
+                ]
+            }
+            
+            let serviceColumns = getColumnsAndKeys(values: serviceValues)
+            let serviceStatement = "INSERT INTO \(tableName)\(TableNames.Booking.Relation.venue) (\(serviceColumns.names)) VALUES (\(serviceValues.keys))"
+            try db.execute(sql: serviceStatement, arguments: StatementArguments(serviceValues))
+        }
+        
+        try histories.forEach { history in
+            var historyValues: [String : DatabaseValueConvertible?] {
+                return [
+                    CommonColumns.fkId.rawValue: id,
+                    Booking.StatusHistory.Columns.id.rawValue: history.id,
+                    Booking.StatusHistory.Columns.notes.rawValue: history.notes,
+                    Booking.BookingStatus.Columns.id.rawValue: history.status.id.rawValue,
+                    Booking.BookingStatus.Columns.title.rawValue: history.status.title,
+                    Booking.BookingStatus.Columns.description.rawValue: history.status.description,
+                    Booking.BookingStatus.Columns.status.rawValue: history.status.status
+                ]
+            }
+            
+            let historyColumns = getColumnsAndKeys(values: historyValues)
+            let historyStatement = "INSERT INTO \(tableName)\(TableNames.Booking.Relation.venue) (\(historyColumns.names)) VALUES (\(historyValues.keys))"
+            try db.execute(sql: historyStatement, arguments: StatementArguments(historyValues))
+        }
+        
 //        try customizeRequestServices?.forEach {
 //            try db.execute(sql: """
 //                INSERT INTO \(tableName)\(TableNames.Booking.Relation.customizeRequestService)

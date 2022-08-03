@@ -9,14 +9,12 @@
 import RxSwift
 import Alamofire
 
-open class PaymentAPI: ServiceHelper{
+open class PaymentAPI {
     
-    public override init() {
-        super.init()
-    }
+    public init() { }
     
     public func getPayoutURL(amount: Double) -> Observable<(Data?, HTTPURLResponse?)>{
-        return super.request(Endpoint.initPayout,
+        return ServiceHelper.shared.request(Endpoint.initPayout,
                              method: HTTPMethod.put,
                              parameter: ["payoutAmount": amount],
                              encoding: JSONEncoding.default)
@@ -37,7 +35,7 @@ open class PaymentAPI: ServiceHelper{
             params["artisanId"] = artisanId
         }
         
-        return super.request(endpoint,
+        return ServiceHelper.shared.request(endpoint,
                              parameter: params)
         .retry(3).map { result in
             return (result.data, result.response)
@@ -46,7 +44,7 @@ open class PaymentAPI: ServiceHelper{
     
     public func getRefundURL(bookingId: Int) -> Observable<(Data?, HTTPURLResponse?)>{
         
-        return super.request(Endpoint.bookingPaymentRefundInit,
+        return ServiceHelper.shared.request(Endpoint.bookingPaymentRefundInit,
                              parameter: ["bookingId": bookingId])
         .retry(3).map { result in
             return (result.data, result.response)
@@ -55,7 +53,7 @@ open class PaymentAPI: ServiceHelper{
     
     public func getBalanceSummary() -> Observable<(Data?, HTTPURLResponse?)>{
         
-        return super.request(Endpoint.balanceSummary,
+        return ServiceHelper.shared.request(Endpoint.balanceSummary,
                              parameter: nil,
                              encoding: URLEncoding.default)
         .retry(3).map { result in
@@ -65,7 +63,7 @@ open class PaymentAPI: ServiceHelper{
     
     public func getPaymentHistories(page: Int, limit: Int) -> Observable<(Data?, HTTPURLResponse?)>{
         
-        return super.request(Endpoint.bookingPaymentSummaryHistories,
+        return ServiceHelper.shared.request(Endpoint.bookingPaymentSummaryHistories,
                              parameter: ["page": page, "limit": limit])
         .retry(3).map { result in
             return (result.data, result.response)
@@ -74,7 +72,7 @@ open class PaymentAPI: ServiceHelper{
     
     public func getHistoryDetail(id: Int) -> Observable<(Data?, HTTPURLResponse?)>{
         
-        return super.request(Endpoint.bookingPaymentSummaryHistories,
+        return ServiceHelper.shared.request(Endpoint.bookingPaymentSummaryHistories,
                              parameter: ["id": id])
         .retry(3).map { result in
             return (result.data, result.response)

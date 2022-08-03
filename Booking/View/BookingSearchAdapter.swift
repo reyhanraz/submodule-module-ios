@@ -21,7 +21,7 @@ public class BookingSearchAdapter<C: Cache>: NSObject, UITableViewDelegate, UITa
     public let identifier = "BookingCell"
     
     let _cache: C
-    let _userKind: User.Kind
+    let _userKind: NewProfile.Kind
     
     public var list: [Booking]?
     public var loadMoreItems: (() -> Void)?
@@ -30,7 +30,7 @@ public class BookingSearchAdapter<C: Cache>: NSObject, UITableViewDelegate, UITa
     
     public weak var delegate: BookingSearchAdapterDelegate?
     
-    public init(cache: C, kind: User.Kind) {
+    public init(cache: C, kind: NewProfile.Kind) {
         _cache = cache
         _userKind = kind
         

@@ -14,57 +14,104 @@ import Common
 import CommonUI
 import Foundation
 
-public struct BookingListViewModel {
+public struct BookingListViewModel{
+    public typealias Request = BookingListRequest
+    public typealias Response = NewList<Booking>
+
+    public var loading: Driver<Loading>
+    public var result: Driver<(Request, [Booking], Bool)>
+    public var failed: Driver<Status.Detail>
+    public var arrayResult: Driver<[Booking]>
     
-    // MARK: Outputs
-    public let result = PublishSubject<[Booking]>()
+    private let _getListProperty = PublishSubject<Request>()
+    private let _loadMoreProperty = PublishSubject<Request>()
+            
+    private let delegate = UIApplication.shared.delegate as! AppDelegateType
+
+    
+    public init(activityIndicator: ActivityIndicator){
+        let loadingProperty = PublishSubject<Loading>()
+        let failedProperty = PublishSubject<Status.Detail>()
+        let arrayResultProperty = PublishSubject<[Booking]>()
+
+
+        loading = loadingProperty.asDriver(onErrorJustReturn: Loading(start: false))
+        failed = failedProperty.asDriver(onErrorDriveWith: .empty())
+        arrayResult = arrayResultProperty.asDriver(onErrorDriveWith: .empty())
         
-    private let serviceAPI: ServiceAPI
-     
-    public init(service: ServiceAPI) {
-        self.serviceAPI = service
-    }
-    
-    public func load(){
-        serviceAPI.fetchData(url: "https://private-anon-3f6ccb4b78-beautybell.apiary-mock.com/api/v1/bookings", decode: ListBooking.self, completionHandler: { result in
-            switch result{
-            case .success(let response):
-                self.result.onNext(response.data)
-            case .error(_):
-                break
-            case .unauthorized:
-                break
-            case .fail(status: _, errors: _):
-                break
-            }
-        })
-    }
-}
-
-
-import Alamofire
-
-public protocol ServiceAPI{
-    func fetchData<T: Codable>(url: String, decode: T.Type, completionHandler: @escaping (Result<T, Error>) -> Void)
-}
-
-public struct DataService: ServiceAPI {
-    
-    // MARK: - Singleton
-    public static let shared = DataService()
-    
-    // MARK: - Services
-    public func fetchData<T: Codable>(url: String, decode: T.Type, completionHandler: @escaping (Result<T, Error>) -> Void){
-        AF.request(url)
-            .validate(contentType: ["application/json"])
-            .responseDecodable(of: decode.self){ response in
-                guard let value = response.value else {return}
-                completionHandler(.success(value))
-            }
+        let cache = BookingSQLCache(dbQueue: delegate.dbQueue, tableName: TableNames.Booking.booking)
         
+        let _useCase = NewListUseCaseProvider(
+                service: BookingCloudService<NewList<Booking>>(),
+                cacheService: NewListCacheService<BookingListRequest, NewList<Booking>, BookingSQLCache>(cache: cache),
+                cache: cache,
+                insertToCache: false,
+                activityIndicator: activityIndicator)
+        
+        var items = [Booking]()
+        var isShouldClearItems = false
+        
+        let initialRequest = _getListProperty
+            .asDriver(onErrorDriveWith: .empty())
+            .do(onNext: { _ in loadingProperty.onNext(Loading(start: true)) })
+            .flatMap { request -> Driver<(Request, Result<NewList<Booking>, Error>)> in
+                return _useCase.execute(request: request)
+                    .map { (request, $0) }.asDriver(onErrorDriveWith: .empty())
+            }
+            .do(onNext: { _ in loadingProperty.onNext(Loading(start: false)) })
+            .flatMap({ result -> Driver<(Request, NewList<Booking>, Bool)> in
+                switch result.1 {
+                case let .success(list):
+                    return .just((result.0, list, false))
+                case .unauthorized:
+                    return .empty()
+                case let .fail(status, _):
+                    failedProperty.onNext(status)
+                    
+                    return .empty()
+                case .error(_):
+                    return .empty()
+                }
+            }).do(onNext: { _ in isShouldClearItems = true })
+        
+        let nextRequest = _loadMoreProperty
+            .asDriver(onErrorDriveWith: .empty())
+            .do(onNext: { _ in loadingProperty.onNext(Loading(start: true)) })
+            .flatMap { request -> Driver<(Request, Result<NewList<Booking>, Error>)> in
+                return _useCase.execute(request: request).map { (request, $0) }.asDriver(onErrorDriveWith: .empty())
+            }
+            .do(onNext: { _ in loadingProperty.onNext(Loading(start: false)) })
+            .flatMap({ result -> Driver<(Request, NewList<Booking>, Bool)> in
+                switch result.1 {
+                case let .success(list):
+                    return .just((result.0, list, false))
+                default:
+                    return .empty()
+                }
+            }).do(onNext: { _ in isShouldClearItems = false })
+        
+        result = Driver.merge(initialRequest, nextRequest).map { (request, dataResponse, isFromInitialCache) in
+            if isShouldClearItems {
+                items.removeAll()
+            }
+            
+            items += dataResponse.data
+            arrayResultProperty.onNext(items)
+            
+            return (request, items, isFromInitialCache)
+        }
     }
-}
+    
+    public func get(bookingID: String? = nil) {
+        let request = BookingListRequest()
+        request.id = bookingID
+        request.forceReload = true
+        _getListProperty.onNext(request)
+    }
+    
+    public func loadMore(request: BookingListRequest) {
+        _loadMoreProperty.onNext(request)
 
-public struct ListBooking: Codable{
-    public let data: [Booking]
+    }
+    
 }

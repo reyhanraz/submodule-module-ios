@@ -10,7 +10,7 @@ import GRDB
 import Platform
 
 extension Gallery: MultiTableRecord {
-    public typealias R = ListRequest
+    public typealias R = NewListRequest
 
     public var contentValues: [String : DatabaseValueConvertible?] {
 
@@ -110,8 +110,8 @@ extension Gallery: MultiTableRecord {
         var query = "WHERE \(tableName).\(CommonColumns._id.rawValue) != -1"
 
         if let request = request {
-            if let id = request.id, id > 0 {
-                query += " AND  \(tableName).\(Gallery.Columns.userId.rawValue) = \(id)"
+            if let id = request.id {
+                query += " AND  \(tableName).\(Gallery.Columns.userId.rawValue) = '\(id)'"
             }
 
             if request.page > 0 && !request.ignorePaging {

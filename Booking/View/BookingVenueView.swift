@@ -15,7 +15,7 @@ public protocol BookingVenueViewDelegate: class {
 }
 
 public class BookingVenueView: UIView {
-    private let _userKind: User.Kind
+    private let _userKind: NewProfile.Kind
     
     public weak var delegate: BookingVenueViewDelegate?
     
@@ -154,7 +154,7 @@ public class BookingVenueView: UIView {
         fatalError("init(coder:)")
     }
     
-    public init(userKind: User.Kind) {
+    public init(userKind: NewProfile.Kind) {
         _userKind = userKind
         
         super.init(frame: .zero)

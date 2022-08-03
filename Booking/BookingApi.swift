@@ -9,9 +9,9 @@
 import Moya
 import Platform
 import L10n_swift
+import ServiceWrapper
 
 public enum BookingApi {
-    case complaint(request: PostComplaintRequest)
     case createBooking(request: PostBookingRequest)
     case getList(statuses: [Int]?, keyword: String?, page: Int, limit: Int, timestamp: TimeInterval?)
     case getDetail(id: Int)
@@ -34,13 +34,11 @@ extension BookingApi: TargetType {
         switch self {
         case .createBooking, .getDetail:
             return "\("config.serverless".l10n())booking"
-        case .complaint:
-            return "\("config.serverless".l10n())bookingComplaint"
         case let .updateBookingStatus(_, status):
             switch status {
             case .confirmed:
                 return "\("config.serverless".l10n())setBookingStatusConfirmed"
-            case .process:
+            case .workInProgress:
                 return "\("config.serverless".l10n())setBookingStatusProcess"
             case .completed:
                 return "\("config.serverless".l10n())setBookingStatusCompleted"
@@ -72,7 +70,7 @@ extension BookingApi: TargetType {
     
     public var method: Moya.Method {
         switch self {
-        case .createBooking, .updateCustomizeRequestStatus, .checkAvailability, .complaint:
+        case .createBooking, .updateCustomizeRequestStatus, .checkAvailability:
             return .post
         case .getList, .getDetail:
             return .get
@@ -107,8 +105,6 @@ extension BookingApi: TargetType {
             }
 
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
-        case let .complaint(request):
-            return .requestJSONEncodable(request)
         case let .getList(statuses, keyword, page, limit, timestamp):
             var params: [String : Any] = [:]
             
@@ -122,15 +118,15 @@ extension BookingApi: TargetType {
             if let statuses = statuses, !statuses.isEmpty {
                 var bookingStatuses = statuses
                 
-                if let index = bookingStatuses.firstIndex(of: Booking.Status.canceled.rawValue) {
-                    bookingStatuses.remove(at: index)
-                    bookingStatuses.append(Booking.Status.canceledByArtisan.rawValue)
-                    bookingStatuses.append(Booking.Status.canceledByCustomer.rawValue)
-                } else if let _ = bookingStatuses.firstIndex(of: Booking.Status.complaint.rawValue) {
-                    bookingStatuses.append(Booking.Status.settledForCustomer.rawValue)
-                } else if let _ = bookingStatuses.firstIndex(of: Booking.Status.completed.rawValue) {
-                    bookingStatuses.append(Booking.Status.settledForArtisan.rawValue)
-                }
+//                if let index = bookingStatuses.firstIndex(of: Booking.Status.canceled.rawValue) {
+//                    bookingStatuses.remove(at: index)
+//                    bookingStatuses.append(Booking.Status.canceledByArtisan.rawValue)
+//                    bookingStatuses.append(Booking.Status.canceledByCustomer.rawValue)
+//                } else if let _ = bookingStatuses.firstIndex(of: Booking.Status.openIssue.rawValue) {
+//                    bookingStatuses.append(Booking.Status.settledForCustomer.rawValue)
+//                } else if let _ = bookingStatuses.firstIndex(of: Booking.Status.completed.rawValue) {
+//                    bookingStatuses.append(Booking.Status.settledForArtisan.rawValue)
+//                }
                 
                 params["statusIds"] = bookingStatuses
             }
