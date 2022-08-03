@@ -13,7 +13,7 @@ open class CalendarAPI{
     
     public init() {}
     
-    public func getEventList(start: Date?, end: Date?, artisanId: Int) -> Observable<(Data?, HTTPURLResponse?)>{
+    public func getEventList(start: Date?, end: Date?, artisanId: String) -> Observable<(Data?, HTTPURLResponse?)>{
         
         var params: [String : Any] = [:]
         params["artisanId"] = artisanId

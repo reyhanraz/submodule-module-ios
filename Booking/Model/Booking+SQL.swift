@@ -110,8 +110,9 @@ extension Booking: MultiTableRecord {
                                       birthdate: nil,
                                       idCard: nil,
                                       bio: nil,
-                                  timeStamp: Date().timeIntervalSince1970,
-                                  createdAt: artisanRow[Artisan.Columns.created_at])
+                                      gender: nil,
+                                      timeStamp: Date().timeIntervalSince1970,
+                                      createdAt: artisanRow[Artisan.Columns.created_at])
                 
             } else {
                 artisan = nil

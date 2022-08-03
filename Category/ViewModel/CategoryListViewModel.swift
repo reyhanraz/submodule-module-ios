@@ -14,7 +14,7 @@ import Domain
 import Common
 
 public struct CategoryListViewModel {
-    public typealias Request = ListRequest
+    public typealias Request = CategoryListRequest
     public typealias DataResponse = NewList<Category>
     public typealias Response = Category
     

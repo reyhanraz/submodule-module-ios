@@ -35,7 +35,7 @@ public struct UpdateArtisanProfileViewModel<T: ResponseType>: UpdateArtisanProfi
     public let dismissResponder: Driver<Bool>
     
     public init<U: UseCase>(
-        id: Int,
+        id: String,
         phone: (Driver<String?>, String),
         name: (Driver<String?>, Int, Int),
         instagram: Driver<String?>,

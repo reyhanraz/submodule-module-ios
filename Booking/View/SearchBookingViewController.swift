@@ -18,12 +18,12 @@ public protocol SearchBookingViewControllerDelegate: class {
     func searchDidDismiss()
 }
 
-public class SearchBookingViewController<U: UseCase, Source: TableViewDataSource, ServiceResponse: ResponseListType>: RxViewController, UISearchBarDelegate, UISearchControllerDelegate
+public class SearchBookingViewController<U: UseCase, Source: TableViewDataSource, ServiceResponse: NewResponseListType>: RxViewController, UISearchBarDelegate, UISearchControllerDelegate
     where
     U.R == BookingListRequest,
     U.T == ServiceResponse,
     U.E == Error,
-Source.Item == ServiceResponse.Data.T {
+Source.Item == ServiceResponse.T {
     
     private let _cellClass: AnyClass
     private let _useCase: U

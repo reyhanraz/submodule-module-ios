@@ -14,12 +14,8 @@ import L10n_swift
 open class ProfileAPI<R: Encodable> {
     public init() {}
     
-    public func getDetailProfile(request: Int?) -> Observable<(Data?, HTTPURLResponse?)>{
-        var param: [String: Int] = [:]
-        if let id = request{
-            param["id"] = id
-        }
-        return ServiceHelper.shared.request(Endpoint.profil, parameter: param).retry(3).map { result in
+    public func getDetailProfile() -> Observable<(Data?, HTTPURLResponse?)>{
+        return ServiceHelper.shared.request(Endpoint.profil, parameter: nil).retry(3).map { result in
             return (result.data, result.response)
         }
     }
