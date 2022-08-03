@@ -96,6 +96,7 @@ extension Artisan: MultiTableRecord {
                                   birthdate: nil,
                                   idCard: nil,
                                   bio: nil,
+                                  gender: nil,
                                   timeStamp: row[CommonColumns.timestamp],
                                   createdAt: row[Artisan.Columns.created_at])
             
